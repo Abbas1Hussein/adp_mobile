@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
@@ -8,8 +7,6 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
     super.builders,
     super.key,
     this.shape,
-    this.onTapUp,
-    this.onTapDown,
     this.onLongPress,
     this.hoverColor,
     this.pressedColor,
@@ -35,7 +32,7 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
   /// The background color of the button when it is disabled.
   final Color? disabledColor;
 
-  final ShapeBorder? shape;
+  final OutlinedBorder? shape;
 
   /// The mouse cursor to use when hovering over this widget.
   final MouseCursor mouseCursor;
@@ -50,26 +47,6 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
   ///  * [enabled], which is true if the button is enabled.
   final VoidCallback? onPressed;
 
-  /// Called when the button is pressed.
-  ///
-  /// If this callback, [onLongPress], [onPressed] and [onTapUp] are null,
-  /// then the button will be disabled.
-  ///
-  /// See also:
-  ///
-  ///  * [enabled], which is true if the button is enabled.
-  final VoidCallback? onTapDown;
-
-  /// Called when the button is released.
-  ///
-  /// If this callback, [onLongPress], [onPressed] and [onTapDown] are null,
-  /// then the button will be disabled.
-  ///
-  /// See also:
-  ///
-  ///  * [enabled], which is true if the button is enabled.
-  final VoidCallback? onTapUp;
-
   /// Called when the button is long-pressed.
   ///
   /// If this callback, [onPressed], [onTapDown] and [onTapUp] are null,
@@ -82,10 +59,44 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
 
   /// Whether the button is enabled or disabled. Buttons are disabled by default. To
   /// enable a button, set its [onPressed] property to a non-null value.
-  bool get enabled =>
-      onPressed != null ||
-      onLongPress != null ||
-      onTapDown != null ||
-      onTapUp != null;
+  bool get enabled => onPressed != null || onLongPress != null;
 
+  ButtonStyle androidDefaultStyle() {
+    return ButtonStyle(
+      shape: MaterialStateProperty.all(shape),
+      backgroundColor: MaterialStateProperty.resolveWith(
+        (states) {
+          return forStates(
+            states,
+            pressed: pressedColor,
+            hovering: hoverColor,
+            disabled: disabledColor,
+            none: backgroundColor,
+          );
+        },
+      ),
+    );
+  }
+}
+
+T forStates<T>(
+  Set<MaterialState> states, {
+  required T disabled,
+  required T none,
+  T? pressed,
+  T? hovering,
+  T? focused,
+}) {
+  if (states.contains(MaterialState.disabled)) return disabled;
+  if (pressed != null && states.contains(MaterialState.pressed)) {
+    return pressed;
+  }
+  if (hovering != null && states.contains(MaterialState.hovered)) {
+    return hovering;
+  }
+  if (states.contains(MaterialState.focused)) {
+    return focused ?? pressed ?? none;
+  }
+
+  return none;
 }

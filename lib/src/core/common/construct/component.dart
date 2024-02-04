@@ -5,6 +5,9 @@ import '../../core.dart';
 import 'builders.dart' as b;
 import 'component_mixin.dart';
 
+export 'property.dart';
+export '../../extension/widget.dart';
+
 /// A base class for creating adaptive components that can have different implementations
 /// on Android and IOS platforms.
 ///

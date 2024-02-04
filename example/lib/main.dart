@@ -2,9 +2,11 @@ import 'package:adp_mobile/adp_mobile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+const theme = ThemeMode.dark;
+
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.android,
   );
   runApp(const App());
 }
@@ -14,27 +16,38 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const theme = ThemeMode.dark;
+    final isMobile = !PlatformRuining.isWeb &&
+        (PlatformRuining.isRealAndroid || PlatformRuining.isRealIOS);
     if (PlatformRuining.targetPlatform == MobileTargetPlatform.android) {
+      final titleBar = !isMobile
+          ? const TitleBar(child: Scaffold(body: HomeScreen()))
+          : const Scaffold(body: HomeScreen());
       return MaterialApp(
-        themeMode: ThemeMode.dark,
+        themeMode: theme,
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
-        home: const TitleBar(child: Scaffold(body: HomeScreen())),
+        home: titleBar,
       );
     } else {
-      return const CupertinoApp(
+      final titleBar = !isMobile
+          ? const TitleBar(child: CupertinoPageScaffold(child: HomeScreen()))
+          : const CupertinoPageScaffold(child: HomeScreen());
+
+      return CupertinoApp(
         theme: theme == ThemeMode.dark
-            ? CupertinoThemeData(
-                scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray)
-            : CupertinoThemeData(applyThemeToAll: true),
-        localizationsDelegates: [
+            ? const CupertinoThemeData(
+                brightness: Brightness.dark,
+                scaffoldBackgroundColor: CupertinoColors.darkBackgroundGray,
+              )
+            : const CupertinoThemeData(
+                brightness: Brightness.light,
+                scaffoldBackgroundColor: CupertinoColors.white,
+              ),
+        localizationsDelegates: const [
           DefaultMaterialLocalizations.delegate,
           DefaultCupertinoLocalizations.delegate,
         ],
-        home: TitleBar(
-          child: CupertinoPageScaffold(child: HomeScreen()),
-        ),
+        home: titleBar,
       );
     }
   }
@@ -48,23 +61,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _currentValue = false;
+  double _currentValue = 10;
 
   @override
   Widget build(BuildContext context) {
-    const text =
+    const content =
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
     return Center(
-      child: AdaptiveWidget(
-        onAndroid: (context) {
-          print('onAndroid');
-          return DatePickerDialog(
-              firstDate: DateTime.now(), lastDate: DateTime.now());
-        },
-        oniOS: (context) {
-          print('oniOS');
-          return CupertinoDatePicker(onDateTimeChanged: (value) {});
-        },
+      child: AdaptiveButton(
+        onPressed: () {},
+        child: Text('text button'),
       ),
     );
   }

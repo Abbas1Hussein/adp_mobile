@@ -52,7 +52,7 @@ class DefaultsPlatformManager {
   static Future<void> _initializeWindowConfiguration() async {
     WidgetsFlutterBinding.ensureInitialized();
 
-    const size = Size(400, 600);
+    const size = Size(345, 600);
 
     await windowManager.ensureInitialized();
     const windowOptions = WindowOptions(

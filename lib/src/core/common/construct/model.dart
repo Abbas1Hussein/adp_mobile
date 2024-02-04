@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 /// - [A]: Type of data when adapted for the Android platform.
 /// - [I]: Type of data when adapted for the IOS platform.
 abstract class CoreModel<A, I> {
+  const CoreModel();
   /// Converts the model to its representation on the Android platform.
   ///
   /// Returns an instance of [A] representing the model on the Android platform.

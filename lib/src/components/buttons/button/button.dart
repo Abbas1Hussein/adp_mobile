@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/properties.dart';
+import '../../../core/extension/brightness.dart';
 import 'base_button.dart';
+import 'iOS.dart';
 
 /// Buttons are the graphical control element that provides a user to trigger an event such as taking actions, making choices, searching things, and many more.
 /// They can be placed anywhere in our UI like dialogs, forms, cards, toolbars, etc.
@@ -17,8 +19,6 @@ class AdaptiveButton extends AdaptiveBaseButton {
     super.builders,
     super.key,
     super.shape,
-    super.onTapUp,
-    super.onTapDown,
     super.onLongPress,
     super.hoverColor,
     super.pressedColor,
@@ -34,8 +34,6 @@ class AdaptiveButton extends AdaptiveBaseButton {
     super.builders,
     super.key,
     super.shape,
-    super.onTapUp,
-    super.onTapDown,
     super.onLongPress,
     super.hoverColor,
     super.pressedColor,
@@ -51,8 +49,6 @@ class AdaptiveButton extends AdaptiveBaseButton {
     super.builders,
     super.key,
     super.shape,
-    super.onTapUp,
-    super.onTapDown,
     super.onLongPress,
     super.hoverColor,
     super.pressedColor,
@@ -70,23 +66,95 @@ class AdaptiveButton extends AdaptiveBaseButton {
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     switch (_type) {
       case AdaptiveButtonType.base:
-        return ElevatedButton(onPressed: onPressed, child: child);
+        return ElevatedButton(
+          style: androidDefaultStyle(),
+          onLongPress: onLongPress,
+          onPressed: onPressed,
+          child: child,
+        );
       case AdaptiveButtonType.filled:
-        return FilledButton(onPressed: onPressed, child: child);
+        return FilledButton(
+          style: androidDefaultStyle(),
+          onLongPress: onLongPress,
+          onPressed: onPressed,
+          child: child,
+        );
       case AdaptiveButtonType.outlined:
-        return OutlinedButton(onPressed: onPressed, child: child);
+        return OutlinedButton(
+          style: androidDefaultStyle(),
+          onLongPress: onLongPress,
+          onPressed: onPressed,
+          child: child,
+        );
     }
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
+    final theme = CupertinoTheme.of(context);
     switch (_type) {
       case AdaptiveButtonType.base:
-        return CupertinoButton(onPressed: onPressed, child: child);
+        return IOSButton(
+          shape: shape,
+          onPressed: onPressed,
+          hoverColor: hoverColor,
+          mouseCursor: mouseCursor,
+          onLongPress: onLongPress,
+          pressedColor: pressedColor,
+          disabledColor: disabledColor,
+          backgroundColor: backgroundColor,
+          child: child,
+        );
       case AdaptiveButtonType.filled:
-        return CupertinoButton.filled(onPressed: onPressed, child: child);
+        return IOSButton(
+          shape: shape,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          mouseCursor: mouseCursor,
+          pressedOpacity: 0.6,
+          disabledColor: disabledColor ?? CupertinoColors.secondaryLabel,
+          backgroundColor: backgroundColor ?? theme.primaryColor,
+          pressedColor: pressedColor ?? theme.primaryColor.withOpacity(0.6),
+          hoverColor: hoverColor ?? theme.primaryColor.withOpacity(0.6),
+          child: DefaultTextStyle.merge(
+            style: theme.textTheme.textStyle.copyWith(
+              color: CupertinoDynamicColor.resolve(
+                CupertinoColors.white,
+                context,
+              ),
+            ),
+            child: child,
+          ),
+        );
       case AdaptiveButtonType.outlined:
-        return CupertinoButton(onPressed: onPressed, child: child);
+        return IOSButton(
+          shape: shape ??
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(2),
+                  side: BorderSide(
+                    width: 1,
+                    color: CupertinoTheme.brightnessOf(context).resolve(
+                      lightColor: CupertinoColors.black,
+                      darkColor: CupertinoColors.extraLightBackgroundGray,
+                    ),
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                  )),
+          padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 12.0),
+          pressedOpacity: 0.7,
+          onPressed: onPressed,
+          onLongPress: onLongPress,
+          mouseCursor: mouseCursor,
+          disabledColor: disabledColor,
+          backgroundColor: backgroundColor,
+          pressedColor: pressedColor,
+          hoverColor: hoverColor,
+          child: DefaultTextStyle(
+            style: theme.textTheme.textStyle.copyWith(
+              fontWeight: FontWeight.w500,
+            ),
+            child: child,
+          ),
+        );
     }
   }
 }
