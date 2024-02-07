@@ -1,6 +1,7 @@
-import 'package:adp_mobile/src/core/core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../core/common/construct/component.dart';
 
 class AdaptiveBackButton extends CoreAdaptiveComponent {
   const AdaptiveBackButton({super.key, this.color, this.onPressed});

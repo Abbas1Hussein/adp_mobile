@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:window_manager/window_manager.dart';
+
+import '../../buttons/icon_button/icon_button.dart';
+import '../../icon/icon.dart';
+import '../../icon/icons.dart';
 
 class TitleBar extends StatelessWidget {
   const TitleBar({super.key, required this.child});
@@ -20,9 +23,9 @@ class TitleBar extends StatelessWidget {
               child: Row(
                 children: [
                   const SizedBox(width: 6.0),
-                  const Icon(CupertinoIcons.battery_75_percent),
+                  const AdaptiveIcon(AdpIcons.battery75),
                   const SizedBox(width: 6.0),
-                  const Icon(CupertinoIcons.wifi),
+                  const AdaptiveIcon(AdpIcons.wifi),
                   const Expanded(
                     child: DragToResizeArea(
                       enableResizeEdges: [ResizeEdge.top],
@@ -66,16 +69,16 @@ class _TitleBottomState extends State<TitleBottom> {
           children: [
             Tooltip(
               message: 'finish',
-              child: IconButton(
+              child: AdaptiveIconButton(
                 onPressed: windowManager.close,
-                icon: const Icon(Icons.arrow_back_ios_rounded),
+                icon: const AdaptiveIcon.all(Icons.arrow_back_ios_rounded),
               ),
             ),
             Tooltip(
               message: 'minimize',
-              child: IconButton(
+              child: AdaptiveIconButton(
                 onPressed: windowManager.minimize,
-                icon: const Icon(Icons.circle_rounded),
+                icon: const AdaptiveIcon.all(Icons.circle_rounded),
               ),
             ),
             FutureBuilder<bool>(
@@ -84,23 +87,23 @@ class _TitleBottomState extends State<TitleBottom> {
                 if (snapshot.data == true) {
                   return Tooltip(
                     message: 'unMaximize',
-                    child: IconButton(
+                    child: AdaptiveIconButton(
                       onPressed: () {
                         windowManager.unmaximize();
                         setState(() {});
                       },
-                      icon: const Icon(Icons.rectangle_rounded),
+                      icon: const AdaptiveIcon.all(Icons.rectangle_outlined),
                     ),
                   );
                 }
                 return Tooltip(
                   message: 'maximized',
-                  child: IconButton(
+                  child: AdaptiveIconButton(
                     onPressed: () {
                       windowManager.maximize();
                       setState(() {});
                     },
-                    icon: const Icon(Icons.rectangle_rounded),
+                    icon: const AdaptiveIcon.all(Icons.rectangle_rounded),
                   ),
                 );
               },

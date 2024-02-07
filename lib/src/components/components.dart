@@ -6,3 +6,4 @@ export 'indicators/indicators.dart';
 export 'icon/icon.dart';
 export 'icon/icon_theme.dart';
 export 'icon/icons.dart';
+export 'fields/fields.dart';
