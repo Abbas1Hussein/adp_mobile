@@ -35,7 +35,10 @@ class DefaultsPlatformManager {
     assert(
         _instance == null, 'DefaultsPlatformManager is already initialized.');
 
-    if (isDebugging && !kIsWeb) {
+    final isMobile = defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
+
+    if (isDebugging && !kIsWeb && !isMobile) {
       _initializeWindowConfiguration();
     }
 

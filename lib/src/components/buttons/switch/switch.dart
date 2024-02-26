@@ -3,8 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import '../../../core/common/construct/property.dart';
-import '../../../core/extension/widget.dart';
 
 /// The switch represents a physical switch that allows users to turn
 /// things on or off, like a light switch. Use switch controls to present

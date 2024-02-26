@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import '../../../core/extension/widget.dart';
 
 const _kListTileConstraints = BoxConstraints(minHeight: 48.0, minWidth: 48.0);
 
@@ -81,12 +80,12 @@ class AdaptiveListTile extends CoreAdaptiveComponent {
   /// Called when the user taps this list tile.
   ///
   /// Inoperative if [enabled] is false.
-  final GestureTapCallback? onTap;
+  final VoidCallback? onTap;
 
   /// Called when the user long-presses on this list tile.
   ///
   /// Inoperative if [enabled] is false.
-  final GestureLongPressCallback? onLongPress;
+  final VoidCallback? onLongPress;
 
   /// The shape of the tile.
   final ShapeBorder? shape;

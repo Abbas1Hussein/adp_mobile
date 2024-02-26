@@ -12,7 +12,7 @@ dependencies:
     sdk: flutter
 
   window_manager: ^0.3.7
-  search_field_autocomplete: ^0.0.4
+  search_field_autocomplete: ^1.0.0
 
 
 dev_dependencies:

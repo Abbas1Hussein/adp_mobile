@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import '../../../core/common/construct/properties.dart';
-import '../../../core/extension/widget.dart';
 
 /// A checkbox is a type of button that lets the user choose between
 /// two opposite states, actions, or values. A selected checkbox is

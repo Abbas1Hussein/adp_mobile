@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import '../../../core/common/construct/properties.dart';
-import '../../../core/extension/widget.dart';
 
 /// Radio buttons, also called option buttons, let users select one option from
 /// a collection of two or more mutually exclusive, but related, options. Radio

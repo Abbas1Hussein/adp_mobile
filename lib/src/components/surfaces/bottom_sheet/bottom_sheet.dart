@@ -16,51 +16,114 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// The [content] parameter is required and represents the main content of the bottom sheet.
   const AdaptiveBottomSheet({
     super.key,
+    super.builders,
     this.title,
+    this.titleTextStyle,
+    this.titlePadding,
+    this.contentTextStyle,
+    this.contentPadding,
     this.actions,
+    this.actionsPadding,
     required this.content,
   });
+
+  /// The title of the dialog.
+  ///
+  /// Typically a [Text] widget.
   final Widget? title;
 
-  /// The main content of the bottom sheet.
+  /// Style for the text in the [title] of this [AdaptiveBottomSheet].
+  final TextStyle? titleTextStyle;
+
+  /// Padding around the title.
+  ///
+  /// If there is no title, no padding will be provided. Otherwise, this padding
+  /// is used.
+  final EdgeInsetsGeometry? titlePadding;
+
+  /// The content of the dialog.
+  ///
+  /// Typically a [Text] widget.
   final Widget content;
+
+  /// Style for the text in the [content] of this [AlertDialog].
+  final TextStyle? contentTextStyle;
+
+  /// Padding around the content.
+  ///
+  /// If there is no [content], no padding will be provided. Otherwise, this
+  /// padding is used.
+  final EdgeInsetsGeometry? contentPadding;
 
   /// The set of actions that are displayed for the user to select.
   ///
-  /// Typically this is a list of [CupertinoActionSheetAction] widgets.
+  /// Typically this is a list of [AdaptiveBottomSheetAction] widgets.
   final List<Widget>? actions;
+
+  /// Padding around the set of [actions] at the bottom of the dialog.
+  ///
+  /// Typically used to provide padding to the button bar between the button bar
+  /// and the edges of the dialog.
+  ///
+  /// The [buttonPadding] may contribute to the padding on the edges of
+  /// [actions] as well.
+  ///
+  /// If there are no [actions], then no padding will be included.
+  final EdgeInsetsGeometry? actionsPadding;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return SizedBox(
-      width: double.infinity,
+    return IntrinsicHeight(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (title != null) Padding(
+          if (title != null)
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: DefaultTextStyle.merge(
-                style: Theme.of(context).typography.dense.titleSmall,
+                style: titleTextStyle ??
+                    Theme.of(context).typography.dense.titleSmall,
                 child: title!,
               ),
             ),
-          Expanded(
+          Flexible(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: DefaultTextStyle.merge(
-                style: Theme.of(context).typography.dense.bodySmall,
+                style: contentTextStyle ??
+                    Theme.of(context).typography.dense.bodySmall,
                 child: SingleChildScrollView(child: content),
               ),
             ),
           ),
-          const Divider(thickness: 0.3),
-          if (actions != null) Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 1.0),
-              child: Row(
-                textDirection: TextDirection.rtl,
-                children: actions!,
+          if (actions != null && actions!.isNotEmpty)
+            const Divider(thickness: 0.3),
+          if (actions != null && actions!.isNotEmpty)
+            if (actions!.length <= 2)
+              Row(
+                children: actions!.map(
+                  (child) {
+                    return Expanded(
+                      child: Padding(
+                        padding: actionsPadding ?? const EdgeInsets.all(4.0),
+                        child: child,
+                      ),
+                    );
+                  },
+                ).toList(),
+              )
+            else
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: actions!.map(
+                  (child) {
+                    return Padding(
+                      padding: actionsPadding ?? const EdgeInsets.all(4.0),
+                      child: child,
+                    );
+                  },
+                ).toList(),
               ),
-            ),
         ],
       ),
     );
@@ -69,9 +132,60 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     return CupertinoActionSheet(
-      title: title,
-      message: content,
-      actions: actions,
+      title: title != null
+          ? DefaultTextStyle.merge(style: titleTextStyle, child: title!)
+          : null,
+      message: DefaultTextStyle.merge(
+        style: contentTextStyle,
+        child: content,
+      ),
+      actions: actions
+          ?.map(
+            (child) => Padding(
+              padding: actionsPadding ?? EdgeInsets.zero,
+              child: child,
+            ),
+          )
+          .toList(),
+    );
+  }
+}
+
+class AdaptiveBottomSheetAction extends CoreAdaptiveComponent {
+  const AdaptiveBottomSheetAction({
+    super.key,
+    this.textStyle,
+    required this.onPressed,
+    required this.child,
+  });
+
+  /// The widget below this widget in the tree.
+  ///
+  /// Typically a [Text] widget.
+  final Widget child;
+
+  /// The callback that is called when the button is tapped or otherwise
+  /// activated.
+  ///
+  /// If this is set to null, the button will be disabled.
+  final VoidCallback onPressed;
+
+  /// [TextStyle] to apply to any text that appears in this button.
+  final TextStyle? textStyle;
+
+  @override
+  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
+    return TextButton(
+      onPressed: onPressed,
+      child: DefaultTextStyle.merge(style: textStyle, child: child),
+    );
+  }
+
+  @override
+  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
+    return CupertinoActionSheetAction(
+      onPressed: onPressed,
+      child: DefaultTextStyle.merge(style: textStyle, child: child),
     );
   }
 }
