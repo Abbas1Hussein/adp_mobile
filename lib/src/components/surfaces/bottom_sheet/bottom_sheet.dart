@@ -24,6 +24,7 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
     this.contentPadding,
     this.actions,
     this.actionsPadding,
+    this.actionsTextStyle,
     required this.content,
   });
 
@@ -71,6 +72,9 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// If there are no [actions], then no padding will be included.
   final EdgeInsetsGeometry? actionsPadding;
 
+  /// Style for the text in the [content] of this [AlertDialog].
+  final TextStyle? actionsTextStyle;
+
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     return IntrinsicHeight(
@@ -82,7 +86,7 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
               padding: const EdgeInsets.all(8.0),
               child: DefaultTextStyle.merge(
                 style: titleTextStyle ??
-                    Theme.of(context).typography.dense.titleSmall,
+                    Theme.of(context).textTheme.titleSmall,
                 child: title!,
               ),
             ),
@@ -91,13 +95,11 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
               padding: const EdgeInsets.all(8.0),
               child: DefaultTextStyle.merge(
                 style: contentTextStyle ??
-                    Theme.of(context).typography.dense.bodySmall,
+                    Theme.of(context).textTheme.bodySmall,
                 child: SingleChildScrollView(child: content),
               ),
             ),
           ),
-          if (actions != null && actions!.isNotEmpty)
-            const Divider(thickness: 0.3),
           if (actions != null && actions!.isNotEmpty)
             if (actions!.length <= 2)
               Row(
@@ -106,7 +108,10 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
                     return Expanded(
                       child: Padding(
                         padding: actionsPadding ?? const EdgeInsets.all(4.0),
-                        child: child,
+                        child: DefaultTextStyle.merge(
+                          style: actionsTextStyle,
+                          child: child,
+                        ),
                       ),
                     );
                   },
@@ -119,7 +124,10 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
                   (child) {
                     return Padding(
                       padding: actionsPadding ?? const EdgeInsets.all(4.0),
-                      child: child,
+                      child: DefaultTextStyle.merge(
+                        style: actionsTextStyle,
+                        child: child,
+                      ),
                     );
                   },
                 ).toList(),
@@ -143,7 +151,10 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
           ?.map(
             (child) => Padding(
               padding: actionsPadding ?? EdgeInsets.zero,
-              child: child,
+              child: DefaultTextStyle.merge(
+                style: actionsTextStyle,
+                child: child,
+              ),
             ),
           )
           .toList(),
@@ -175,7 +186,7 @@ class AdaptiveBottomSheetAction extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return TextButton(
+    return OutlinedButton(
       onPressed: onPressed,
       child: DefaultTextStyle.merge(style: textStyle, child: child),
     );

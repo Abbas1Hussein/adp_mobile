@@ -6,7 +6,7 @@ const themeMode = ThemeMode.dark;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.android,
   );
   runApp(const App());
 }
@@ -41,30 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
     const content =
         'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
     return Center(
-      child: AdaptiveButton(
-        child: const Text('SHOW'),
-        onPressed: () {
-          showAdpBottomSheet(
-            context: context,
-            builder: (context) {
-              return AdaptiveBottomSheet(
-                title: Text('title'),
-                content: Text(content),
-                actions: [
-                  AdaptiveBottomSheetAction(
-                    child: Text('1'),
-                    onPressed: () {},
-                  ),
-                  AdaptiveBottomSheetAction(
-                    child: Text('2'),
-                    onPressed: () {},
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      ),
+      child: CupertinoDatePicker(
+        mode: CupertinoDatePickerMode.time,
+        onDateTimeChanged: (value) {},
+      )
     );
   }
 }
