@@ -10,8 +10,8 @@ import 'platforms/platforms.dart';
 ///
 /// Use this widget to create date picker with platform-specific
 /// styling and behavior:
-/// - On macOS, [MacosDatePicker] is utilized.
-/// - On Windows, [DatePicker] is used.
+/// - On IOS, [CupertinoDatePicker] is utilized.
+/// - On Android, [DatePicker] is used.
 class AdaptiveDatePicker extends CoreAdaptiveComponent<
     DatePickerAndroidProperty, DatePickerIOSProperty> {
   /// Creates an instance of [AdaptiveDatePicker].
@@ -25,8 +25,8 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
   ///
   /// The [properties] parameter allows you to customize the visual and functional aspects
   /// of the tab view separately for Windows and macOS platforms.
-  /// You can provide specific [properties] for each platform using `DatePickerWindowsProperty`
-  /// and `DatePickerMacosProperty` respectively.
+  /// You can provide specific [properties] for each platform using `DatePickerAndroidProperty`
+  /// and `DatePickerIOSProperty` respectively.
   ///
   /// See also:
   ///
@@ -54,21 +54,21 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
   /// It provides the selected [DateTime] as an argument.
   final ValueChanged<DateTime>? onSelected;
 
+
   @override
   Widget android(BuildContext context, [DatePickerAndroidProperty? property]) {
-    // return DatePickerIOS(
-    //   property: property,
-    //   onCancel: onCancel,
-    //   initialDate: initialDate,
-    //   onDateTimeChanged: onSelected,
-    // );
-    return SizedBox();
+    return DatePickerAndroid(
+      property: property,
+      onCancel: onCancel,
+      initialDate: initialDate,
+      onDateTimeChanged: onSelected,
+    );
   }
 
   @override
   Widget iOS(BuildContext context, [DatePickerIOSProperty? property]) {
     return DatePickerIOS(
-      property: const DatePickerIOSProperty(mode: CupertinoDatePickerMode.date),
+      property: property,
       onCancel: onCancel,
       initialDate: initialDate,
       onDateTimeChanged: onSelected,

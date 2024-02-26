@@ -1,7 +1,122 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/construct/property.dart';
-/// add date picker Android
+import '../../picker_button/android.dart';
+
+class MaterialDatePickerButton extends AndroidPickerButton {
+  const MaterialDatePickerButton({
+    super.key,
+    this.alwaysUse24HourFormat = false,
+    required super.onPressed,
+    required super.initialDate,
+    required super.localizations,
+  });
+
+  final bool alwaysUse24HourFormat;
+
+  @override
+  Widget child(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Text(month.substring(0, 3)),
+        verticalDivider,
+        Text(day),
+        verticalDivider,
+        Text(year),
+      ],
+    );
+  }
+}
+
+class DatePickerAndroid extends StatefulWidget {
+  const DatePickerAndroid({
+    super.key,
+    this.onCancel,
+    this.property,
+    this.initialDate,
+    this.onDateTimeChanged,
+  });
+
+  final DateTime? initialDate;
+  final VoidCallback? onCancel;
+  final DatePickerAndroidProperty? property;
+  final ValueChanged<DateTime>? onDateTimeChanged;
+
+  @override
+  State<DatePickerAndroid> createState() => _DatePickerAndroidState();
+}
+
+class _DatePickerAndroidState extends State<DatePickerAndroid> {
+  late DateTime selectedDate;
+  late MaterialLocalizations localizations;
+
+  @override
+  void initState() {
+    selectedDate = widget.initialDate ?? DateTime.now();
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    localizations = MaterialLocalizations.of(context);
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialDatePickerButton(
+      initialDate: selectedDate,
+      localizations: localizations,
+      onPressed: _showDatePickerDialog,
+    );
+  }
+
+  void _showDatePickerDialog() async {
+    final firstDate = selectedDate.subtract(const Duration(days: 1365));
+    final lastDate = selectedDate.add(const Duration(days: 1365));
+
+    final dataTime = await showDialog<DateTime>(
+      context: context,
+      barrierDismissible: widget.property?.isDismissible ?? true,
+      builder: (context) => DatePickerDialog(
+        initialDate: selectedDate,
+        firstDate: widget.property?.firstDate ?? firstDate,
+        lastDate: widget.property?.lastDate ?? lastDate,
+        cancelText: widget.property?.cancelText,
+        confirmText: widget.property?.confirmText,
+        errorFormatText: widget.property?.errorFormatText,
+        errorInvalidText: widget.property?.errorInvalidText,
+        fieldHintText: widget.property?.fieldHintText,
+        fieldLabelText: widget.property?.fieldLabelText,
+        helpText: widget.property?.helpText,
+        switchToInputEntryModeIcon: widget.property?.switchToInputEntryModeIcon,
+        switchToCalendarEntryModeIcon: widget.property?.switchToCalendarEntryModeIcon,
+        keyboardType: widget.property?.keyboardType,
+        initialEntryMode: widget.property?.initialEntryMode ?? DatePickerEntryMode.calendar,
+        initialCalendarMode: widget.property?.initialCalendarMode ?? DatePickerMode.year,
+        currentDate: widget.property?.currentDate,
+        restorationId: widget.property?.restorationId,
+        selectableDayPredicate: widget.property?.selectableDayPredicate,
+        onDatePickerModeChange: widget.property?.onDatePickerModeChange,
+      ),
+    );
+    if (dataTime != null) {
+      _onDateTimeChanged(dataTime);
+    } else {
+      widget.onCancel?.call();
+    }
+  }
+
+  void _onDateTimeChanged(DateTime dateTime) {
+    setState(() {
+      selectedDate = dateTime;
+    });
+    widget.onDateTimeChanged?.call(dateTime);
+  }
+}
+
 class DatePickerAndroidProperty extends CoreAndroidProperty {
   const DatePickerAndroidProperty({
     this.firstDate,
@@ -19,6 +134,7 @@ class DatePickerAndroidProperty extends CoreAndroidProperty {
     this.fieldLabelText,
     this.keyboardType,
     this.restorationId,
+    this.isDismissible = true,
     this.onDatePickerModeChange,
     this.switchToInputEntryModeIcon,
     this.switchToCalendarEntryModeIcon,
@@ -34,6 +150,13 @@ class DatePickerAndroidProperty extends CoreAndroidProperty {
 
   /// The [DateTime] representing today. It will be highlighted in the day grid.
   final DateTime? currentDate;
+
+  /// Determines whether the MaterialDatePicker can be dismissed by tapping outside of it.
+  ///
+  /// If set to true, the MaterialDatePicker can be dismissed by tapping outside its bounds.
+  /// If set to false, the MaterialDatePicker will remain open until a selection is made or the cancel action is triggered.
+  /// Defaults to `true`.
+  final bool isDismissible;
 
   /// The initial mode of date entry method for the date picker dialog.
   ///
