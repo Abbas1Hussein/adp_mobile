@@ -28,18 +28,4 @@ abstract class BaseDateFormatter extends StatelessWidget {
 
   TimeOfDay get timeOfDay => TimeOfDay.fromDateTime(initialDate);
 
-// static const kMonthAbbreviations = [
-//   'Jan',
-//   'Feb',
-//   'Mar',
-//   'Apr',
-//   'May',
-//   'Jun',
-//   'Jul',
-//   'Aug',
-//   'Sep',
-//   'Oct',
-//   'Nov',
-//   'Dec',
-// ];
 }

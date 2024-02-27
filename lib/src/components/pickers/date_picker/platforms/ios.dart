@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/construct/property.dart';
-import '../../ios_dialog_picker.dart';
-import '../../picker_button/ios.dart';
-import '../../picker_button/picker_button_constraints.dart';
+import '../../button_picker/ios.dart';
+import '../../dialog_picker/ios.dart';
+import '../../button_picker/button_constraints.dart';
+
 
 /// available modes for CupertinoDatePicker
 enum CupertinoDatePickerModeStyle {
-  /// Displayed CupertinoDatePicker with Macos Dialog.
+  /// Displayed CupertinoDatePicker with IOS-Style Dialog.
   cupertino,
 
   /// Displayed CupertinoDatePicker as a button.
@@ -63,7 +64,7 @@ class CupertinoDatePickerButton extends IOSPickerButton {
   /// displaying the time (e.g., '4:14 PM').
   List<Widget> _buildTimeWidget() {
     return [
-      Text(initialDate.hour.toString()),
+      Text(timeOfDay.hour.toString()),
       verticalDivider,
       Text(initialDate.minute.toString()),
       if (!alwaysUse24HourFormat) verticalDivider,
@@ -81,7 +82,7 @@ class CupertinoDatePickerButton extends IOSPickerButton {
     return [
       Text('$weekDay, ${month.substring(0, 3)}'),
       verticalDivider,
-      Text('${initialDate.hour.toString()}:${initialDate.minute.toString()}'),
+      Text('${timeOfDay.hour.toString()}:${initialDate.minute.toString()}'),
       if (!alwaysUse24HourFormat) verticalDivider,
       if (!alwaysUse24HourFormat) Text(amPm),
     ];
@@ -127,7 +128,8 @@ class _DatePickerIOSState extends State<DatePickerIOS> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.property?.modeStyle == CupertinoDatePickerModeStyle.cupertinoButton) {
+    if (widget.property?.modeStyle ==
+        CupertinoDatePickerModeStyle.cupertinoButton) {
       return ConstrainedBox(
         constraints: kPickerButtonConstraints,
         child: _buildCupertinoDatePicker(),
@@ -231,10 +233,10 @@ class DatePickerIOSProperty extends CoreIOSProperty {
   /// Defaults to `true`.
   final bool showTitle;
 
-  /// Determines whether the CupertinoDatePicker can be dismissed by tapping outside of it.
+  /// Determines whether the DatePicker can be dismissed by tapping outside of it.
   ///
-  /// If set to true, the CupertinoDatePicker can be dismissed by tapping outside its bounds.
-  /// If set to false, the CupertinoDatePicker will remain open until a selection is made or the cancel action is triggered.
+  /// If set to true, the DatePicker can be dismissed by tapping outside its bounds.
+  /// If set to false, the DatePicker will remain open until a selection is made or the cancel action is triggered.
   /// Defaults to `true`.
   final bool isDismissible;
 

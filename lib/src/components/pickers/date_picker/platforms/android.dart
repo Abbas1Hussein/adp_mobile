@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/common/construct/property.dart';
-import '../../picker_button/android.dart';
+import '../../button_picker/android.dart';
 
 class MaterialDatePickerButton extends AndroidPickerButton {
   const MaterialDatePickerButton({
@@ -151,10 +151,10 @@ class DatePickerAndroidProperty extends CoreAndroidProperty {
   /// The [DateTime] representing today. It will be highlighted in the day grid.
   final DateTime? currentDate;
 
-  /// Determines whether the MaterialDatePicker can be dismissed by tapping outside of it.
+  /// Determines whether the DatePicker can be dismissed by tapping outside of it.
   ///
-  /// If set to true, the MaterialDatePicker can be dismissed by tapping outside its bounds.
-  /// If set to false, the MaterialDatePicker will remain open until a selection is made or the cancel action is triggered.
+  /// If set to true, the DatePicker can be dismissed by tapping outside its bounds.
+  /// If set to false, the DatePicker will remain open until a selection is made or the cancel action is triggered.
   /// Defaults to `true`.
   final bool isDismissible;
 
