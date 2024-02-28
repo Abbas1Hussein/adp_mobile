@@ -6,7 +6,7 @@ const themeMode = ThemeMode.light;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.android,
+    targetPlatform: MobileTargetPlatform.iOS,
   );
   runApp(const App());
 }
@@ -28,6 +28,7 @@ class App extends StatelessWidget {
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Form(
         key: _formKey,
         child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             AdaptiveTextFormField(
               prefix: const AdaptiveIcon(AdpIcons.search),
@@ -63,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   _formKey.currentState!.save();
-                 print('Form submitted: $_formData');
+                  print('Form submitted: $_formData');
+
                 }
               },
               child: const Text('Submit'),
@@ -74,3 +76,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+

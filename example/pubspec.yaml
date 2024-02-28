@@ -37,7 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   adp_mobile:
-    path: D:/flutter/packages/adp_mobile
+    path: ../
+  
 
 dev_dependencies:
   flutter_test:
