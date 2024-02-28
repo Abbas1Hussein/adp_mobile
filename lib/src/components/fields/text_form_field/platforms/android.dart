@@ -6,94 +6,134 @@ import 'package:flutter/material.dart';
 import '../../fields_properties.dart';
 import '../../text_field/platforms/android.dart';
 
-class TextFormFieldWindows extends StatelessWidget {
-  const TextFormFieldWindows({
+class TextFormFieldAndroid extends StatelessWidget {
+  const TextFormFieldAndroid({
     super.key,
-    this.adpProperties,
+    this.property,
+    this.fieldProperties,
   });
-  final AdaptiveFormFieldProperties? adpProperties;
 
+  final FormFieldAndroidProperty? property;
+  final FormFieldProperties? fieldProperties;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: adpProperties?.padding ?? const EdgeInsets.all(4.0),
+      padding: fieldProperties?.padding ?? const EdgeInsets.all(4.0),
       child: TextFieldTapRegion(
-        onTapOutside: adpProperties?.onTapOutside,
+        onTapOutside: fieldProperties?.onTapOutside,
         child: TextFormField(
-          onTap: adpProperties?.onTap,
-          onSaved: adpProperties?.onSaved,
-          validator: adpProperties?.validator,
-          onChanged: adpProperties?.onChanged,
-          onFieldSubmitted: adpProperties?.onFieldSubmitted,
-          onEditingComplete: adpProperties?.onEditingComplete,
-         // errorHighlightColor: adpProperties?.errorHighlightColor,
-          style: adpProperties?.style,
-
-          enabled: adpProperties?.enabled ?? true,
-          contextMenuBuilder: adpProperties?.contextMenuBuilder ?? kDefaultContextMenuBuilder,
-         //prefixMode: adpProperties?.prefixMode?.overlayMode ?? OverlayVisibilityMode.always,
-        // suffixMode: adpProperties?.suffixMode?.overlayMode ?? OverlayVisibilityMode.always,
-          initialValue: adpProperties?.initialValue,
-          autovalidateMode: adpProperties?.autovalidateMode,
-          maxLines: adpProperties?.maxLines ?? 1,
-          minLines: adpProperties?.minLines,
-          focusNode: adpProperties?.focusNode,
-          maxLength: adpProperties?.maxLength,
+          onTap: fieldProperties?.onTap,
+          onSaved: fieldProperties?.onSaved,
+          validator: fieldProperties?.validator,
+          onChanged: fieldProperties?.onChanged,
+          onFieldSubmitted: fieldProperties?.onFieldSubmitted,
+          onEditingComplete: fieldProperties?.onEditingComplete,
+          clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
+          textDirection: fieldProperties?.textDirection,
+          scribbleEnabled: fieldProperties?.scribbleEnabled?? true,
+          spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
+          enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
+          cursorOpacityAnimates: fieldProperties?.cursorOpacityAnimates ?? true,
+          contentInsertionConfiguration: fieldProperties?.contentInsertionConfiguration,
+          magnifierConfiguration: fieldProperties?.magnifierConfiguration,
+          style: fieldProperties?.style,
+          enabled: fieldProperties?.enabled ?? true,
+          contextMenuBuilder: fieldProperties?.contextMenuBuilder ?? TextFieldAndroid.kDefaultContextMenuBuilder,
+          initialValue: fieldProperties?.initialValue,
+          autovalidateMode: fieldProperties?.autovalidateMode,
+          maxLines: fieldProperties?.maxLines ?? 1,
+          minLines: fieldProperties?.minLines,
+          focusNode: fieldProperties?.focusNode,
+          maxLength: fieldProperties?.maxLength,
           decoration: InputDecoration(
-            suffix: adpProperties?.suffix,
-            prefix: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: adpProperties?.prefix,
-            ),
-            //  hintText:(adpProperties?.enabled ?? true)?  adpProperties?.placeholder: adpProperties?.placeholderStyle,
+            label: property?.label,
+            filled: property?.filled,
+            isDense: property?.isDense,
+            alignLabelWithHint: property?.alignLabelWithHint,
+            border: property?.border,
+            disabledBorder: property?.disabledBorder,
+            floatingLabelStyle: property?.floatingLabelStyle,
+            floatingLabelAlignment: property?.floatingLabelAlignment,
+            floatingLabelBehavior: property?.floatingLabelBehavior,
+            error: property?.error,
+            errorBorder: property?.errorBorder,
+            prefixIcon: fieldProperties?.prefix,
+            suffixIcon: fieldProperties?.suffix,
+            hintText: fieldProperties?.placeholder,
+            hintStyle: fieldProperties?.placeholderStyle,
           ),
-          strutStyle: adpProperties?.strutStyle,
-          showCursor: adpProperties?.showCursor,
-          controller: adpProperties?.controller,
-          cursorColor: adpProperties?.cursorColor,
-          expands: adpProperties?.expands ?? false,
-          cursorHeight: adpProperties?.cursorHeight,
-          keyboardType: adpProperties?.keyboardType,
-          restorationId: adpProperties?.restorationId,
-          readOnly: adpProperties?.readOnly ?? false,
-          scrollPhysics: adpProperties?.scrollPhysics,
-          autofillHints: adpProperties?.autofillHints,
-          autofocus: adpProperties?.autofocus ?? false,
-          cursorWidth: adpProperties?.cursorWidth ?? 2.0,
-          smartDashesType: adpProperties?.smartDashesType,
-          smartQuotesType: adpProperties?.smartQuotesType,
-          autocorrect: adpProperties?.autocorrect ?? true,
-          textInputAction: adpProperties?.textInputAction,
-          inputFormatters: adpProperties?.inputFormatters,
-          obscureText: adpProperties?.obscureText ?? false,
-          scrollController: adpProperties?.scrollController,
-          selectionControls: adpProperties?.selectionControls,
-          textAlignVertical: adpProperties?.textAlignVertical,
-          keyboardAppearance: adpProperties?.keyboardAppearance,
-          textAlign: adpProperties?.textAlign ?? TextAlign.start,
-          maxLengthEnforcement: adpProperties?.maxLengthEnforcement,
-          enableSuggestions: adpProperties?.enableSuggestions ?? true,
-          obscuringCharacter: adpProperties?.obscuringCharacter ?? '•',
-          enableInteractiveSelection:
-              adpProperties?.enableInteractiveSelection,
-          cursorRadius:
-              adpProperties?.cursorRadius ?? const Radius.circular(2.0),
-          scrollPadding:
-              adpProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
-          selectionWidthStyle:
-              adpProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
-          dragStartBehavior:
-              adpProperties?.dragStartBehavior ?? DragStartBehavior.start,
-          selectionHeightStyle:
-              adpProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
-          textCapitalization:
-              adpProperties?.textCapitalization ?? TextCapitalization.none,
-          enableIMEPersonalizedLearning: true,
-         // highlightColor: adpProperties?.decoration != null ? Colors.transparent : null,
-         // unfocusedColor: adpProperties?.decoration != null ? Colors.transparent : null,
+          strutStyle: fieldProperties?.strutStyle,
+          showCursor: fieldProperties?.showCursor,
+          controller: fieldProperties?.controller,
+          undoController: fieldProperties?.undoController,
+          cursorColor: fieldProperties?.cursorColor,
+          expands: fieldProperties?.expands ?? false,
+          cursorHeight: fieldProperties?.cursorHeight,
+          keyboardType: fieldProperties?.keyboardType,
+          restorationId: fieldProperties?.restorationId,
+          readOnly: fieldProperties?.readOnly ?? false,
+          scrollPhysics: fieldProperties?.scrollPhysics,
+          autofillHints: fieldProperties?.autofillHints,
+          autofocus: fieldProperties?.autofocus ?? false,
+          cursorWidth: fieldProperties?.cursorWidth ?? 2.0,
+          smartDashesType: fieldProperties?.smartDashesType,
+          smartQuotesType: fieldProperties?.smartQuotesType,
+          autocorrect: fieldProperties?.autocorrect ?? true,
+          textInputAction: fieldProperties?.textInputAction,
+          inputFormatters: fieldProperties?.inputFormatters,
+          obscureText: fieldProperties?.obscureText ?? false,
+          scrollController: fieldProperties?.scrollController,
+          selectionControls: fieldProperties?.selectionControls,
+          textAlignVertical: fieldProperties?.textAlignVertical,
+          keyboardAppearance: fieldProperties?.keyboardAppearance,
+          textAlign: fieldProperties?.textAlign ?? TextAlign.start,
+          maxLengthEnforcement: fieldProperties?.maxLengthEnforcement,
+          enableSuggestions: fieldProperties?.enableSuggestions ?? true,
+          obscuringCharacter: fieldProperties?.obscuringCharacter ?? '•',
+          enableInteractiveSelection: fieldProperties?.enableInteractiveSelection,
+          cursorRadius: fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
+          scrollPadding: fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
+          selectionWidthStyle: fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
+          dragStartBehavior: fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
+          selectionHeightStyle: fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
+          textCapitalization: fieldProperties?.textCapitalization ?? TextCapitalization.none,
         ),
       ),
     );
   }
+}
+
+class FormFieldAndroidProperty extends FieldAndroidProperty {
+  const FormFieldAndroidProperty({
+    super.label,
+    super.filled = false,
+    super.isDense = false,
+    super.alignLabelWithHint = false,
+    super.border,
+    super.disabledBorder,
+    super.floatingLabelAlignment,
+    super.floatingLabelBehavior,
+    super.floatingLabelStyle,
+    this.error,
+    this.errorBorder,
+  });
+
+  /// Optional widget that appears below the [InputDecorator.child] and the border.
+  ///
+  /// If non-null, the border's color animates to red and the [helperText] is not shown.
+  ///
+  /// Only one of [error] and [errorText] can be specified.
+  final Widget? error;
+
+  /// The border to display when the [InputDecorator] does not have the focus and
+  /// is showing an error.
+  ///
+  /// See also:
+  ///
+  ///  * [UnderlineInputBorder], an [InputDecorator] border which draws a horizontal
+  ///    line at the bottom of the input decorator's container.
+  ///  * [OutlineInputBorder], an [InputDecorator] border which draws a
+  ///    rounded rectangle around the input decorator's container.
+  final InputBorder? errorBorder;
 }

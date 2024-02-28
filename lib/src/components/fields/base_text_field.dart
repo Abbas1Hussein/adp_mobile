@@ -7,15 +7,16 @@ import 'package:flutter/services.dart';
 import '../../core/common/construct/component.dart';
 import 'fields_properties.dart';
 
-abstract class BaseTextField extends CoreAdaptiveComponent {
+abstract class BaseTextField<A extends CoreAndroidProperty,
+    I extends CoreIOSProperty> extends CoreAdaptiveComponent<A, I> {
   const BaseTextField({
     super.key,
     super.builders,
+    super.properties,
     this.focusNode,
     this.contextMenuBuilder,
     this.selectionHeightStyle,
     this.selectionWidthStyle,
-    this.decoration,
     this.placeholder,
     this.placeholderStyle,
     this.prefix,
@@ -24,8 +25,9 @@ abstract class BaseTextField extends CoreAdaptiveComponent {
     this.keyboardType,
     this.readOnly,
     this.maxLength,
-    this.maxLines= 1,
+    this.maxLines = 1,
     this.controller,
+    this.undoController,
     this.onTap,
     this.onTapOutside,
     this.onChanged,
@@ -44,6 +46,14 @@ abstract class BaseTextField extends CoreAdaptiveComponent {
     this.strutStyle,
     this.textAlign,
     this.textAlignVertical,
+    this.clipBehavior = Clip.hardEdge,
+    this.spellCheckConfiguration,
+    this.contentInsertionConfiguration,
+    this.cursorOpacityAnimates,
+    this.enableIMEPersonalizedLearning = true,
+    this.magnifierConfiguration,
+    this.scribbleEnabled = true,
+    this.textDirection,
     this.autofocus = false,
     this.obscuringCharacter,
     this.inputFormatters,
@@ -93,6 +103,52 @@ abstract class BaseTextField extends CoreAdaptiveComponent {
           'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline AdaptiveTextField.',
         );
 
+
+
+  /// {@macro flutter.material.Material.clipBehavior}
+  ///
+  /// Defaults to [Clip.hardEdge].
+  final Clip clipBehavior;
+
+  /// {@macro flutter.widgets.editableText.textDirection}
+  final TextDirection? textDirection;
+
+  /// {@macro flutter.widgets.editableText.scribbleEnabled}
+  final bool scribbleEnabled;
+
+  /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
+  final bool enableIMEPersonalizedLearning;
+
+  /// {@macro flutter.widgets.editableText.cursorOpacityAnimates}
+  final bool? cursorOpacityAnimates;
+
+  /// {@macro flutter.widgets.editableText.contentInsertionConfiguration}
+  final ContentInsertionConfiguration? contentInsertionConfiguration;
+
+  /// {@macro flutter.widgets.EditableText.spellCheckConfiguration}
+  ///
+  /// If [SpellCheckConfiguration.misspelledTextStyle] is not specified in this
+  /// configuration, then [materialMisspelledTextStyle] is used by default.
+  final SpellCheckConfiguration? spellCheckConfiguration;
+
+  /// {@macro flutter.widgets.magnifier.TextMagnifierConfiguration.intro}
+  ///
+  /// {@macro flutter.widgets.magnifier.intro}
+  ///
+  /// {@macro flutter.widgets.magnifier.TextMagnifierConfiguration.details}
+  ///
+  /// By default, builds a [CupertinoTextMagnifier] on iOS and [TextMagnifier]
+  /// on Android, and builds nothing on all other platforms. If it is desired to
+  /// suppress the magnifier, consider passing [TextMagnifierConfiguration.disabled].
+  ///
+  /// {@tool dartpad}
+  /// This sample demonstrates how to customize the magnifier that this text field uses.
+  ///
+  /// ** See code in examples/api/lib/widgets/text_magnifier/text_magnifier.0.dart **
+  /// {@end-tool}
+  final TextMagnifierConfiguration? magnifierConfiguration;
+
+
   /// Defines the keyboard focus for this widget.
   final FocusNode? focusNode;
 
@@ -104,9 +160,6 @@ abstract class BaseTextField extends CoreAdaptiveComponent {
 
   /// Controls how wide the selection highlight boxes are computed to be.
   final ui.BoxWidthStyle? selectionWidthStyle;
-
-  /// Controls the [BoxDecoration] of the text field behind the text input.
-  final BoxDecoration? decoration;
 
   /// A lighter colored placeholder hint that appears on the first line of the
   /// text field when the text entry is empty.
@@ -153,6 +206,9 @@ abstract class BaseTextField extends CoreAdaptiveComponent {
 
   /// A controller for manipulating the text field's content.
   final TextEditingController? controller;
+
+  /// {@macro flutter.widgets.undoHistory.controller}
+  final UndoHistoryController? undoController;
 
   /// Callback for each distinct tap except for every second tap of a double tap.
   final GestureTapCallback? onTap;
@@ -340,172 +396,11 @@ abstract class BaseTextField extends CoreAdaptiveComponent {
 }
 
 extension AdaptiveTextFieldEx on BaseTextField {
-  AdaptiveFieldProperties get fieldProperties {
-    return AdaptiveFieldProperties(
-      // Behavior
-      readOnly: readOnly,
-      autofocus: autofocus,
-      enableSuggestions: enableSuggestions,
-      enableInteractiveSelection: enableInteractiveSelection,
-
-      // Callbacks
-      onTap: onTap,
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
-      onTapOutside: onTapOutside,
-      onEditingComplete: onEditingComplete,
-
-      // Limits
-      maxLines: maxLines,
-      minLines: minLines,
-      maxLength: maxLength,
-      maxLengthEnforcement: maxLengthEnforcement,
-
-      // Appearance
-      style: style,
-      textAlign: textAlign,
-      strutStyle: strutStyle,
-      decoration: decoration,
-      placeholder: placeholder,
-      placeholderStyle: placeholderStyle,
-      textAlignVertical: textAlignVertical,
-
-      // Content
-      controller: controller,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      obscuringCharacter: obscuringCharacter,
-      textCapitalization: textCapitalization,
-
-      // Focus and Navigation
-      focusNode: focusNode,
-      textInputAction: textInputAction,
-
-      // Other
-      enabled: enabled,
-      expands: expands,
-      padding: padding,
-      restorationId: restorationId,
-      dragStartBehavior: dragStartBehavior,
-
-      // Widget
-      prefix: prefix,
-      suffix: suffix,
-      contextMenuBuilder: contextMenuBuilder,
-
-      // Platform-specific
-      keyboardAppearance: keyboardAppearance,
-
-      // Scroll
-      scrollPadding: scrollPadding,
-      scrollPhysics: scrollPhysics,
-      scrollController: scrollController,
-
-      // Selection
-      showCursor: showCursor,
-      selectionControls: selectionControls,
-      selectionWidthStyle: selectionWidthStyle,
-      selectionHeightStyle: selectionHeightStyle,
-
-      // Visuals
-      cursorColor: cursorColor,
-      cursorWidth: cursorWidth,
-      cursorHeight: cursorHeight,
-      cursorRadius: cursorRadius,
-
-      // Text Input
-      autocorrect: autocorrect,
-      obscureText: obscureText,
-      autofillHints: autofillHints,
-      smartDashesType: smartDashesType,
-      smartQuotesType: smartQuotesType,
-    );
+  FieldProperties get fieldProperties {
+    return FieldProperties.fromBaseTextField(this);
   }
 
-  AdaptiveFormFieldProperties get formFieldProperties {
-    return AdaptiveFormFieldProperties(
-      // Behavior
-      readOnly: readOnly,
-      autofocus: autofocus,
-      enableSuggestions: enableSuggestions,
-      enableInteractiveSelection: enableInteractiveSelection,
-
-      // Callbacks
-      onTap: onTap,
-      onSaved: onSaved,
-      validator: validator,
-      onChanged: onChanged,
-      onTapOutside: onTapOutside,
-      onFieldSubmitted: onFieldSubmitted,
-      onEditingComplete: onEditingComplete,
-
-      // Limits
-      maxLines: maxLines,
-      minLines: minLines,
-      maxLength: maxLength,
-      maxLengthEnforcement: maxLengthEnforcement,
-
-      // Appearance
-      style: style,
-      textAlign: textAlign,
-      strutStyle: strutStyle,
-      decoration: decoration,
-      placeholder: placeholder,
-      initialValue: initialValue,
-      placeholderStyle: placeholderStyle,
-      textAlignVertical: textAlignVertical,
-      errorHighlightColor: errorHighlightColor,
-
-      // Content
-      controller: controller,
-      keyboardType: keyboardType,
-      inputFormatters: inputFormatters,
-      obscuringCharacter: obscuringCharacter,
-      textCapitalization: textCapitalization,
-
-      // Focus and Navigation
-      focusNode: focusNode,
-      textInputAction: textInputAction,
-
-      // Other
-      enabled: enabled,
-      expands: expands,
-      padding: padding,
-      restorationId: restorationId,
-      autovalidateMode: autovalidateMode,
-      dragStartBehavior: dragStartBehavior,
-
-      // Widget
-      prefix: prefix,
-      suffix: suffix,
-      contextMenuBuilder: contextMenuBuilder,
-
-      // Platform-specific
-      keyboardAppearance: keyboardAppearance,
-
-      // Scroll
-      scrollPadding: scrollPadding,
-      scrollPhysics: scrollPhysics,
-      scrollController: scrollController,
-
-      // Selection
-      showCursor: showCursor,
-      selectionControls: selectionControls,
-      selectionWidthStyle: selectionWidthStyle,
-      selectionHeightStyle: selectionHeightStyle,
-
-      // Visuals
-      cursorColor: cursorColor,
-      cursorWidth: cursorWidth,
-      cursorHeight: cursorHeight,
-      cursorRadius: cursorRadius,
-
-      // Text Input
-      autocorrect: autocorrect,
-      obscureText: obscureText,
-      autofillHints: autofillHints,
-      smartDashesType: smartDashesType,
-      smartQuotesType: smartQuotesType,
-    );
+  FormFieldProperties get formFieldProperties {
+    return FormFieldProperties.fromBaseTextField(this);
   }
 }

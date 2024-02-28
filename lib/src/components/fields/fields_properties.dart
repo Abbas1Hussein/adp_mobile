@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'base_text_field.dart';
 
 abstract class _BaseFieldProperties {
   const _BaseFieldProperties({
@@ -11,12 +12,21 @@ abstract class _BaseFieldProperties {
     this.contextMenuBuilder,
     this.selectionHeightStyle,
     this.selectionWidthStyle,
+    this.clipBehavior = Clip.hardEdge,
+    this.spellCheckConfiguration,
+    this.contentInsertionConfiguration,
+    this.cursorOpacityAnimates,
+    this.enableIMEPersonalizedLearning = true,
+    this.magnifierConfiguration,
+    this.scribbleEnabled = true,
+    this.textDirection,
     this.suffix,
     this.keyboardType,
     this.readOnly,
     this.maxLength,
     this.maxLines,
     this.controller,
+    this.undoController,
     this.onChanged,
     this.onSubmitted,
     this.obscureText,
@@ -53,7 +63,6 @@ abstract class _BaseFieldProperties {
     this.keyboardAppearance,
     this.dragStartBehavior,
     this.textInputAction,
-    this.decoration,
     this.placeholder,
     this.placeholderStyle,
     this.prefix,
@@ -73,8 +82,49 @@ abstract class _BaseFieldProperties {
   /// Controls how wide the selection highlight boxes are computed to be.
   final BoxWidthStyle? selectionWidthStyle;
 
-  /// Controls the [BoxDecoration] of the text field behind the text input.
-  final BoxDecoration? decoration;
+  /// {@macro flutter.material.Material.clipBehavior}
+  ///
+  /// Defaults to [Clip.hardEdge].
+  final Clip clipBehavior;
+
+  /// {@macro flutter.widgets.editableText.textDirection}
+  final TextDirection? textDirection;
+
+  /// {@macro flutter.widgets.editableText.scribbleEnabled}
+  final bool scribbleEnabled;
+
+  /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
+  final bool enableIMEPersonalizedLearning;
+
+  /// {@macro flutter.widgets.editableText.cursorOpacityAnimates}
+  final bool? cursorOpacityAnimates;
+
+  /// {@macro flutter.widgets.editableText.contentInsertionConfiguration}
+  final ContentInsertionConfiguration? contentInsertionConfiguration;
+
+  /// {@macro flutter.widgets.EditableText.spellCheckConfiguration}
+  ///
+  /// If [SpellCheckConfiguration.misspelledTextStyle] is not specified in this
+  /// configuration, then [materialMisspelledTextStyle] is used by default.
+  final SpellCheckConfiguration? spellCheckConfiguration;
+
+  /// {@macro flutter.widgets.magnifier.TextMagnifierConfiguration.intro}
+  ///
+  /// {@macro flutter.widgets.magnifier.intro}
+  ///
+  /// {@macro flutter.widgets.magnifier.TextMagnifierConfiguration.details}
+  ///
+  /// By default, builds a [CupertinoTextMagnifier] on iOS and [TextMagnifier]
+  /// on Android, and builds nothing on all other platforms. If it is desired to
+  /// suppress the magnifier, consider passing [TextMagnifierConfiguration.disabled].
+  ///
+  /// {@tool dartpad}
+  /// This sample demonstrates how to customize the magnifier that this text field uses.
+  ///
+  /// ** See code in examples/api/lib/widgets/text_magnifier/text_magnifier.0.dart **
+  /// {@end-tool}
+  final TextMagnifierConfiguration? magnifierConfiguration;
+
 
   /// A lighter colored placeholder hint that appears on the first line of the
   /// text field when the text entry is empty.
@@ -119,6 +169,9 @@ abstract class _BaseFieldProperties {
 
   /// A controller for manipulating the text field's content.
   final TextEditingController? controller;
+
+  /// {@macro flutter.widgets.undoHistory.controller}
+  final UndoHistoryController? undoController;
 
   /// Callback function for text changes.
   final ValueChanged<String>? onChanged;
@@ -232,9 +285,8 @@ abstract class _BaseFieldProperties {
   final bool? showCursor;
 }
 
-class AdaptiveFieldProperties extends _BaseFieldProperties {
-  const AdaptiveFieldProperties({
-    super.decoration,
+class FieldProperties extends _BaseFieldProperties  {
+  const FieldProperties({
     super.padding,
     super.placeholder,
     super.placeholderStyle,
@@ -244,9 +296,18 @@ class AdaptiveFieldProperties extends _BaseFieldProperties {
     super.suffix,
     super.keyboardType,
     super.readOnly,
+    super.clipBehavior,
+    super.spellCheckConfiguration,
+    super.contentInsertionConfiguration,
+    super.cursorOpacityAnimates,
+    super.enableIMEPersonalizedLearning,
+    super.magnifierConfiguration,
+    super.scribbleEnabled,
+    super.textDirection,
     super.maxLength,
     super.maxLines,
     super.controller,
+    super.undoController,
     super.onChanged,
     super.onSubmitted,
     super.autocorrect,
@@ -287,23 +348,96 @@ class AdaptiveFieldProperties extends _BaseFieldProperties {
     super.textCapitalization,
     super.textInputAction,
   });
+
+  factory FieldProperties.fromBaseTextField(BaseTextField baseTextField) {
+    return FieldProperties(
+      magnifierConfiguration: baseTextField.magnifierConfiguration,
+      contentInsertionConfiguration: baseTextField.contentInsertionConfiguration,
+      cursorOpacityAnimates: baseTextField.cursorOpacityAnimates,
+      spellCheckConfiguration: baseTextField.spellCheckConfiguration,
+      scribbleEnabled: baseTextField.scribbleEnabled,
+      textDirection: baseTextField.textDirection,
+      clipBehavior: baseTextField.clipBehavior,
+      enableIMEPersonalizedLearning: baseTextField.enableIMEPersonalizedLearning,
+      onSubmitted: baseTextField.onSubmitted,
+      focusNode: baseTextField.focusNode,
+      contextMenuBuilder: baseTextField.contextMenuBuilder,
+      suffix: baseTextField.suffix,
+      padding: baseTextField.padding,
+      placeholder: baseTextField.placeholder,
+      placeholderStyle: baseTextField.placeholderStyle,
+      prefix: baseTextField.prefix,
+      keyboardType: baseTextField.keyboardType,
+      readOnly: baseTextField.readOnly,
+      maxLength: baseTextField.maxLength,
+      maxLines: baseTextField.maxLines,
+      controller: baseTextField.controller,
+      undoController: baseTextField.undoController,
+      onChanged: baseTextField.onChanged,
+      autocorrect: baseTextField.autocorrect,
+      cursorColor: baseTextField.cursorColor,
+      cursorHeight: baseTextField.cursorHeight,
+      cursorRadius: baseTextField.cursorRadius,
+      cursorWidth: baseTextField.cursorWidth,
+      enabled: baseTextField.enabled,
+      enableSuggestions: baseTextField.enableSuggestions,
+      expands: baseTextField.expands,
+      inputFormatters: baseTextField.inputFormatters,
+      maxLengthEnforcement: baseTextField.maxLengthEnforcement,
+      minLines: baseTextField.minLines,
+      obscureText: baseTextField.obscureText,
+      onEditingComplete: baseTextField.onEditingComplete,
+      onTapOutside: baseTextField.onTapOutside,
+      selectionHeightStyle: baseTextField.selectionHeightStyle,
+      selectionWidthStyle: baseTextField.selectionWidthStyle,
+      smartDashesType: baseTextField.smartDashesType,
+      smartQuotesType: baseTextField.smartQuotesType,
+      autofillHints: baseTextField.autofillHints,
+      autofocus: baseTextField.autofocus,
+      dragStartBehavior: baseTextField.dragStartBehavior,
+      enableInteractiveSelection: baseTextField.enableInteractiveSelection,
+      keyboardAppearance: baseTextField.keyboardAppearance,
+      obscuringCharacter: baseTextField.obscuringCharacter,
+      onTap: baseTextField.onTap,
+      restorationId: baseTextField.restorationId,
+      scrollController: baseTextField.scrollController,
+      scrollPadding: baseTextField.scrollPadding,
+      scrollPhysics: baseTextField.scrollPhysics,
+      selectionControls: baseTextField.selectionControls,
+      showCursor: baseTextField.showCursor,
+      strutStyle: baseTextField.strutStyle,
+      style: baseTextField.style,
+      textAlign: baseTextField.textAlign,
+      textAlignVertical: baseTextField.textAlignVertical,
+      textCapitalization: baseTextField.textCapitalization,
+      textInputAction: baseTextField.textInputAction,
+    );
+  }
 }
 
-class AdaptiveFormFieldProperties extends _BaseFieldProperties {
-  const AdaptiveFormFieldProperties({
+class FormFieldProperties extends _BaseFieldProperties {
+  const FormFieldProperties({
     super.focusNode,
     super.contextMenuBuilder,
     super.suffix,
-    super.decoration,
     super.padding,
     super.placeholder,
     super.placeholderStyle,
     super.prefix,
     super.keyboardType,
     super.readOnly,
+    super.clipBehavior,
+    super.spellCheckConfiguration,
+    super.contentInsertionConfiguration,
+    super.cursorOpacityAnimates,
+    super.enableIMEPersonalizedLearning,
+    super.magnifierConfiguration,
+    super.scribbleEnabled,
+    super.textDirection,
     super.maxLength,
     super.maxLines,
     super.controller,
+    super.undoController,
     super.onChanged,
     super.autocorrect,
     super.cursorColor,
@@ -350,6 +484,75 @@ class AdaptiveFormFieldProperties extends _BaseFieldProperties {
     this.errorHighlightColor,
   });
 
+  factory FormFieldProperties.fromBaseTextField(BaseTextField baseTextField) {
+    return FormFieldProperties(
+      magnifierConfiguration: baseTextField.magnifierConfiguration,
+      contentInsertionConfiguration: baseTextField.contentInsertionConfiguration,
+      cursorOpacityAnimates: baseTextField.cursorOpacityAnimates,
+      spellCheckConfiguration: baseTextField.spellCheckConfiguration,
+      scribbleEnabled: baseTextField.scribbleEnabled,
+      textDirection: baseTextField.textDirection,
+      clipBehavior: baseTextField.clipBehavior,
+      enableIMEPersonalizedLearning: baseTextField.enableIMEPersonalizedLearning,
+      focusNode: baseTextField.focusNode,
+      contextMenuBuilder: baseTextField.contextMenuBuilder,
+      suffix: baseTextField.suffix,
+      padding: baseTextField.padding,
+      placeholder: baseTextField.placeholder,
+      placeholderStyle: baseTextField.placeholderStyle,
+      prefix: baseTextField.prefix,
+      keyboardType: baseTextField.keyboardType,
+      readOnly: baseTextField.readOnly,
+      maxLength: baseTextField.maxLength,
+      maxLines: baseTextField.maxLines,
+      controller: baseTextField.controller,
+      undoController: baseTextField.undoController,
+      onChanged: baseTextField.onChanged,
+      autocorrect: baseTextField.autocorrect,
+      cursorColor: baseTextField.cursorColor,
+      cursorHeight: baseTextField.cursorHeight,
+      cursorRadius: baseTextField.cursorRadius,
+      cursorWidth: baseTextField.cursorWidth,
+      enabled: baseTextField.enabled,
+      enableSuggestions: baseTextField.enableSuggestions,
+      expands: baseTextField.expands,
+      inputFormatters: baseTextField.inputFormatters,
+      maxLengthEnforcement: baseTextField.maxLengthEnforcement,
+      minLines: baseTextField.minLines,
+      obscureText: baseTextField.obscureText,
+      onEditingComplete: baseTextField.onEditingComplete,
+      onTapOutside: baseTextField.onTapOutside,
+      selectionHeightStyle: baseTextField.selectionHeightStyle,
+      selectionWidthStyle: baseTextField.selectionWidthStyle,
+      smartDashesType: baseTextField.smartDashesType,
+      smartQuotesType: baseTextField.smartQuotesType,
+      autofillHints: baseTextField.autofillHints,
+      autofocus: baseTextField.autofocus,
+      dragStartBehavior: baseTextField.dragStartBehavior,
+      enableInteractiveSelection: baseTextField.enableInteractiveSelection,
+      keyboardAppearance: baseTextField.keyboardAppearance,
+      obscuringCharacter: baseTextField.obscuringCharacter,
+      onTap: baseTextField.onTap,
+      restorationId: baseTextField.restorationId,
+      scrollController: baseTextField.scrollController,
+      scrollPadding: baseTextField.scrollPadding,
+      scrollPhysics: baseTextField.scrollPhysics,
+      selectionControls: baseTextField.selectionControls,
+      showCursor: baseTextField.showCursor,
+      strutStyle: baseTextField.strutStyle,
+      style: baseTextField.style,
+      textAlign: baseTextField.textAlign,
+      textAlignVertical: baseTextField.textAlignVertical,
+      textCapitalization: baseTextField.textCapitalization,
+      textInputAction: baseTextField.textInputAction,
+      onSaved: baseTextField.onSaved,
+      validator: baseTextField.validator,
+      initialValue: baseTextField.initialValue,
+      autovalidateMode: baseTextField.autovalidateMode,
+      onFieldSubmitted: baseTextField.onFieldSubmitted,
+      errorHighlightColor: baseTextField.errorHighlightColor,
+    );
+  }
 
   /// An optional value to initialize the form field to, or null otherwise.
   final String? initialValue;

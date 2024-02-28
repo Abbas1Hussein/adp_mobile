@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../core/common/construct/properties.dart';
 import '../base_text_field.dart';
 import '../text_field/text_field.dart';
 import 'platforms/platforms.dart';
@@ -9,9 +8,10 @@ import 'platforms/platforms.dart';
 ///
 /// Use this widget to create text form field with platform-specific
 /// styling and behavior:
-/// - On MacOS, specific form field used.
-/// - On Windows, [TextFormBox] is used.
-final class AdaptiveTextFormField extends BaseTextField {
+/// - On IOS, specific form field used.
+/// - On Android, [TextFormField] is used.
+final class AdaptiveTextFormField
+    extends BaseTextField<FormFieldAndroidProperty, FormFieldIOSProperty> {
   /// Creates a [FormField] that contains a [AdaptiveTextField].
   ///
   /// A [Form] ancestor is not required. The [Form] simply makes it easier to
@@ -39,11 +39,22 @@ final class AdaptiveTextFormField extends BaseTextField {
   ///
   /// See also:
   ///
-  ///   * [AdaptiveTextField].
-  ///   * [AdaptiveTextSearchField].
+  ///   * [AdaptiveTextField],
+  ///   * [AdaptiveTextSearchField],
   const AdaptiveTextFormField({
     super.key,
     super.builders,
+    super.properties,
+    super.textDirection,
+    super.scribbleEnabled = true,
+    super.spellCheckConfiguration,
+    super.clipBehavior = Clip.hardEdge,
+    super.contentInsertionConfiguration,
+    super.cursorOpacityAnimates,
+    super.enableIMEPersonalizedLearning = true,
+    super.magnifierConfiguration,
+    super.onSubmitted,
+    super.undoController,
     super.autocorrect,
     super.autofillHints,
     super.autofocus,
@@ -53,7 +64,6 @@ final class AdaptiveTextFormField extends BaseTextField {
     super.cursorHeight,
     super.cursorRadius,
     super.cursorWidth,
-    super.decoration,
     super.dragStartBehavior,
     super.enabled,
     super.enableInteractiveSelection,
@@ -107,12 +117,18 @@ final class AdaptiveTextFormField extends BaseTextField {
         );
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return TextFormFieldWindows(adpProperties: formFieldProperties);
+  Widget android(BuildContext context, [FormFieldAndroidProperty? property]) {
+    return TextFormFieldAndroid(
+      property: property,
+      fieldProperties: formFieldProperties,
+    );
   }
 
- @override
-  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-   return TextFormFieldMacos(adpProperties: formFieldProperties);
+  @override
+  Widget iOS(BuildContext context, [FormFieldIOSProperty? property]) {
+    return TextFormFieldIOS(
+      property: property,
+      formFieldProperties: formFieldProperties,
+    );
   }
 }

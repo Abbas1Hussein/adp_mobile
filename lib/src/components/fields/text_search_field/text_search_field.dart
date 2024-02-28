@@ -29,14 +29,11 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
     super.focusNode,
     super.placeholder,
     super.placeholderStyle,
-    SuggestionDecoration? super.decoration,
+    this.decoration,
     this.emptyBuilder,
     this.onSelected,
     required this.suggestions,
   });
-
-  /// Callback widget to show when the search returns no results.
-  final Widget? Function(String)? emptyBuilder;
 
   /// A list of suggestions for the SearchFieldAutoComplete.
   ///
@@ -45,6 +42,12 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
 
   /// Callback function called when the user selects a value from the search results.
   final ValueChanged<AdaptiveSearchItem<T>>? onSelected;
+
+  /// The decoration for the suggestion list.
+  final SuggestionDecoration? decoration;
+
+  /// Callback widget to show when the search returns no results.
+  final Widget? Function(String)? emptyBuilder;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
@@ -62,7 +65,8 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
       onSuggestionSelected: (searchFieldItem) {
         onSelected?.call(AdaptiveSearchItem.from(searchFieldItem));
       },
-      suggestionsDecoration: suggestionDecoration(Theme.of(context).highlightColor),
+      suggestionsDecoration:
+          suggestionDecoration(Theme.of(context).highlightColor),
     );
   }
 
@@ -82,21 +86,20 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
       onSuggestionSelected: (searchFieldItem) {
         onSelected?.call(AdaptiveSearchItem.from(searchFieldItem));
       },
-      suggestionsDecoration: suggestionDecoration(CupertinoColors.tertiarySystemFill),
+      suggestionsDecoration:
+          suggestionDecoration(CupertinoColors.tertiarySystemFill),
     );
   }
 
   SuggestionDecoration? suggestionDecoration(Color color) {
-    final d = decoration as SuggestionDecoration?;
-
     return SuggestionDecoration(
-      color: d?.color ?? color,
-      border: d?.border,
-      gradient: d?.gradient,
-      boxShadow: d?.boxShadow,
-      marginSuggestions: d?.marginSuggestions,
-      paddingSuggestions: d?.paddingSuggestions,
-      borderRadius: d?.borderRadius ?? BorderRadius.circular(8.0),
+      color: decoration?.color ?? color,
+      border: decoration?.border,
+      gradient: decoration?.gradient,
+      boxShadow: decoration?.boxShadow,
+      marginSuggestions: decoration?.marginSuggestions,
+      paddingSuggestions: decoration?.paddingSuggestions,
+      borderRadius: decoration?.borderRadius ?? BorderRadius.circular(8.0),
     );
   }
 }

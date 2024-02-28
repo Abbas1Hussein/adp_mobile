@@ -7,95 +7,123 @@ import 'package:flutter/services.dart';
 import '../../fields_properties.dart';
 import '../../text_field/platforms/ios.dart';
 
-class TextFormFieldMacos extends StatelessWidget {
-  const TextFormFieldMacos({super.key, this.adpProperties});
+class TextFormFieldIOS extends StatelessWidget {
+  const TextFormFieldIOS({
+    super.key,
+    this.property,
+    this.formFieldProperties,
+  });
 
-  final AdaptiveFormFieldProperties? adpProperties;
+  final FormFieldIOSProperty? property;
+  final FormFieldProperties? formFieldProperties;
 
   @override
   Widget build(BuildContext context) {
     return TextFieldTapRegion(
-      onTapOutside: adpProperties?.onTapOutside,
-      child: _MacosTextFormField(
+      onTapOutside: formFieldProperties?.onTapOutside,
+      child: _IOSTextFormField(
         key: key,
         context: context,
-        onTap: adpProperties?.onTap,
-        onSaved: adpProperties?.onSaved,
-        onChanged: adpProperties?.onChanged,
-        validator: adpProperties?.validator,
-        onFieldSubmitted: adpProperties?.onFieldSubmitted,
-        onEditingComplete: adpProperties?.onEditingComplete,
-        initialValue: adpProperties?.initialValue,
-        placeholder: adpProperties?.placeholder,
-        errorHighlightColor: adpProperties?.errorHighlightColor,
-        autovalidateMode:
-            adpProperties?.autovalidateMode ?? AutovalidateMode.disabled,
-        placeholderStyle:
-            adpProperties?.placeholderStyle ?? kDefaultPlaceholderStyle,
-        clearButtonMode: OverlayVisibilityMode.editing,
-        padding: adpProperties?.padding ?? const EdgeInsets.all(4.0),
-        decoration: adpProperties?.decoration,
-        prefix: adpProperties?.prefix,
-        style: adpProperties?.style,
+        onTap: formFieldProperties?.onTap,
+        onSaved: formFieldProperties?.onSaved,
+        onChanged: formFieldProperties?.onChanged,
+        validator: formFieldProperties?.validator,
+        onFieldSubmitted: formFieldProperties?.onFieldSubmitted,
+        onEditingComplete: formFieldProperties?.onEditingComplete,
+        initialValue: formFieldProperties?.initialValue,
+        placeholder: formFieldProperties?.placeholder,
+        errorHighlightColor: formFieldProperties?.errorHighlightColor,
+        autovalidateMode: formFieldProperties?.autovalidateMode ?? AutovalidateMode.disabled,
+        placeholderStyle: formFieldProperties?.placeholderStyle ?? kDefaultPlaceholderStyle,
+        padding: formFieldProperties?.padding ?? const EdgeInsets.all(4.0),
+        decoration: property?.decoration,
+        clipBehavior: formFieldProperties?.clipBehavior ?? Clip.hardEdge,
+        textDirection: formFieldProperties?.textDirection,
+        scribbleEnabled: formFieldProperties?.scribbleEnabled ?? true,
+        spellCheckConfiguration: formFieldProperties?.spellCheckConfiguration,
+        enableIMEPersonalizedLearning: formFieldProperties?.enableIMEPersonalizedLearning ?? true,
+        cursorOpacityAnimates: formFieldProperties?.cursorOpacityAnimates ?? true,
+        contentInsertionConfiguration: formFieldProperties?.contentInsertionConfiguration,
+        magnifierConfiguration: formFieldProperties?.magnifierConfiguration,
+        style: formFieldProperties?.style,
+        suffixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
+        prefixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
+        clearButtonMode:
+            property?.clearButtonMode ?? OverlayVisibilityMode.never,
+        prefix: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: formFieldProperties?.prefix,
+        ),
         suffix: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: adpProperties?.suffix,
+          child: formFieldProperties?.suffix,
         ),
-        enabled: adpProperties?.enabled,
-        maxLines: adpProperties?.maxLines ?? 1,
-        minLines: adpProperties?.minLines,
-        focusNode: adpProperties?.focusNode,
-        maxLength: adpProperties?.maxLength,
-        strutStyle: adpProperties?.strutStyle,
-        showCursor: adpProperties?.showCursor,
-        controller: adpProperties?.controller,
-        cursorColor: adpProperties?.cursorColor,
-        expands: adpProperties?.expands ?? false,
-        cursorHeight: adpProperties?.cursorHeight,
-        keyboardType: adpProperties?.keyboardType,
-        readOnly: adpProperties?.readOnly ?? false,
-        restorationId: adpProperties?.restorationId,
-        scrollPhysics: adpProperties?.scrollPhysics,
-        autofillHints: adpProperties?.autofillHints,
-        autofocus: adpProperties?.autofocus ?? false,
-        cursorWidth: adpProperties?.cursorWidth ?? 2.0,
-        smartDashesType: adpProperties?.smartDashesType,
-        smartQuotesType: adpProperties?.smartQuotesType,
-        autocorrect: adpProperties?.autocorrect ?? true,
-        textInputAction: adpProperties?.textInputAction,
-        inputFormatters: adpProperties?.inputFormatters,
-        obscureText: adpProperties?.obscureText ?? false,
-        scrollController: adpProperties?.scrollController,
-        selectionControls: adpProperties?.selectionControls,
-        textAlignVertical: adpProperties?.textAlignVertical,
-        obscuringCharacter: adpProperties?.obscuringCharacter ?? '•',
-        keyboardAppearance: adpProperties?.keyboardAppearance,
-        contextMenuBuilder:
-            adpProperties?.contextMenuBuilder ?? kDefaultContextMenuBuilder,
-        textAlign: adpProperties?.textAlign ?? TextAlign.start,
-        maxLengthEnforcement: adpProperties?.maxLengthEnforcement,
-        enableSuggestions: adpProperties?.enableSuggestions ?? true,
-        cursorRadius: adpProperties?.cursorRadius ?? const Radius.circular(2.0),
+        enabled: formFieldProperties?.enabled,
+        maxLines: formFieldProperties?.maxLines ?? 1,
+        minLines: formFieldProperties?.minLines,
+        focusNode: formFieldProperties?.focusNode,
+        maxLength: formFieldProperties?.maxLength,
+        strutStyle: formFieldProperties?.strutStyle,
+        showCursor: formFieldProperties?.showCursor,
+        controller: formFieldProperties?.controller,
+        undoController: formFieldProperties?.undoController,
+        cursorColor: formFieldProperties?.cursorColor,
+        expands: formFieldProperties?.expands ?? false,
+        cursorHeight: formFieldProperties?.cursorHeight,
+        keyboardType: formFieldProperties?.keyboardType,
+        readOnly: formFieldProperties?.readOnly ?? false,
+        restorationId: formFieldProperties?.restorationId,
+        scrollPhysics: formFieldProperties?.scrollPhysics,
+        autofillHints: formFieldProperties?.autofillHints,
+        autofocus: formFieldProperties?.autofocus ?? false,
+        cursorWidth: formFieldProperties?.cursorWidth ?? 2.0,
+        smartDashesType: formFieldProperties?.smartDashesType,
+        smartQuotesType: formFieldProperties?.smartQuotesType,
+        autocorrect: formFieldProperties?.autocorrect ?? true,
+        textInputAction: formFieldProperties?.textInputAction,
+        inputFormatters: formFieldProperties?.inputFormatters,
+        obscureText: formFieldProperties?.obscureText ?? false,
+        scrollController: formFieldProperties?.scrollController,
+        selectionControls: formFieldProperties?.selectionControls,
+        textAlignVertical: formFieldProperties?.textAlignVertical,
+        obscuringCharacter: formFieldProperties?.obscuringCharacter ?? '•',
+        keyboardAppearance: formFieldProperties?.keyboardAppearance,
+        contextMenuBuilder: formFieldProperties?.contextMenuBuilder ??
+            TextFieldIOS.kDefaultContextMenuBuilder,
+        textAlign: formFieldProperties?.textAlign ?? TextAlign.start,
+        maxLengthEnforcement: formFieldProperties?.maxLengthEnforcement,
+        enableSuggestions: formFieldProperties?.enableSuggestions ?? true,
+        cursorRadius:
+            formFieldProperties?.cursorRadius ?? const Radius.circular(2.0),
         scrollPadding:
-            adpProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
+            formFieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
         enableInteractiveSelection:
-            adpProperties?.enableInteractiveSelection ?? true,
+            formFieldProperties?.enableInteractiveSelection ?? true,
         selectionWidthStyle:
-            adpProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
+            formFieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
         dragStartBehavior:
-            adpProperties?.dragStartBehavior ?? DragStartBehavior.start,
+            formFieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
         selectionHeightStyle:
-            adpProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
+            formFieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
         textCapitalization:
-            adpProperties?.textCapitalization ?? TextCapitalization.none,
+            formFieldProperties?.textCapitalization ?? TextCapitalization.none,
       ),
     );
   }
 }
 
-/// A [FormField] that contains a [_MacosTextFormField].
+class FormFieldIOSProperty extends FieldIOSProperty {
+  const FormFieldIOSProperty({
+    super.clearButtonMode,
+    super.decoration,
+    super.prefixMode,
+    super.suffixMode,
+  });
+}
+
+/// A [FormField] that contains a [_IOSTextFormField].
 ///
-/// This is a convenience widget that wraps a [_MacosTextFormField] widget in a
+/// This is a convenience widget that wraps a [_IOSTextFormField] widget in a
 /// [FormField].
 ///
 /// A [Form] ancestor is not required. The [Form] simply makes it easier to
@@ -118,14 +146,14 @@ class TextFormFieldMacos extends StatelessWidget {
 /// Remember to call [TextEditingController.dispose] of the [TextEditingController]
 /// when it is no longer needed. This will ensure any resources used by the object
 /// are discarded.
-class _MacosTextFormField extends FormField<String> {
-  /// Creates a [FormField] that contains a [_MacosTextFormField].
+class _IOSTextFormField extends FormField<String> {
+  /// Creates a [FormField] that contains a [_IOSTextFormField].
   ///
   /// When a [controller] is specified, [initialValue] must be null (the
   /// default). If [controller] is null, then a [TextEditingController]
   /// will be constructed automatically and its `text` will be initialized
   /// to [initialValue] or the empty string.
-  _MacosTextFormField({
+  _IOSTextFormField({
     Key? key,
     this.controller,
     required BuildContext context,
@@ -183,9 +211,18 @@ class _MacosTextFormField extends FormField<String> {
     bool enableInteractiveSelection = true,
     String? restorationId,
     MaxLengthEnforcement? maxLengthEnforcement,
+    UndoHistoryController? undoController,
+    Clip clipBehavior = Clip.hardEdge,
+    TextDirection? textDirection,
+    bool scribbleEnabled = true,
+    bool enableIMEPersonalizedLearning = true,
+    bool? cursorOpacityAnimates = true,
+    ContentInsertionConfiguration? contentInsertionConfiguration,
+    SpellCheckConfiguration? spellCheckConfiguration,
+    TextMagnifierConfiguration? magnifierConfiguration,
     BoxHeightStyle selectionHeightStyle = BoxHeightStyle.tight,
     BoxWidthStyle selectionWidthStyle = BoxWidthStyle.tight,
-    BoxDecoration? decoration = kDefaultRoundedBorderDecoration,
+    BoxDecoration? decoration,
     EditableTextContextMenuBuilder? contextMenuBuilder,
   })  : assert(initialValue == null || controller == null),
         assert(obscuringCharacter.length == 1),
@@ -211,7 +248,7 @@ class _MacosTextFormField extends FormField<String> {
           autovalidateMode: autovalidateMode,
           enabled: enabled ?? true,
           builder: (FormFieldState<String> field) {
-            final state = field as _MacosTextFormFieldState;
+            final state = field as _IOSTextFormFieldState;
             void onChangedHandler(String value) {
               field.didChange(value);
               if (onChanged != null) {
@@ -224,86 +261,91 @@ class _MacosTextFormField extends FormField<String> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  DecoratedBox(
-                    decoration: decoration?.copyWith(
-                          color: decoration.color?.withOpacity(0.7),
-                        ) ??
-                        const BoxDecoration(),
-                    child: CupertinoTextField(
-                      padding: padding,
-                      enableInteractiveSelection: enableInteractiveSelection,
-                      clearButtonMode: clearButtonMode,
-                      controller: state._effectiveController,
-                      focusNode: focusNode,
-                      keyboardType: keyboardType,
-                      textInputAction: textInputAction,
-                      style: style,
-                      strutStyle: strutStyle,
-                      textAlign: textAlign,
-                      textAlignVertical: textAlignVertical,
-                      textCapitalization: textCapitalization,
-                      autofocus: autofocus,
-                      readOnly: readOnly,
-                      showCursor: showCursor,
-                      obscuringCharacter: obscuringCharacter,
-                      obscureText: obscureText,
-                      autocorrect: autocorrect,
-                      smartDashesType: smartDashesType ??
-                          (obscureText
-                              ? SmartDashesType.disabled
-                              : SmartDashesType.enabled),
-                      smartQuotesType: smartQuotesType ??
-                          (obscureText
-                              ? SmartQuotesType.disabled
-                              : SmartQuotesType.enabled),
-                      enableSuggestions: enableSuggestions,
-                      maxLines: maxLines,
-                      minLines: minLines,
-                      expands: expands,
-                      maxLength: maxLength,
-                      onChanged: onChangedHandler,
-                      onTap: onTap,
-                      onEditingComplete: onEditingComplete,
-                      onSubmitted: onFieldSubmitted,
-                      inputFormatters: inputFormatters,
-                      enabled: enabled ?? true,
-                      cursorWidth: cursorWidth,
-                      cursorHeight: cursorHeight,
-                      cursorColor: cursorColor,
-                      cursorRadius: cursorRadius,
-                      scrollPadding: scrollPadding,
-                      scrollPhysics: scrollPhysics,
-                      keyboardAppearance: keyboardAppearance,
-                      autofillHints: autofillHints,
-                      placeholder: placeholder,
-                      placeholderStyle: placeholderStyle,
-                      scrollController: scrollController,
-                      prefix: prefix,
-                      prefixMode: prefixMode,
-                      suffix: suffix,
-                      suffixMode: suffixMode,
-                      dragStartBehavior: dragStartBehavior,
-                      maxLengthEnforcement: maxLengthEnforcement,
-                      restorationId: restorationId,
-                      selectionHeightStyle: selectionHeightStyle,
-                      selectionWidthStyle: selectionWidthStyle,
-                     // focusedDecoration: decoration != null ? null : kDefaultFocusedBorderDecoration,
-                      decoration: decoration != null
-                          ? null
-                          : kDefaultRoundedBorderDecoration.copyWith(
-                              border: field.errorText != null
-                                  ? Border.all(
-                                      color: errorHighlightColor ?? CupertinoColors.systemRed,
-                                      width: 1.5,
-                                    )
-                                  : kDefaultRoundedBorderDecoration.border,
-                            ),
-                      selectionControls: selectionControls,
-                      contextMenuBuilder: contextMenuBuilder,
-                    ),
+                  CupertinoTextField(
+                    padding: padding,
+                    undoController: undoController,
+                    clipBehavior: clipBehavior,
+                    textDirection: textDirection,
+                    scribbleEnabled: scribbleEnabled,
+                    magnifierConfiguration: magnifierConfiguration,
+                    cursorOpacityAnimates: cursorOpacityAnimates ?? true,
+                    spellCheckConfiguration: spellCheckConfiguration,
+                    contentInsertionConfiguration:
+                        contentInsertionConfiguration,
+                    enableIMEPersonalizedLearning:
+                        enableIMEPersonalizedLearning,
+                    enableInteractiveSelection: enableInteractiveSelection,
+                    clearButtonMode: clearButtonMode,
+                    controller: state._effectiveController,
+                    focusNode: focusNode,
+                    keyboardType: keyboardType,
+                    textInputAction: textInputAction,
+                    style: style,
+                    strutStyle: strutStyle,
+                    textAlign: textAlign,
+                    textAlignVertical: textAlignVertical,
+                    textCapitalization: textCapitalization,
+                    autofocus: autofocus,
+                    readOnly: readOnly,
+                    showCursor: showCursor,
+                    obscuringCharacter: obscuringCharacter,
+                    obscureText: obscureText,
+                    autocorrect: autocorrect,
+                    smartDashesType: smartDashesType ??
+                        (obscureText
+                            ? SmartDashesType.disabled
+                            : SmartDashesType.enabled),
+                    smartQuotesType: smartQuotesType ??
+                        (obscureText
+                            ? SmartQuotesType.disabled
+                            : SmartQuotesType.enabled),
+                    enableSuggestions: enableSuggestions,
+                    maxLines: maxLines,
+                    minLines: minLines,
+                    expands: expands,
+                    maxLength: maxLength,
+                    onChanged: onChangedHandler,
+                    onTap: onTap,
+                    onEditingComplete: onEditingComplete,
+                    onSubmitted: onFieldSubmitted,
+                    inputFormatters: inputFormatters,
+                    enabled: enabled ?? true,
+                    cursorWidth: cursorWidth,
+                    cursorHeight: cursorHeight,
+                    cursorColor: field.errorText != null ?  CupertinoColors.systemRed: cursorColor,
+                    cursorRadius: cursorRadius,
+                    scrollPadding: scrollPadding,
+                    scrollPhysics: scrollPhysics,
+                    keyboardAppearance: keyboardAppearance,
+                    autofillHints: autofillHints,
+                    placeholder: placeholder,
+                    placeholderStyle: placeholderStyle,
+                    scrollController: scrollController,
+                    prefix: prefix,
+                    prefixMode: prefixMode,
+                    suffix: suffix,
+                    suffixMode: suffixMode,
+                    dragStartBehavior: dragStartBehavior,
+                    maxLengthEnforcement: maxLengthEnforcement,
+                    restorationId: restorationId,
+                    selectionHeightStyle: selectionHeightStyle,
+                    selectionWidthStyle: selectionWidthStyle,
+                    decoration: decoration ??
+                        kDefaultRoundedBorderDecoration.copyWith(
+                          border: field.errorText != null
+                              ? Border.all(
+                                  color: errorHighlightColor ??
+                                      CupertinoColors.systemRed,
+                                  width: 1.5,
+                                )
+                              : kDefaultRoundedBorderDecoration.border,
+                        ),
+                    selectionControls: selectionControls,
+                    contextMenuBuilder: contextMenuBuilder,
                   ),
                   if (field.errorText != null)
-                    _buildDefaultErrorMessage(field.errorText!, errorHighlightColor, context),
+                    _buildDefaultErrorMessage(
+                        field.errorText!, errorHighlightColor, context),
                 ],
               ),
             );
@@ -318,14 +360,13 @@ class _MacosTextFormField extends FormField<String> {
     return Padding(
       padding: const EdgeInsetsDirectional.only(
         top: 2.0,
-        start: 4.0,
-        end: 2.0,
       ),
       child: Align(
         alignment: AlignmentDirectional.centerStart,
         child: DefaultTextStyle(
-          style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
-              color: CupertinoColors.systemRed, fontWeight: FontWeight.bold,),
+          style: CupertinoTheme.of(context).textTheme.tabLabelTextStyle.copyWith(
+                color: CupertinoColors.systemRed,
+              ),
           child: Text(errorText),
         ),
       ),
@@ -335,17 +376,17 @@ class _MacosTextFormField extends FormField<String> {
   final TextEditingController? controller;
 
   @override
-  FormFieldState<String> createState() => _MacosTextFormFieldState();
+  FormFieldState<String> createState() => _IOSTextFormFieldState();
 }
 
-class _MacosTextFormFieldState extends FormFieldState<String> {
+class _IOSTextFormFieldState extends FormFieldState<String> {
   TextEditingController? _controller;
 
   TextEditingController? get _effectiveController =>
       widget.controller ?? _controller;
 
   @override
-  _MacosTextFormField get widget => super.widget as _MacosTextFormField;
+  _IOSTextFormField get widget => super.widget as _IOSTextFormField;
 
   @override
   void initState() {
@@ -358,7 +399,7 @@ class _MacosTextFormFieldState extends FormFieldState<String> {
   }
 
   @override
-  void didUpdateWidget(_MacosTextFormField oldWidget) {
+  void didUpdateWidget(_IOSTextFormField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller?.removeListener(_handleControllerChanged);

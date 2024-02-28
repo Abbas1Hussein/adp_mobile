@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/widgets.dart';
 
-import '../../../core/common/construct/component.dart';
 import '../base_text_field.dart';
 import 'platforms/platforms.dart';
 
@@ -10,9 +9,10 @@ import 'platforms/platforms.dart';
 ///
 /// Use this widget to create text field  with platform-specific
 /// styling and behavior:
-/// - On macOS, [MacosTextField] is utilized.
-/// - On Windows, [TextBox] is used.
-final class AdaptiveTextField extends BaseTextField {
+/// - On IOS, [CupertinoTextField] is utilized.
+/// - On Android, [TextField] is used.
+final class AdaptiveTextField
+    extends BaseTextField<FieldAndroidProperty, FieldIOSProperty> {
   /// Creates a adaptive text field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with
@@ -54,22 +54,32 @@ final class AdaptiveTextField extends BaseTextField {
   ///
   /// See also:
   ///
-  ///   * [AdaptiveTextFormField]
-  ///   * [AdaptiveTextSearchField].
+  ///   * [AdaptiveTextFormField],
+  ///
+  ///   * [AdaptiveTextSearchField],
   const AdaptiveTextField({
     super.key,
     super.builders,
+    super.properties,
     super.autocorrect,
     super.autofillHints,
     super.autofocus,
     super.controller,
+    super.undoController,
     super.contextMenuBuilder,
     super.cursorColor,
     super.cursorHeight,
     super.cursorRadius,
     super.cursorWidth,
-    super.decoration,
     super.dragStartBehavior,
+    super.textDirection,
+    super.scribbleEnabled = true,
+    super.spellCheckConfiguration,
+    super.clipBehavior =  Clip.hardEdge,
+    super.contentInsertionConfiguration,
+    super.cursorOpacityAnimates,
+    super.enableIMEPersonalizedLearning = true,
+    super.magnifierConfiguration,
     super.enableInteractiveSelection,
     super.enableSuggestions,
     super.enabled,
@@ -114,12 +124,18 @@ final class AdaptiveTextField extends BaseTextField {
   });
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return TextFieldWindows(adpProperties: fieldProperties);
+  Widget android(BuildContext context, [FieldAndroidProperty? property]) {
+    return TextFieldAndroid(
+      property: property,
+      fieldProperties: fieldProperties,
+    );
   }
 
   @override
-  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    return TextFieldMacos(adpProperties: fieldProperties);
+  Widget iOS(BuildContext context, [FieldIOSProperty? property]) {
+    return TextFieldIOS(
+      property: property,
+      fieldProperties: fieldProperties,
+    );
   }
 }
