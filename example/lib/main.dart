@@ -6,7 +6,7 @@ const themeMode = ThemeMode.light;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.android,
   );
   runApp(const App());
 }
@@ -19,8 +19,8 @@ class App extends StatelessWidget {
     return AdpApp(
       themeMode: themeMode,
       home: adaptiveValue(
-        ios: () => const CupertinoPageScaffold(child: HomeScreen()),
-        android: () => const Scaffold(body: HomeScreen()),
+        ios: () => HomeScreen(),
+        android: () => HomeScreen(),
       ),
     );
   }
@@ -34,47 +34,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? _formData;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AdaptiveTextFormField(
-              prefix: const AdaptiveIcon(AdpIcons.search),
-              placeholder: 'Enter text...',
-              onSaved: (newValue) {
-                _formData = newValue;
-              },
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: 16),
-            AdaptiveButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  _formKey.currentState!.save();
-                  print('Form submitted: $_formData');
-
-                }
-              },
-              child: const Text('Submit'),
-            ),
-          ],
-        ),
-      ),
+    return AdaptiveTabView(
+      currentIndex: currentIndex,
+      onChanged: (value) {
+        setState(() {
+          currentIndex = value;
+        });
+      },
+      tabs: const [
+        AdaptiveTab(label: Text('1'), icon: AdaptiveIcon(AdpIcons.info)),
+        AdaptiveTab(label: Text('2'), icon: AdaptiveIcon(AdpIcons.app)),
+        AdaptiveTab(label: Text('3'), icon: AdaptiveIcon(AdpIcons.battery75)),
+      ],
+      children: const [
+        Center(child: AdaptiveTimePicker()),
+        Center(child: AdaptiveDatePicker()),
+        Center(child: Text('3')),
+      ],
     );
   }
 }
-
-

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../core/common/construct/component.dart';
+import '../../core/extension/icon.dart';
 import 'icons.dart';
-import 'platforms/ios.dart';
 
 class AdaptiveIcon extends CoreAdaptiveComponent {
   /// Creates an adp icon.
@@ -100,13 +100,16 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     final icon = cupertino ?? adaptiveIcons?.cupertino;
 
-    return CupertinoIcon(
-      icon,
-      key: key,
-      size: size,
-      color: color,
-      semanticLabel: semanticLabel,
-      textDirection: textDirection,
+    return IconTheme.merge(
+      data: IconTheme.of(context).toCupertino(context),
+      child: Icon(
+        icon,
+        key: key,
+        size: size,
+        color: color,
+        semanticLabel: semanticLabel,
+        textDirection: textDirection,
+      ),
     );
   }
 }
