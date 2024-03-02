@@ -1,8 +1,4 @@
 import 'package:adp_mobile/adp_mobile.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:window_manager/window_manager.dart';
 
 /// Manages default configurations for the mobile platform.
 ///
@@ -35,36 +31,16 @@ class DefaultsPlatformManager {
     assert(
         _instance == null, 'DefaultsPlatformManager is already initialized.');
 
-    final isMobile = defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS;
-
-    if (isDebugging && !kIsWeb && !isMobile) {
-      _initializeWindowConfiguration();
-    }
+    // final isMobile = defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS;
+    // if (isDebugging && !kIsWeb && !isMobile) {
+    //   _initializeWindowConfiguration();
+    // }
 
     return _instance = DefaultsPlatformManager._(
       targetPlatform,
       targetWeb: targetWeb,
       isDebugging: isDebugging,
     );
-  }
-
-  /// Initializes window configuration for the application.
-  ///
-  /// Hides the default title bar.
-  static Future<void> _initializeWindowConfiguration() async {
-    WidgetsFlutterBinding.ensureInitialized();
-
-    const size = Size(345, 600);
-
-    await windowManager.ensureInitialized();
-    const windowOptions = WindowOptions(
-      size: size,
-      center: true,
-      titleBarStyle: TitleBarStyle.hidden,
-    );
-    await windowManager.waitUntilReadyToShow(windowOptions);
-    await windowManager.show();
   }
 
   /// the debugging status for the application.

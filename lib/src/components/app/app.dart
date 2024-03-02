@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/core.dart';
-import '../layout/header_footer_wrapper/header_footer_wrapper.dart';
 
 class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
   const AdpApp({
@@ -305,7 +304,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
         color: color,
         locale: locale,
         actions: actions,
-        builder: _buildBuilderWithHeaderFooterWrapper,
+        builder: builder,
         themeMode: themeMode,
         onGenerateTitle: onGenerateTitle,
         restorationScopeId: restorationScopeId,
@@ -336,7 +335,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
       routes: routes,
       locale: locale,
       actions: actions,
-      builder: _buildBuilderWithHeaderFooterWrapper,
+      builder: builder,
       themeMode: themeMode,
       initialRoute: initialRoute,
       navigatorKey: navigatorKey,
@@ -378,7 +377,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
         locale: locale,
         actions: actions,
         shortcuts: shortcuts,
-        builder: _buildBuilderWithHeaderFooterWrapper,
+        builder: builder,
         routerConfig: routerConfig,
         routerDelegate: routerDelegate,
         theme: theme,
@@ -407,7 +406,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
       locale: locale,
       actions: actions,
       shortcuts: shortcuts,
-      builder: _buildBuilderWithHeaderFooterWrapper,
+      builder: builder,
       initialRoute: initialRoute,
       navigatorKey: navigatorKey,
       onUnknownRoute: onUnknownRoute,
@@ -430,31 +429,6 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
     );
   }
 
-  Widget _buildBuilderWithHeaderFooterWrapper(BuildContext context, Widget? child) {
-    return Overlay(
-      initialEntries: [
-        OverlayEntry(
-          builder: (context) {
-            return builder?.call(
-                  context,
-                  _buildHeaderFooterWrapper(context, child),
-                ) ??
-                _buildHeaderFooterWrapper(context, child);
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHeaderFooterWrapper(BuildContext context, Widget? child) {
-    if (child == null) return const SizedBox.shrink();
-
-    final isMobile = PlatformRuining.isRealAndroid || PlatformRuining.isRealIOS;
-
-    if (isMobile || PlatformRuining.isWeb) return child;
-
-    return HeaderFooterWrapper(child: child);
-  }
 }
 
 class AppAndroidProperty extends CoreAndroidProperty {

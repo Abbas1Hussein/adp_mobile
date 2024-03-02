@@ -1,12 +1,12 @@
 import 'package:adp_mobile/adp_mobile.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:adp_mobile_preview/adp_mobile_preview.dart';
 import 'package:flutter/material.dart';
 
-const themeMode = ThemeMode.light;
+const themeMode = ThemeMode.dark;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.android,
+    targetPlatform: MobileTargetPlatform.iOS,
   );
   runApp(const App());
 }
@@ -16,11 +16,16 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AdpApp(
-      themeMode: themeMode,
-      home: adaptiveValue(
-        ios: () => HomeScreen(),
-        android: () => HomeScreen(),
+    return AdaptiveMobilePreview(
+      type: PlatformRuining.targetPlatform == MobileTargetPlatform.android
+          ? DevicesType.android.samsungGalaxyA50
+          : DevicesType.iOS.iPhone13Mini,
+      child: AdpApp(
+        themeMode: themeMode,
+        home: adaptiveValue(
+          ios: () => const HomeScreen(),
+          android: () => const HomeScreen(),
+        ),
       ),
     );
   }
@@ -38,22 +43,32 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return AdaptiveTabView(
-      currentIndex: currentIndex,
-      onChanged: (value) {
-        setState(() {
-          currentIndex = value;
-        });
-      },
-      tabs: const [
-        AdaptiveTab(label: Text('1'), icon: AdaptiveIcon(AdpIcons.info)),
-        AdaptiveTab(label: Text('2'), icon: AdaptiveIcon(AdpIcons.app)),
-        AdaptiveTab(label: Text('3'), icon: AdaptiveIcon(AdpIcons.battery75)),
-      ],
+    return AdaptiveNavigationView(
+      appBar: const AdaptiveAppBar(
+        title: Text('title'),
+        leading: AdaptiveIcon(AdpIcons.battery75),
+      ),
+      navigationBar: AdaptiveNavigationBar(
+        currentIndex: currentIndex,
+        onChanged: (value) {
+          setState(() {
+            currentIndex = value;
+          });
+        },
+        items: [
+          AdaptiveNavigationBarItem(
+            icon: const AdaptiveIcon(AdpIcons.home),
+            label: 'home',
+          ),
+          AdaptiveNavigationBarItem(
+            icon: const AdaptiveIcon(AdpIcons.save),
+            label: 'saved',
+          ),
+        ],
+      ),
       children: const [
-        Center(child: AdaptiveTimePicker()),
-        Center(child: AdaptiveDatePicker()),
-        Center(child: Text('3')),
+        Center(child: Text('1')),
+        Center(child: Text('2')),
       ],
     );
   }

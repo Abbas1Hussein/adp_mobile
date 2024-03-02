@@ -38,7 +38,9 @@ dependencies:
 
   adp_mobile:
     path: ../
-  
+
+  adp_mobile_preview:
+    path: D:/flutter/packages/adp_mobile_preview
 
 dev_dependencies:
   flutter_test:
