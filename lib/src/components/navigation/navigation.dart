@@ -4,5 +4,6 @@ export 'tab_view/platforms/platforms.dart'
     show TabViewIOSProperty, TabViewAndroidProperty;
 
 export 'navigation_view/navigation_bar.dart';
+export 'navigation_view/navigation_bar_item.dart';
 export 'navigation_view/navigation_view.dart';
 export 'navigation_view/platforms/platforms.dart';

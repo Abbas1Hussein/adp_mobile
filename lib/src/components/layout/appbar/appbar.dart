@@ -10,6 +10,7 @@ class AdaptiveAppBar extends CoreModel<AppBar, CupertinoNavigationBar> {
     this.title,
     this.actions,
     this.backgroundColor,
+    this.border,
     this.foregroundColor,
     this.actionsIconTheme,
     this.centerTitle,
@@ -78,6 +79,13 @@ class AdaptiveAppBar extends CoreModel<AppBar, CupertinoNavigationBar> {
   /// widget.
   final IconThemeData? actionsIconTheme;
 
+  /// {@template flutter.cupertino.CupertinoNavigationBar.border}
+  /// The border of the app bar. By default renders a single pixel bottom border side.
+  ///
+  /// If a border is null, the app bar will not display a border.
+  /// {@endtemplate}
+  final Border? border;
+
   /// The background color of the navigation app bar.
   ///
   /// If [backgroundColor] is specified, it sets the color of the app bar.
@@ -108,19 +116,21 @@ class AdaptiveAppBar extends CoreModel<AppBar, CupertinoNavigationBar> {
   @override
   AppBar toAndroid(BuildContext context) {
     return AppBar(
-      leading: leading,
-      automaticallyImplyLeading: automaticallyImplyLeading,
+      shape: border,
       title: title,
+      leading: leading,
       actions: actions,
+      elevation: 1.0,
+      centerTitle: centerTitle,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       actionsIconTheme: actionsIconTheme,
-      centerTitle: centerTitle,
-      titleSpacing: titleSpacing,
-      toolbarOpacity: toolbarOpacity,
-      leadingWidth: leadingWidth,
-      toolbarTextStyle: toolbarTextStyle,
       titleTextStyle: titleTextStyle,
+      titleSpacing: titleSpacing,
+      leadingWidth: leadingWidth,
+      toolbarOpacity: toolbarOpacity,
+      toolbarTextStyle: toolbarTextStyle,
+      automaticallyImplyLeading: automaticallyImplyLeading,
     );
   }
 
@@ -139,6 +149,7 @@ class AdaptiveAppBar extends CoreModel<AppBar, CupertinoNavigationBar> {
         : null;
 
     return CupertinoNavigationBar(
+      border: border,
       leading: centerTitle == false
           ? Row(children: [
               if (leading != null) leading!,
@@ -146,12 +157,6 @@ class AdaptiveAppBar extends CoreModel<AppBar, CupertinoNavigationBar> {
               if (title != null) styledTitle!
             ])
           : leading,
-      automaticallyImplyLeading: automaticallyImplyLeading,
-      middle: centerTitle != false ? styledTitle : null,
-      automaticallyImplyMiddle: true,
-      backgroundColor: (backgroundColor ?? defaultBackgroundColor)
-          .withOpacity(toolbarOpacity),
-      transitionBetweenRoutes: true,
       trailing: actions != null
           ? IconTheme(
               data: (actionsIconTheme ?? Theme.of(context).iconTheme).copyWith(
@@ -164,6 +169,12 @@ class AdaptiveAppBar extends CoreModel<AppBar, CupertinoNavigationBar> {
               child: Row(mainAxisSize: MainAxisSize.min, children: actions!),
             )
           : null,
+      middle: centerTitle != false ? styledTitle : null,
+      backgroundColor: (backgroundColor ?? defaultBackgroundColor)
+          .withOpacity(toolbarOpacity),
+      automaticallyImplyMiddle: true,
+      transitionBetweenRoutes: true,
+      automaticallyImplyLeading: automaticallyImplyLeading,
     );
   }
 }

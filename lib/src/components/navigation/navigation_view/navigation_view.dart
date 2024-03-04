@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' ;
 
 import '../../../core/common/construct/component.dart';
 import '../../layout/appbar/appbar.dart';
@@ -25,15 +25,15 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   ///
   /// The [properties] parameter allows you to customize the visual and functional aspects
   /// of the navigation view separately for Windows and macOS platforms.
-  /// You can provide specific [properties] for each platform using `NavigationViewWindowsProperty`
-  /// and `NavigationViewMacosProperty` respectively.
+  /// You can provide specific [properties] for each platform using `NavigationViewAndroidProperty`
+  /// and `NavigationViewIOSProperty` respectively.
   ///
   /// - [children] should have the same length as the number of items in the navigation sidebar.
   ///
   /// See also:
-  ///   * [AdaptiveNavigationSidebar] Use this widget to create a visually consistent and platform-specific navigation
+  ///   * [AdaptiveNavigationBar] Use this widget to create a visually consistent and platform-specific navigation
   ///   sidebar handling navigation items [navigationBar].
-  ///   * [AdaptiveNavigationAppBar] An adaptive app bar component that displayed at the top of the navigation view [appBar].
+  ///   * [AdaptiveAppBar] An adaptive app bar component that displayed at the top of the navigation view [appBar].
   const AdaptiveNavigationView({
     super.key,
     super.builders,
@@ -52,10 +52,10 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   /// top of the navigation view.
   final AdaptiveAppBar? appBar;
 
-  /// An adaptive navigation sidebar for handling navigation items.
+  /// An adaptive navigation bar for handling navigation items.
   ///
-  /// The `sidebar` parameter allows you to provide an adaptive navigation sidebar that handles
-  /// navigation items. The appearance and behavior of the sidebar can be customized based on the
+  /// The `sidebar` parameter allows you to provide an adaptive navigation bar that handles
+  /// navigation items. The appearance and behavior of the navigation bar can be customized based on the
   /// underlying platform.
   ///
   /// The [navigationBar.items] should have the same length as the number of [children].
@@ -64,7 +64,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   /// The list of widgets representing the body of each navigation item.
   ///
   /// Each widget corresponds to a navigation item in the [navigationBar]. It should have the same length as
-  /// the number of items in the navigation sidebar.
+  /// the number of items in the navigation bar.
   final List<Widget> children;
 
   /// Optional padding around the body content.
@@ -99,8 +99,12 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     BuildContext context, [
     NavigationViewAndroidProperty? property,
   ]) {
-    final isLandscape =
-        MediaQuery.orientationOf(context) == Orientation.landscape;
+    final isNavAutoDetected =
+        ((property?.mode ?? AndroidNavigationMode.auto) == AndroidNavigationMode.auto);
+
+    final isLandscape = isNavAutoDetected
+        ? MediaQuery.orientationOf(context) == Orientation.landscape
+        : false;
 
     final body = Padding(
       padding: contentPadding,
@@ -110,21 +114,15 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     final bar = navigationBar.toAndroid(context);
 
     final buildNavigationRail = isLandscape
-        ? Row(
-            children: [
-              bar.$2,
-              const VerticalDivider(),
-              Expanded(child: body),
-            ],
-          )
+        ? Row(children: [
+            bar.$2,
+            const VerticalDivider(thickness: 0.3),
+            Expanded(child: body),
+          ])
         : null;
 
     return Scaffold(
-      backgroundColor: backgroundColor,
-      restorationId: property?.restorationId,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      bottomSheet: property?.bottomSheet,
-      primary: property?.primary ?? true,
+      appBar: appBar?.toAndroid(context),
       drawer: property?.drawer,
       drawerDragStartBehavior:
           property?.drawerDragStartBehavior ?? DragStartBehavior.start,
@@ -137,15 +135,19 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
           property?.endDrawerEnableOpenDragGesture ?? true,
       extendBody: property?.extendBody ?? false,
       onDrawerChanged: property?.onDrawerChanged,
-      extendBodyBehindAppBar: property?.extendBodyBehindAppBar ?? false,
       onEndDrawerChanged: property?.onEndDrawerChanged,
+      extendBodyBehindAppBar: property?.extendBodyBehindAppBar ?? false,
       floatingActionButton: property?.floatingActionButton,
       floatingActionButtonAnimator: property?.floatingActionButtonAnimator,
       floatingActionButtonLocation: property?.floatingActionButtonLocation,
       persistentFooterAlignment:
           property?.persistentFooterAlignment ?? AlignmentDirectional.centerEnd,
       persistentFooterButtons: property?.persistentFooterButtons,
-      appBar: appBar?.toAndroid(context),
+      restorationId: property?.restorationId,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      primary: property?.primary ?? true,
+      backgroundColor: backgroundColor,
+      bottomSheet: property?.bottomSheet,
       body: isLandscape ? buildNavigationRail : body,
       bottomNavigationBar: isLandscape ? null : bar.$1,
     );
@@ -161,18 +163,14 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       tabBar: navigationBar.toIOS(context),
       tabBuilder: (BuildContext context, int index) {
-        return CupertinoTabView(
-          builder: (context) {
-            return CupertinoPageScaffold(
-              navigationBar: appBar?.toIOS(context),
-              child: SafeArea(
-                child: Padding(
-                  padding: contentPadding,
-                  child: children[index],
-                ),
-              ),
-            );
-          },
+        return CupertinoPageScaffold(
+          navigationBar: appBar?.toIOS(context),
+          child: SafeArea(
+            child: Padding(
+              padding: contentPadding,
+              child: children[index],
+            ),
+          ),
         );
       },
     );

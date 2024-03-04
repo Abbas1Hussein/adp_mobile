@@ -2,18 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/model.dart';
+import 'navigation_bar_item.dart';
 
-/// A custom navigation sidebar view widget that adapts its appearance based on the platform.
+/// A custom navigation bar view widget that adapts its appearance based on the platform.
 ///
 /// See also:
 ///
 ///  * [AdaptiveNavigationView] rendering this component.
 ///
-/// On macOS, the [NavigationPane] utilized.
-/// On Windows, the [Sidebar] used.
+/// On iOS, the [BottomNavigationBar] and [NavigationRail] used.
+/// On Android, the [CupertinoTabBar] used.
 class AdaptiveNavigationBar
     extends CoreModel<(BottomNavigationBar, NavigationRail), CupertinoTabBar> {
-  /// Creates a adaptive nav sidebar
+  /// Creates a adp nav bar
   ///
   /// [items] must have at least 2 items
   ///
@@ -21,6 +22,7 @@ class AdaptiveNavigationBar
   const AdaptiveNavigationBar({
     this.onChanged,
     this.currentIndex = 0,
+    this.backgroundColor,
     this.selectedIconTheme,
     this.unselectedIconTheme,
     this.selectedLabelStyle,
@@ -53,7 +55,7 @@ class AdaptiveNavigationBar
   /// ```
   final ValueChanged<int>? onChanged;
 
-  /// The list of navigation items.
+  /// The list of navigation bar items.
   ///
   /// The `items` parameter is a list of [AdaptiveNavigationBarItem] objects,
   /// each representing an individual item in the navigation sidebar. It is required
@@ -99,26 +101,25 @@ class AdaptiveNavigationBar
   /// when they are not in focus.
   final IconThemeData? unselectedIconTheme;
 
+  /// The background color of the navigation view.
+  ///
+  /// The `backgroundColor` parameter allows you to specify the background color of the entire
+  /// navigation view. If `null`, the default background color of the underlying platform is used.
+  final Color? backgroundColor;
+
   @override
   (BottomNavigationBar, NavigationRail) toAndroid(BuildContext context) {
     final navigationRail = NavigationRail(
+      extended: false,
       selectedIndex: currentIndex,
       onDestinationSelected: onChanged,
-     // selectedItemColor: selectedItemColor,
-    //  unselectedItemColor: unselectedItemColor,
+      backgroundColor: backgroundColor,
+      indicatorColor: selectedItemColor,
       selectedIconTheme: selectedIconTheme,
       unselectedIconTheme: unselectedIconTheme,
       selectedLabelTextStyle: selectedLabelStyle,
       unselectedLabelTextStyle: unselectedLabelStyle,
-      destinations: items.map((e) {
-        return NavigationRailDestination(
-          icon: e.icon,
-          indicatorColor: e.backgroundColor,
-          label: Text(e.label ?? '* - *'),
-          selectedIcon: e.activeIcon,
-        );
-      }).toList(),
-      extended: false,
+      destinations: items.map((e) => e.toNavigationRailDestination()).toList(),
       labelType: NavigationRailLabelType.all,
     );
     final bottomNavigationBar = BottomNavigationBar(
@@ -130,7 +131,7 @@ class AdaptiveNavigationBar
       unselectedIconTheme: unselectedIconTheme,
       selectedLabelStyle: selectedLabelStyle,
       unselectedLabelStyle: unselectedLabelStyle,
-      //  backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor,
       items: items,
     );
     return (bottomNavigationBar, navigationRail);
@@ -143,26 +144,8 @@ class AdaptiveNavigationBar
       currentIndex: currentIndex,
       activeColor: selectedItemColor,
       inactiveColor: unselectedItemColor ?? CupertinoColors.inactiveGray,
-      //  backgroundColor: backgroundColor,
-      items: items.map((e) {
-        return AdaptiveNavigationBarItem(
-          icon: e.icon,
-          tooltip: e.tooltip,
-          activeIcon: e.activeIcon,
-          backgroundColor: e.backgroundColor,
-          label: e.label ?? '* - *',
-        );
-      }).toList(),
+      backgroundColor: backgroundColor,
+      items: items,
     );
   }
-}
-
-class AdaptiveNavigationBarItem extends BottomNavigationBarItem {
-  AdaptiveNavigationBarItem({
-    super.activeIcon,
-    super.backgroundColor,
-    super.tooltip,
-    required super.icon,
-    required String super.label,
-  });
 }

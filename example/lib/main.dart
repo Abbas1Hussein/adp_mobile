@@ -6,7 +6,7 @@ const themeMode = ThemeMode.dark;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.android,
   );
   runApp(const App());
 }
@@ -18,15 +18,9 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return AdaptiveMobilePreview(
       type: PlatformRuining.targetPlatform == MobileTargetPlatform.android
-          ? DevicesType.android.samsungGalaxyA50
-          : DevicesType.iOS.iPhone13Mini,
-      child: AdpApp(
-        themeMode: themeMode,
-        home: adaptiveValue(
-          ios: () => const HomeScreen(),
-          android: () => const HomeScreen(),
-        ),
-      ),
+          ? DevicesType.android.samsungGalaxyNote20Ultra
+          : DevicesType.iOS.iPhone13ProMax,
+      child: const AdpApp(themeMode: themeMode, home: HomeScreen()),
     );
   }
 }
@@ -44,31 +38,43 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveNavigationView(
-      appBar: const AdaptiveAppBar(
-        title: Text('title'),
-        leading: AdaptiveIcon(AdpIcons.battery75),
+      appBar: const AdaptiveAppBar(title: Text('title')),
+      properties: Properties.android(
+        const NavigationViewAndroidProperty(
+          mode: AndroidNavigationMode.auto,
+        ),
       ),
       navigationBar: AdaptiveNavigationBar(
         currentIndex: currentIndex,
         onChanged: (value) {
-          setState(() {
-            currentIndex = value;
-          });
+          setState(() => currentIndex = value);
         },
         items: [
           AdaptiveNavigationBarItem(
+            tooltip: 'home',
             icon: const AdaptiveIcon(AdpIcons.home),
             label: 'home',
           ),
           AdaptiveNavigationBarItem(
+            tooltip: 'saved',
             icon: const AdaptiveIcon(AdpIcons.save),
             label: 'saved',
           ),
         ],
       ),
-      children: const [
-        Center(child: Text('1')),
-        Center(child: Text('2')),
+      children: [
+        const Center(child: Text('1')),
+        Center(
+          child: AdaptiveButton(
+            child: const Text('GO'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => widget),
+              );
+            },
+          ),
+        ),
       ],
     );
   }

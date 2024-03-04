@@ -24,6 +24,7 @@ class NavigationViewAndroidProperty extends CoreAndroidProperty {
     this.drawerEnableOpenDragGesture,
     this.endDrawerEnableOpenDragGesture,
     this.restorationId,
+    this.mode = AndroidNavigationMode.auto,
   });
 
   /// If true, and [bottomNavigationBar] or [persistentFooterButtons]
@@ -231,4 +232,22 @@ class NavigationViewAndroidProperty extends CoreAndroidProperty {
   ///  * [RestorationManager], which explains how state restoration works in
   ///    Flutter.
   final String? restorationId;
+
+  /// The navigation mode to determine the layout configuration.
+  ///
+  /// If [AndroidNavigationMode.auto], the navigation mode is determined automatically based on the device orientation.
+  /// If [AndroidNavigationMode.onlyBottom], only the bottom navigation bar is displayed.
+  ///
+  /// By default to [AndroidNavigationMode.auto].
+  final AndroidNavigationMode mode;
+
+}
+
+/// different navigation modes for Android.
+enum AndroidNavigationMode {
+  /// Automatically determine the navigation mode based on the device orientation.
+  auto,
+
+  /// Display only the bottom navigation bar.
+  onlyBottom,
 }
