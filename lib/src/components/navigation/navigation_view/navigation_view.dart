@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart' ;
+import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import '../../layout/appbar/appbar.dart';
+import '../../layout/appbar/appbar_page.dart';
 import '../navigation.dart';
 
 /// The Navigation View top-level navigation for your app provides a structured layout for navigation within an application.
@@ -20,7 +20,7 @@ import '../navigation.dart';
 /// - On macOS, [MacosWindow] is utilized.
 /// - On Windows, [NavigationView] is used.
 class AdaptiveNavigationView extends CoreAdaptiveComponent<
-    NavigationViewAndroidProperty, NavigationViewIOSProperty> {
+    NavigationViewAndroidProperty, CoreIOSProperty> {
   /// Creates an adaptive navigation view.
   ///
   /// The [properties] parameter allows you to customize the visual and functional aspects
@@ -33,7 +33,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   /// See also:
   ///   * [AdaptiveNavigationBar] Use this widget to create a visually consistent and platform-specific navigation
   ///   sidebar handling navigation items [navigationBar].
-  ///   * [AdaptiveAppBar] An adaptive app bar component that displayed at the top of the navigation view [appBar].
+  ///   * [AdaptiveAppBarPage] An adaptive app bar component that displayed at the top of the navigation view [appBar].
   const AdaptiveNavigationView({
     super.key,
     super.builders,
@@ -41,6 +41,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     this.appBar,
     this.contentPadding = kContentPadding,
     this.backgroundColor,
+    this.restorationId,
     this.resizeToAvoidBottomInset = true,
     required this.navigationBar,
     required this.children,
@@ -50,7 +51,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   ///
   /// The `appBar` parameter allows you to provide an adaptive app bar that is displayed at the
   /// top of the navigation view.
-  final AdaptiveAppBar? appBar;
+  final AdaptiveNavigationAppbar? appBar;
 
   /// An adaptive navigation bar for handling navigation items.
   ///
@@ -79,6 +80,17 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   /// navigation view. If `null`, the default background color of the underlying platform is used.
   final Color? backgroundColor;
 
+  /// Restoration ID to save and restore the state of the [AdaptiveNavigationView].
+  ///
+  /// The state of this widget is persisted in a [RestorationBucket] claimed
+  /// from the surrounding [RestorationScope] using the provided restoration ID.
+  ///
+  /// See also:
+  ///
+  ///  * [RestorationManager], which explains how state restoration works in
+  ///    Flutter.
+  final String? restorationId;
+
   /// Whether the body should size itself to avoid the window's bottom inset.
   ///
   /// For example, if there is an onscreen keyboard displayed above the
@@ -99,8 +111,8 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     BuildContext context, [
     NavigationViewAndroidProperty? property,
   ]) {
-    final isNavAutoDetected =
-        ((property?.mode ?? AndroidNavigationMode.auto) == AndroidNavigationMode.auto);
+    final isNavAutoDetected = ((property?.mode ?? AndroidNavigationMode.auto) ==
+        AndroidNavigationMode.auto);
 
     final isLandscape = isNavAutoDetected
         ? MediaQuery.orientationOf(context) == Orientation.landscape
@@ -143,7 +155,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
       persistentFooterAlignment:
           property?.persistentFooterAlignment ?? AlignmentDirectional.centerEnd,
       persistentFooterButtons: property?.persistentFooterButtons,
-      restorationId: property?.restorationId,
+      restorationId: restorationId,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       primary: property?.primary ?? true,
       backgroundColor: backgroundColor,
@@ -154,22 +166,19 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   }
 
   @override
-  Widget iOS(
-    BuildContext context, [
-    NavigationViewIOSProperty? property,
-  ]) {
+  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     return CupertinoTabScaffold(
       backgroundColor: backgroundColor,
+      restorationId: restorationId,
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       tabBar: navigationBar.toIOS(context),
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
+          // backgroundColor: backgroundColor,
+          // resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           navigationBar: appBar?.toIOS(context),
           child: SafeArea(
-            child: Padding(
-              padding: contentPadding,
-              child: children[index],
-            ),
+            child: Padding(padding: contentPadding, child: children[index]),
           ),
         );
       },

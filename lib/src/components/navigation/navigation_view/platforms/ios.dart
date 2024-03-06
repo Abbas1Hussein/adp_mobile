@@ -1,9 +1,12 @@
+import '../../../layout/bottom_navigation_bar/platforms/ios.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../../../core/common/construct/property.dart';
-
-class NavigationViewIOSProperty extends CoreIOSProperty {
-  const NavigationViewIOSProperty({this.iconSize, this.height, this.border});
+class NavigationBarIOSProperty extends BottomNavigationBarIOSProperty {
+  const NavigationBarIOSProperty({
+    super.border,
+    super.height,
+    this.iconSize = 30.0,
+  });
 
   /// The size of all of the [BottomNavigationBarItem] icons.
   ///
@@ -13,14 +16,4 @@ class NavigationViewIOSProperty extends CoreIOSProperty {
   ///
   /// Must not be null.
   final double? iconSize;
-
-  /// The height of the [CupertinoTabBar].
-  ///
-  /// Defaults to 50.0. Must not be null.
-  final double? height;
-
-  /// The border of the [CupertinoTabBar].
-  ///
-  /// The default value is a one physical pixel top border with grey color.
-  final Border? border;
 }

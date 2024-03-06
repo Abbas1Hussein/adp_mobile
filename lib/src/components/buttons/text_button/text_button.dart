@@ -71,14 +71,16 @@ class AdaptiveTextButton extends AdaptiveBaseButton {
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     final theme = CupertinoTheme.of(context);
     return IOSButton(
+      pressedOpacity: 0.6,
       shape: shape,
       onPressed: onPressed,
       mouseCursor: mouseCursor,
       onLongPress: onLongPress,
-      hoverColor: hoverColor,
-      pressedColor: pressedColor,
-      disabledColor: disabledColor ?? Colors.transparent,
-      backgroundColor: backgroundColor ?? Colors.transparent,
+      hoverColor: hoverColor ?? Colors.transparent,
+      pressedColor: pressedColor ?? CupertinoColors.quaternaryLabel,
+      disabledColor: disabledColor,
+      backgroundColor: backgroundColor,
+      padding: const EdgeInsets.all(2.0),
       child: DefaultTextStyle.merge(
         style: theme.textTheme.textStyle.copyWith(
           letterSpacing: 0.5,

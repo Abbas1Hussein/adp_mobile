@@ -42,35 +42,34 @@ class CupertinoTimePickerButton extends IOSPickerButton {
       }
     }();
     return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: children,
     );
   }
 
   List<Widget> _buildHourMinutesSecondsWidget(BuildContext context) {
     return [
-      _buildTextWidget(timeOfDay.hour.toString(), 'hour', context),
+      _buildTextWidget(timeOfDay.hour.toString(), 'hou', context),
       verticalDivider,
-      _buildTextWidget(timeOfDay.minute.toString(), 'minutes', context),
+      _buildTextWidget(timeOfDay.minute.toString(), 'min', context),
       verticalDivider,
-      _buildTextWidget(initialDate.second.toString(), 'seconds', context),
+      _buildTextWidget(initialDate.second.toString(), 'sec', context),
     ];
   }
 
   List<Widget> _buildHourMinutesWidget(BuildContext context) {
     return [
-      _buildTextWidget(timeOfDay.hour.toString(), 'hour', context),
+      _buildTextWidget(timeOfDay.hour.toString(), 'hou', context),
       verticalDivider,
-      _buildTextWidget(initialDate.minute.toString(), 'minutes', context),
+      _buildTextWidget(initialDate.minute.toString(), 'min', context),
     ];
   }
 
   List<Widget> _buildMinutesSecondsWidget(BuildContext context) {
     return [
-      _buildTextWidget(timeOfDay.minute.toString(), 'minutes', context),
+      _buildTextWidget(timeOfDay.minute.toString(), 'min', context),
       verticalDivider,
-      _buildTextWidget(initialDate.second.toString(), 'seconds', context),
+      _buildTextWidget(initialDate.second.toString(), 'sec', context),
     ];
   }
 

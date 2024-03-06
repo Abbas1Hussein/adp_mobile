@@ -122,9 +122,8 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
               data: IconTheme.of(context).copyWith(color: foregroundColor),
               child: DefaultTextStyle.merge(
                 style: Theme.of(context)
-                    .typography
-                    .dense
-                    .titleLarge!
+                    .textTheme
+                    .headlineMedium!
                     .copyWith(color: foregroundColor),
                 child: label!,
               ),
@@ -144,7 +143,7 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
       focusColor: focusColor,
       onFocusChange: onFocusChange,
       dragStartBehavior: dragStartBehavior,
-    ).margeWith(buildLabel);
+    ).margeWith(buildLabel, 6.0);
   }
 
   @override
@@ -157,16 +156,13 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
             child: IconTheme.merge(
               data: IconTheme.of(context).copyWith(color: foregroundColor),
               child: DefaultTextStyle.merge(
-                style: Theme.of(context)
-                    .typography
-                    .dense
-                    .headlineMedium!
-                    .copyWith(color: foregroundColor, fontWeight: FontWeight.w400),
+                style: CupertinoTheme.of(context).textTheme.navLargeTitleTextStyle.copyWith(color: foregroundColor, fontWeight: FontWeight.w400),
                 child: label!,
               ),
             ),
           )
         : null;
+
     return CupertinoSwitch(
       value: value,
       thumbColor: knobColor,
@@ -178,6 +174,6 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
       focusColor: focusColor,
       onFocusChange: onFocusChange,
       dragStartBehavior: dragStartBehavior,
-    ).margeWith(buildLabel, 8.0);
+    ).margeWith(buildLabel, 10.0);
   }
 }

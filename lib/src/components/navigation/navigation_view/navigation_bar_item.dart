@@ -6,7 +6,7 @@ class AdaptiveNavigationBarItem extends BottomNavigationBarItem {
     super.backgroundColor,
     super.tooltip,
     required super.icon,
-    required String super.label,
+    required super.label,
   });
 
   NavigationRailDestination toNavigationRailDestination() {

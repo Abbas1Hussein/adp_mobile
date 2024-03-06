@@ -428,7 +428,6 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
       supportedLocales: supportedLocales,
     );
   }
-
 }
 
 class AppAndroidProperty extends CoreAndroidProperty {

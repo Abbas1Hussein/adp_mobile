@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
 
-const _kListTileConstraints = BoxConstraints(minHeight: 48.0, minWidth: 48.0);
-
 /// A single fixed-height row that typically contains some text as well as
 /// a leading or trailing icon.
 ///
@@ -146,33 +144,26 @@ class AdaptiveListTile extends CoreAdaptiveComponent {
           )
         : null;
 
-    return ConstrainedBox(
-      constraints: _kListTileConstraints.copyWith(
-        maxHeight: contentPadding != null
-            ? _kListTileConstraints.minHeight + contentPadding!.vertical
-            : _kListTileConstraints.minHeight,
+    return DecoratedBox(
+      decoration: ShapeDecoration(
+        shape: shape ?? LinearBorder.none,
+        color: enabled ? tileColor : disabledColor,
       ),
-      child: DecoratedBox(
-        decoration: ShapeDecoration(
-          shape: shape ?? LinearBorder.none,
-          color: enabled ? tileColor : disabledColor,
-        ),
-        child: GestureDetector(
-          onTap: enabled ? onLongPress : null,
-          child: CupertinoListTile(
-            onTap: enabled ? onTap : null,
-            title: buildTitle,
-            leading: buildLeading,
-            trailing: buildTrailing,
-            leadingToTitle: leadingWidth,
-            subtitle: Padding(
-              padding: const EdgeInsets.only(bottom: 3.0),
-              child: subtitle,
-            ),
-            padding: contentPadding,
+      child: GestureDetector(
+        onTap: enabled ? onLongPress : null,
+        child: CupertinoListTile(
+          onTap: enabled ? onTap : null,
+          title: buildTitle,
+          leading: buildLeading,
+          trailing: buildTrailing,
+          leadingToTitle: leadingWidth,
+          subtitle: Padding(
+            padding: const EdgeInsets.only(bottom: 3.0),
+            child: subtitle,
           ),
+          padding: contentPadding,
         ),
-      ).applyDisabledEffect(!enabled, 0.4),
-    );
+      ),
+    ).applyDisabledEffect(!enabled, 0.4);
   }
 }

@@ -1,9 +1,15 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../../../core/extension/brightness.dart';
 import '../../../core/extension/widget.dart';
 
-/// A macOS style button.
+const EdgeInsets _kButtonPadding = EdgeInsets.all(16.0);
+const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
+  vertical: 14.0,
+  horizontal: 64.0,
+);
+
+/// A iOS style button.
 class IOSButton extends StatefulWidget {
   const IOSButton({
     super.key,
@@ -15,8 +21,9 @@ class IOSButton extends StatefulWidget {
     this.backgroundColor,
     this.disabledColor,
     this.padding,
-    this.pressedOpacity = 0.4,
+    this.pressedOpacity = 1.0,
     this.mouseCursor = SystemMouseCursors.basic,
+    this.constraints,
     required this.child,
   });
 
@@ -33,6 +40,8 @@ class IOSButton extends StatefulWidget {
 
   final ShapeBorder? shape;
   final EdgeInsetsGeometry? padding;
+
+  final BoxConstraints? constraints;
 
   bool get enabled => onPressed != null || onLongPress != null;
 
@@ -118,28 +127,34 @@ class IOSButtonState extends State<IOSButton>
   @override
   Widget build(BuildContext context) {
     final bool enabled = widget.enabled;
-
-    final Brightness brightness = CupertinoTheme.brightnessOf(context);
+    final theme = CupertinoTheme.of(context);
 
     final disableBackgroundColor =
         widget.disabledColor ?? CupertinoColors.quaternarySystemFill;
 
     final backgroundColor =
-        widget.backgroundColor ?? CupertinoColors.quaternarySystemFill;
+        CupertinoDynamicColor.maybeResolve(widget.backgroundColor, context) ??
+            Colors.transparent;
 
     final fillColor = enabled ? backgroundColor : disableBackgroundColor;
 
     final hoverColor = widget.hoverColor ??
-        brightness.resolve(
-          darkColor: const Color(0xff3C383C),
-          lightColor: const Color(0xffE5E5E5),
-        );
+        widget.backgroundColor?.withOpacity(0.7) ??
+        CupertinoColors.quaternaryLabel;
 
     final pressedColor = widget.pressedColor ??
-        brightness.resolve(
-          darkColor: const Color(0xe6383438),
-          lightColor: const Color(0xe8eae6e6),
-        );
+        widget.backgroundColor?.withOpacity(0.7) ??
+        CupertinoColors.placeholderText;
+
+    final foregroundColor = widget.backgroundColor != null
+        ? theme.primaryContrastingColor
+        : enabled
+            ? theme.primaryColor
+            : CupertinoDynamicColor.resolve(
+                CupertinoColors.placeholderText, context);
+
+    final textStyle =
+        theme.textTheme.textStyle.copyWith(color: foregroundColor);
 
     return MouseRegion(
       cursor: enabled ? widget.mouseCursor : SystemMouseCursors.forbidden,
@@ -164,24 +179,31 @@ class IOSButtonState extends State<IOSButton>
               animation: _opacityAnimation,
               builder: (context, _) {
                 return Container(
-                  constraints: const BoxConstraints(minHeight: 25),
+                  constraints: widget.constraints ??
+                      const BoxConstraints(
+                        minWidth: kMinInteractiveDimensionCupertino,
+                        minHeight: kMinInteractiveDimensionCupertino,
+                      ),
                   decoration: ShapeDecoration(
                     shape: widget.shape ??
                         const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(4))),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
                     color: buttonHeldDown
                         ? pressedColor
                         : (_isHovered ? hoverColor : fillColor),
                   ),
                   child: Padding(
                     padding: widget.padding ??
-                        const EdgeInsets.symmetric(
-                            vertical: 6.0, horizontal: 13.0),
+                        (widget.backgroundColor != null
+                            ? _kBackgroundButtonPadding
+                            : _kButtonPadding),
                     child: Align(
                       heightFactor: 1.0,
                       widthFactor: 1.0,
                       alignment: Alignment.center,
-                      child: widget.child,
+                      child: DefaultTextStyle(
+                          style: textStyle, child: widget.child),
                     ),
                   ),
                 );

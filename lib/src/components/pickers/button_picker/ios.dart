@@ -5,7 +5,6 @@ import '../../buttons/button/iOS.dart';
 import '../date_picker_formatter.dart';
 import 'button_constraints.dart';
 
-
 abstract class IOSPickerButton extends BaseDateFormatter {
   const IOSPickerButton({
     super.key,
@@ -21,26 +20,27 @@ abstract class IOSPickerButton extends BaseDateFormatter {
     final textStyle = CupertinoTheme.of(context).textTheme.pickerTextStyle;
 
     final Color? resolvedBackgroundColor = CupertinoDynamicColor.maybeResolve(
-        CupertinoColors.quaternarySystemFill, context);
+      CupertinoColors.quaternarySystemFill,
+      context,
+    );
 
-    return ConstrainedBox(
+    return IOSButton(
+      onPressed: onPressed,
+      mouseCursor: SystemMouseCursors.click,
+      backgroundColor: resolvedBackgroundColor,
       constraints: kPickerButtonConstraints,
-      child: IOSButton(
-        mouseCursor: SystemMouseCursors.click,
-        onPressed: onPressed,
-        backgroundColor: resolvedBackgroundColor,
-        child: DefaultTextStyle(
-          maxLines: 1,
-          style: textStyle,
-          child: child(context),
-        ),
+      child: DefaultTextStyle(
+        maxLines: 1,
+        style: textStyle,
+        child: child(context),
       ),
     );
   }
 
   Widget child(BuildContext context);
 
-  Widget get verticalDivider {
-    return const SizedBox(height: 15.0, child: VerticalDivider());
-  }
+  Widget get verticalDivider => const SizedBox(
+        height: 13.0,
+        child: VerticalDivider(),
+      );
 }

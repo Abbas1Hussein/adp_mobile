@@ -107,15 +107,15 @@ class AdaptiveButton extends AdaptiveBaseButton {
         );
       case AdaptiveButtonType.filled:
         return IOSButton(
+          pressedOpacity: 0.85,
           shape: shape,
           onPressed: onPressed,
           onLongPress: onLongPress,
           mouseCursor: mouseCursor,
-          pressedOpacity: 0.6,
           disabledColor: disabledColor ?? CupertinoColors.secondaryLabel,
           backgroundColor: backgroundColor ?? theme.primaryColor,
-          pressedColor: pressedColor ?? theme.primaryColor.withOpacity(0.6),
-          hoverColor: hoverColor ?? theme.primaryColor.withOpacity(0.6),
+          pressedColor: pressedColor,
+          hoverColor: hoverColor,
           child: DefaultTextStyle.merge(
             style: theme.textTheme.textStyle.copyWith(
               color: CupertinoDynamicColor.resolve(
@@ -128,9 +128,10 @@ class AdaptiveButton extends AdaptiveBaseButton {
         );
       case AdaptiveButtonType.outlined:
         return IOSButton(
+          pressedOpacity: 0.75,
           shape: shape ??
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(8),
                   side: BorderSide(
                     width: 1,
                     color: CupertinoTheme.brightnessOf(context).resolve(
@@ -139,17 +140,16 @@ class AdaptiveButton extends AdaptiveBaseButton {
                     ),
                     strokeAlign: BorderSide.strokeAlignOutside,
                   )),
-          padding: const EdgeInsets.symmetric(vertical: 3.0, horizontal: 12.0),
-          pressedOpacity: 0.7,
           onPressed: onPressed,
           onLongPress: onLongPress,
           mouseCursor: mouseCursor,
           disabledColor: disabledColor,
-          backgroundColor: backgroundColor,
+          backgroundColor: backgroundColor ?? Colors.transparent,
           pressedColor: pressedColor,
           hoverColor: hoverColor,
           child: DefaultTextStyle(
             style: theme.textTheme.textStyle.copyWith(
+              color: shape?.side.color,
               fontWeight: FontWeight.w500,
             ),
             child: child,

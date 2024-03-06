@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
 const kPickerButtonConstraints = BoxConstraints(
-  maxHeight: 40.0,
-  maxWidth: 295.0,
+  maxHeight: 60.0,
+  maxWidth: 310.0,
 );

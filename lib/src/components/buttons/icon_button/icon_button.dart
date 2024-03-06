@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
@@ -87,12 +88,14 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final buildLabel = label != null ? DefaultTextStyle.merge(
-            style: Theme.of(context).typography.dense.labelMedium?.copyWith(
+    final buildLabel = label != null
+        ? DefaultTextStyle.merge(
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
                   fontWeight: FontWeight.w300,
                 ),
             child: label!,
-          ) : null;
+          )
+        : null;
     return IconButton(
       onPressed: onPressed,
       color: backgroundColor,
@@ -105,29 +108,28 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final buildLabel = label != null ? DefaultTextStyle.merge(
-            style: Theme.of(context).typography.tall.labelLarge?.copyWith(
-                  fontWeight: FontWeight.w300,
-                ),
+    final buildLabel = label != null
+        ? DefaultTextStyle.merge(
+            style: CupertinoTheme.of(context).textTheme.textStyle,
             child: label!,
-          ) : null;
-    return ConstrainedBox(
+          )
+        : null;
+    return IOSButton(
+      hoverColor: hoverColor,
+      padding: const EdgeInsets.all(8.0),
+      onPressed: onPressed,
       constraints: constraints,
-      child: IOSButton(
-        onPressed: onPressed,
-        hoverColor: hoverColor ?? backgroundColor?.withOpacity(0.8),
-        disabledColor: disabledColor,
-        backgroundColor: backgroundColor ?? Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: borderRadius ?? const BorderRadius.all(Radius.circular(7)),
-        ),
-        child: Align(
-          widthFactor: 1.0,
-          heightFactor: 1.0,
-          child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: icon.margeWith(buildLabel),
-          ),
+      disabledColor: disabledColor,
+      backgroundColor: backgroundColor,
+      shape: borderRadius != null
+          ? RoundedRectangleBorder(borderRadius: borderRadius!)
+          : null,
+      child: Align(
+        widthFactor: 1.0,
+        heightFactor: 1.0,
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: icon.margeWith(buildLabel),
         ),
       ),
     );

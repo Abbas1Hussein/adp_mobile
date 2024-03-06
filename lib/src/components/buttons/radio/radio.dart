@@ -115,8 +115,7 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
               data: IconTheme.of(context).copyWith(color: foregroundColor),
               child: DefaultTextStyle.merge(
                 style: Theme.of(context)
-                    .typography
-                    .dense
+                    .textTheme
                     .labelLarge!
                     .copyWith(color: foregroundColor),
                 child: label!,
@@ -156,11 +155,10 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
             child: IconTheme.merge(
               data: IconTheme.of(context).copyWith(color: foregroundColor),
               child: DefaultTextStyle.merge(
-                style: Theme.of(context)
-                    .typography
-                    .dense
-                    .labelMedium!
-                    .copyWith(color: foregroundColor),
+                style: CupertinoTheme.of(context)
+                    .textTheme
+                    .navTitleTextStyle
+                    .copyWith(fontSize: 13.5, color: foregroundColor),
                 child: label!,
               ),
             ),
