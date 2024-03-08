@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -45,16 +44,23 @@ class AdaptiveDrawer extends StatelessWidget {
   /// The [elevation] must be non-negative.
   const AdaptiveDrawer({
     super.key,
-    this.child,
-    this.shape,
     this.width = 304,
-    this.elevation = 0,
+    this.elevation,
     this.semanticLabel,
     this.backgroundColor,
-    this.borderRadius,
+    this.shape,
     this.clipBehavior = Clip.none,
     this.shadowColor = const Color(0xFF000000),
-  }) : assert(elevation >= 0.0);
+    this.child,
+  });
+
+  /// The widget below this widget in the tree.
+  final Widget? child;
+
+  /// The width of the drawer.
+  ///
+  /// Default to 300px.
+  final double width;
 
   /// Sets the color that holds all of the [AdaptiveDrawer]'s
   /// contents.
@@ -67,7 +73,7 @@ class AdaptiveDrawer extends StatelessWidget {
   /// This controls the size of the shadow below the drawer.
   ///
   /// Defaults to 0.
-  final double elevation;
+  final double? elevation;
 
   /// The color used to paint a drop shadow under the drawer's which reflects the drawer's [elevation].
   ///
@@ -77,18 +83,12 @@ class AdaptiveDrawer extends StatelessWidget {
   final Color shadowColor;
 
   /// The shape of the drawer.
-  final BoxShape? shape;
-
-  /// The width of the drawer.
   ///
-  /// Default to 300px.
-  final double width;
-
-  /// The widget below this widget in the tree.
-  final Widget? child;
-
-  /// The target border radius of the rounded corners for a rectangle shape.
-  final BorderRadius? borderRadius;
+  /// Defines the drawer's [Material.shape].
+  ///
+  /// If this is null, then [DrawerThemeData.shape] is used. If that
+  /// is also null, then it falls back to [Material]'s default.
+  final ShapeBorder? shape;
 
   /// The semantic label of the drawer used by accessibility frameworks to
   /// announce screen transitions when the drawer is opened and closed.
@@ -100,36 +100,25 @@ class AdaptiveDrawer extends StatelessWidget {
   /// defaults to [Clip.none].
   final Clip clipBehavior;
 
-  static const _kDrawerDuration = Duration(milliseconds: 300);
-
   @override
   Widget build(BuildContext context) {
     final Color drawerBackgroundColor = backgroundColor ??
         adaptiveValue(
           ios: () => CupertinoTheme.of(context).barBackgroundColor,
-          android: () => Theme.of(context).canvasColor,
+          android: () =>
+              Theme.of(context).drawerTheme.backgroundColor ??
+              Theme.of(context).canvasColor,
         );
 
-
-    return Semantics(
-      scopesRoute: true,
-      namesRoute: true,
-      explicitChildNodes: true,
-      label: semanticLabel,
-      child: AnimatedPhysicalModel(
-        elevation: elevation,
-        shadowColor: shadowColor,
-        shape: BoxShape.rectangle,
-        clipBehavior: clipBehavior,
-        curve: Curves.fastOutSlowIn,
-        duration: _kDrawerDuration,
-        borderRadius: borderRadius ?? BorderRadius.zero,
-        color: drawerBackgroundColor,
-        child: ConstrainedBox(
-          constraints: BoxConstraints.expand(width: width),
-          child: child,
-        ),
-      ),
+    return Drawer(
+      shape: shape,
+      width: width,
+      elevation: elevation,
+      shadowColor: shadowColor,
+      clipBehavior: clipBehavior,
+      semanticLabel: semanticLabel,
+      backgroundColor: drawerBackgroundColor,
+      child: child,
     );
   }
 }

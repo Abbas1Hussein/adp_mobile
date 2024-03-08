@@ -38,47 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
-      drawer: AdaptiveDrawer(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: Column(
-            children: [
-              AdaptiveListTile(
-                enabled: true,
-                tileColor: AdpColors.cyan,
-                leading: const AdaptiveIcon(AdpIcons.battery0),
-                title: const Text('battery0'),
-                subtitle: const Text('0'),
-                onTap: () {},
-              ),
-              AdaptiveListTile(
-                leading: const AdaptiveIcon(AdpIcons.battery25),
-                title: const Text('battery25'),
-                subtitle: const Text('25'),
-                onTap: () {},
-              ),
-              AdaptiveListTile(
-                leading: const AdaptiveIcon(AdpIcons.battery75),
-                title: const Text('battery75'),
-                subtitle: const Text('75'),
-                onTap: () {},
-              ),
-              AdaptiveListTile(
-                leading: const AdaptiveIcon(AdpIcons.battery100),
-                title: const Text('battery100'),
-                subtitle: const Text('100'),
-                onTap: () {},
-              ),
-              AdaptiveListTile(
-                leading: const AdaptiveIcon(AdpIcons.batteryCharge),
-                title: const Text('batteryCharge'),
-                subtitle: const Text('charging'),
-                onTap: () {},
-              ),
-            ],
-          ),
-        ),
-      ),
       appBar: AdaptiveAppBar(title: const Text('AppBar')),
       bottomNavigationBar: AdaptiveBottomNavigationBar(
         currentIndex: currentIndex,
@@ -111,54 +70,65 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
+
+  @override
+  State<FirstScreen> createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffoldPage(
       appBar: const AdaptiveAppBarPage(),
       content: Center(
-        child: AdaptiveTextButton(
-          child: const Text('Switch'),
-          onPressed: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            AdaptivePulldownMenuButton<String>.singleChoice(
+                highlightColor: Colors.redAccent,
+                onSelected: (index, value) {
+                  print('index $index');
+                  print('value $value');
+                },
+                items: const [
+                  AdaptivePulldownMenuItem(
+                    enabled: true,
+                    value: 'New folder',
+                    leading: AdaptiveIcon(AdpIcons.folderAdd),
+                    child: Text('New folder'),
+                  ),
+                  AdaptivePulldownMenuItem(
+                    leading: AdaptiveIcon(AdpIcons.folderOpen),
+                    child: Text('Open'),
+                  ),
+                  AdaptivePulldownMenuItem(
+                    leading: AdaptiveIcon(AdpIcons.wand),
+                    child: Text('Open with'),
+                  ),
+                  AdaptivePulldownMenuItem(
+                    leading: AdaptiveIcon(AdpIcons.delete),
+                    child: Text('Remove'),
+                    enabled: false, // this will disabled.
+                  ),
+                  AdaptivePulldownMenuItem(
+                    leading: AdaptiveIcon(AdpIcons.phone),
+                    child: Text('Import from phone ...'),
+                  ),
+                  AdaptivePulldownMenuDivider(),
+                  AdaptivePulldownMenuItem(
+                    leading: AdaptiveIcon(AdpIcons.star),
+                    child: Text('Give us a star'),
+                  ),
+                ]),
+            const AdaptiveCloseButton(),
+            const AdaptiveBackButton(),
+          ],
         ),
       ),
-    );
-  }
-}
-
-class SecondScreen extends StatefulWidget {
-  const SecondScreen({super.key});
-
-  @override
-  State<SecondScreen> createState() => _SecondScreenState();
-}
-
-class _SecondScreenState extends State<SecondScreen> {
-  int currentIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return AdaptiveNavigationView(
-      appBar: const AdaptiveNavigationAppbar(title: Text('Abbas Hussein')),
-      navigationBar: AdaptiveNavigationBar(
-        onChanged: (value) {
-          setState(() => currentIndex = value);
-        },
-        currentIndex: currentIndex,
-        items: [
-          AdaptiveNavigationBarItem(
-            icon: const AdaptiveIcon(AdpIcons.app),
-            label: 'app',
-          ),
-          AdaptiveNavigationBarItem(
-            icon: const AdaptiveIcon(AdpIcons.home),
-            label: 'home',
-          ),
-        ],
-      ),
-      children: const [Center(child: Text('1')), Center(child: Text('2'))],
     );
   }
 }

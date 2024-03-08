@@ -134,6 +134,8 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
 
   @override
   CupertinoNavigationBar toIOS(BuildContext context) {
+    final iconTheme = const CupertinoIconThemeData().resolve(context);
+
     final Color defaultBackgroundColor =
         CupertinoDynamicColor.maybeResolve(backgroundColor, context) ??
             CupertinoTheme.of(context).barBackgroundColor;
@@ -156,13 +158,11 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
             ])
           : leading,
       trailing: actions != null
-          ? IconTheme(
-              data: (actionsIconTheme ?? Theme.of(context).iconTheme).copyWith(
+          ? IconTheme.merge(
+              data: (actionsIconTheme ?? iconTheme).copyWith(
                 color: foregroundColor ??
-                    CupertinoDynamicColor.resolve(
-                      CupertinoColors.label,
-                      context,
-                    ),
+                    CupertinoDynamicColor.maybeResolve(
+                        iconTheme.color, context),
               ),
               child: Row(mainAxisSize: MainAxisSize.min, children: actions!),
             )

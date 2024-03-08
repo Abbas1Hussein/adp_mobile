@@ -21,10 +21,11 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
     super.key,
     super.builders,
     this.onPressed,
+    this.color,
     this.hoverColor,
     this.borderRadius,
     this.disabledColor,
-    this.backgroundColor,
+    this.mouseCursor = MouseCursor.defer,
     this.constraints = _kAdpIconConstraints,
     required this.icon,
   }) : label = null;
@@ -40,10 +41,11 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
     super.key,
     super.builders,
     this.onPressed,
+    this.color,
     this.hoverColor,
     this.borderRadius,
     this.disabledColor,
-    this.backgroundColor,
+    this.mouseCursor = MouseCursor.defer,
     this.constraints = _kAdpIconConstraints,
     required Widget this.label,
     required this.icon,
@@ -65,6 +67,9 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// if null, default [_kAdpIconConstraints] will be used.
   final BoxConstraints constraints;
 
+  /// Defines the mouse cursor to be displayed when hovering over the icon button.
+  final MouseCursor mouseCursor;
+
   /// The border radius to apply to the icon button. This defines the roundness of the corners
   /// of the button's background.
   ///
@@ -74,7 +79,7 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// The background color of the icon button.
   ///
   /// If null, the default platform-specific background color will be used.
-  final Color? backgroundColor;
+  final Color? color;
 
   /// The color to be used when the icon button is in a disabled state.
   ///
@@ -83,7 +88,7 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
   /// The color of the button's background when the mouse hovers over it.
   ///
-  /// if null, [backgroundColor].withOpacity(0.8) will be used.
+  /// if null, [color].withOpacity(0.8) will be used.
   final Color? hoverColor;
 
   @override
@@ -96,10 +101,12 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
             child: label!,
           )
         : null;
+
     return IconButton(
+      color: color,
       onPressed: onPressed,
-      color: backgroundColor,
       hoverColor: hoverColor,
+      mouseCursor: mouseCursor,
       constraints: constraints,
       disabledColor: disabledColor,
       icon: icon.margeWith(buildLabel),
@@ -114,13 +121,17 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
             child: label!,
           )
         : null;
+
     return IOSButton(
-      hoverColor: hoverColor,
+      pressedOpacity: 0.45,
       padding: const EdgeInsets.all(8.0),
+      mouseCursor: mouseCursor,
+      pressedColor: Colors.transparent,
+      hoverColor: hoverColor ?? Colors.transparent,
       onPressed: onPressed,
       constraints: constraints,
-      disabledColor: disabledColor,
-      backgroundColor: backgroundColor,
+      // disabledColor: disabledColor,
+      // backgroundColor: color,
       shape: borderRadius != null
           ? RoundedRectangleBorder(borderRadius: borderRadius!)
           : null,
@@ -129,7 +140,12 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
         heightFactor: 1.0,
         child: FittedBox(
           fit: BoxFit.scaleDown,
-          child: icon.margeWith(buildLabel),
+          child: IconTheme.merge(
+            data: CupertinoIconThemeData(
+              color: onPressed != null ? color : disabledColor,
+            ).resolve(context),
+            child: icon.margeWith(buildLabel),
+          ),
         ),
       ),
     );
