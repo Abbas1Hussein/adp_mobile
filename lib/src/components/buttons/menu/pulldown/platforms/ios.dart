@@ -1,189 +1,279 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../core/common/construct/property.dart';
+import '../../../../../core/extension/widget.dart';
+import '../../../../additional/brightness.dart';
 import '../../../icon_button/icon_button.dart';
 import '../../menu.dart';
 import '../single_choice.dart';
 
-class PulldownMenuIOS<T> extends StatelessWidget {
+const border = OutlineInputBorder(
+  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+  borderSide: BorderSide(color: CupertinoColors.separator),
+);
+
+class PulldownMenuIOS<T> extends StatefulWidget {
   const PulldownMenuIOS({
     super.key,
-    this.property,
+    this.iconColor,
+    this.iconSize,
+    this.pulldownColor,
+    this.constraints,
+    this.offset = Offset.zero,
+    this.position,
+    this.enableFeedback,
+    this.padding = EdgeInsets.zero,
+    this.elevation,
+    this.clipBehavior = Clip.none,
+    this.shadowColor,
+    this.shape,
+    this.surfaceTintColor,
     this.disabled = false,
     this.onOpened,
     this.onCanceled,
     this.tooltip,
     this.onSelected,
-    this.disabledChild,
-    this.child,
+    this.icon,
+    this.childBuilder,
     this.highlightColor,
     required this.items,
     required this.selectionType,
   });
 
+  final Color? pulldownColor;
+  final Color? highlightColor;
+
+  final Widget? icon;
+  final Color? iconColor;
+  final double? iconSize;
+  final double? elevation;
+  final Color? shadowColor;
+  final Color? surfaceTintColor;
+  final EdgeInsetsGeometry padding;
+  final Offset offset;
+  final ShapeBorder? shape;
+  final bool? enableFeedback;
+  final PopupMenuPosition? position;
+  final Clip clipBehavior;
+  final BoxConstraints? constraints;
+
   final String? tooltip;
   final bool disabled;
   final VoidCallback? onOpened;
-  final List<AdaptivePulldownMenuItemEntry> items;
+  final List<AdaptivePulldownMenuItemEntry<T>> items;
   final PulldownMenuSelectedCallback<T>? onSelected;
   final PopupMenuCanceled? onCanceled;
-  final Widget? disabledChild;
-  final Widget? child;
+  final Widget Function(BuildContext context, VoidCallback showMenu)?
+      childBuilder;
 
-  final Color? highlightColor;
-
-  final PulldownMenuIOSProperty? property;
   final SelectionType selectionType;
 
   @override
-  Widget build(BuildContext context) {
-    // return CupertinoContextMenu(
-    //   actions: _buildActionItems(context).map((e) {
-    //     return CupertinoContextMenuAction(
-    //       onPressed: e.onPressed,
-    //       child: e.item.buildListTile(context),
-    //     );
-    //   }).toList(),
-    //   child: AdaptiveIconButton(
-    //    onPressed: disabled ? null : () => _buildPulldown(context),
-    //     icon: (disabled ? disabledChild : child) ?? _defaultIcon(context),
-    //   ).iOS(context),
-    // );
-    return Tooltip(
-      message: tooltip ?? MaterialLocalizations.of(context).showMenuTooltip,
-      child: AdaptiveIconButton(
-        onPressed: disabled ? null : () => _buildPulldown(context),
-        icon: (disabled ? disabledChild : child) ?? _defaultIcon(context),
-      ).iOS(context),
-    );
-  }
+  State<PulldownMenuIOS<T>> createState() => _PulldownMenuIOSState<T>();
+}
 
-  void _buildPulldown(BuildContext context) {
-    onOpened?.call();
-    showCupertinoModalPopup(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoActionSheet(
-          actions: _buildActionItems(context),
-          cancelButton: _buildCancelButton(context),
-        );
-      },
-    );
-  }
+class _PulldownMenuIOSState<T> extends State<PulldownMenuIOS<T>> {
+  late final _offset = widget.offset;
+  late final _padding = widget.padding;
 
-  List<_CupertinoPulldownItem> _buildActionItems(BuildContext context) {
-    return items
-        .map((item) {
-          if (item is AdaptivePulldownMenuItem<T>) {
-            return _buildCupertinoPulldownItem(context, item);
-          }
-          return const SizedBox.shrink();
-        })
-        .whereType<_CupertinoPulldownItem>()
-        .toList();
-  }
-
-  _CupertinoPulldownItem _buildCupertinoPulldownItem(
-    BuildContext context,
-    AdaptivePulldownMenuItem<T> item,
-  ) {
-    return _CupertinoPulldownItem(
-      highlightColor: highlightColor,
-      disabledNoneColor: property?.disabledNoneColor,
-      enabled: item.enabled ?? selectionType == SelectionType.none,
-      selectionType: selectionType,
-      onPressed: () {
-        item.onTap?.call();
-        onSelected?.call(items.indexOf(item), item.value);
-        Navigator.maybePop(context);
-      },
-      item: item,
-    );
-  }
-
-  Widget _buildCancelButton(BuildContext context) {
-    return CupertinoActionSheetAction(
-      child: Text(
-        property?.cancelButtonLabel ??
-            MaterialLocalizations.of(context).cancelButtonLabel,
+  /// A method to show a popup menu with the items supplied to
+  /// [PopupMenuButton.itemBuilder] at the position of your [PopupMenuButton].
+  ///
+  /// By default, it is called when the user taps the button and [PopupMenuButton.enabled]
+  /// is set to `true`. Moreover, you can open the button by calling the method manually.
+  ///
+  /// You would access your [PopupMenuButtonState] using a [GlobalKey] and
+  /// show the menu of the button with `globalKey.currentState.showButtonMenu`.
+  void showButtonMenu() {
+    final PopupMenuThemeData popupMenuTheme = PopupMenuTheme.of(context);
+    final RenderBox button = context.findRenderObject()! as RenderBox;
+    final RenderBox overlay =
+        Navigator.of(context).overlay!.context.findRenderObject()! as RenderBox;
+    final PopupMenuPosition popupMenuPosition =
+        widget.position ?? popupMenuTheme.position ?? PopupMenuPosition.over;
+    late Offset offset;
+    switch (popupMenuPosition) {
+      case PopupMenuPosition.over:
+        offset = _offset;
+      case PopupMenuPosition.under:
+        offset = Offset(0.0, button.size.height) + _offset;
+        if (widget.childBuilder == null) {
+          // Remove the padding of the icon button.
+          offset -= Offset(0.0, _padding.vertical / 2);
+        }
+    }
+    final RelativeRect position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        button.localToGlobal(offset, ancestor: overlay),
+        button.localToGlobal(button.size.bottomRight(Offset.zero) + offset,
+            ancestor: overlay),
       ),
-      onPressed: () {
-        Navigator.maybePop(context);
-        onCanceled?.call();
-      },
+      Offset.zero & overlay.size,
+    );
+    // Only show the menu if there is something to show
+    if (_allItemsEntry.isNotEmpty) {
+      widget.onOpened?.call();
+      showMenu<T?>(
+        context: context,
+        position: position,
+        items: _allItemsEntry,
+        elevation: widget.elevation,
+        shadowColor: widget.shadowColor,
+        shape: widget.shape ?? border,
+        clipBehavior: widget.clipBehavior,
+        constraints: widget.constraints,
+        color: widget.pulldownColor ??
+            CupertinoTheme.of(context).barBackgroundColor,
+        surfaceTintColor: widget.surfaceTintColor ??
+            CupertinoTheme.of(context).primaryContrastingColor,
+      ).then<void>((T? newValue) {
+        if (!mounted) return null;
+
+        if (newValue == null) {
+          widget.onCanceled?.call();
+          return null;
+        }
+      });
+    }
+  }
+
+  List<PopupMenuEntry<T?>> get _allItemsEntry {
+    final items = widget.items;
+
+    final Iterable<PopupMenuEntry<T?>> iterableEntry = items.map((item) {
+      return item.buildCustomCupertinoMenuItemEntry(
+        context: context,
+        highlightColor: widget.highlightColor,
+        selectionType: widget.selectionType,
+        onSelected: (item) {
+          widget.onSelected?.call(items.indexOf(item), item.value);
+        },
+      );
+    });
+
+    return iterableEntry.whereType<PopupMenuEntry<T?>>().toList();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Tooltip(
+      message:
+          widget.tooltip ?? MaterialLocalizations.of(context).showMenuTooltip,
+      child: widget.childBuilder?.call(context, showButtonMenu) ??
+          _buildIconButton(),
     );
   }
 
-  Widget _defaultIcon(BuildContext context) {
-    return IconTheme.merge(
-      data: const CupertinoIconThemeData().resolve(context),
-      child: const Icon(CupertinoIcons.chevron_down),
+  Widget _buildIconButton() {
+    final icon = IconTheme.merge(
+      data: CupertinoIconThemeData(
+        color: widget.iconColor,
+        size: widget.iconSize,
+      ).resolve(context),
+      child: const Icon(CupertinoIcons.ellipsis_vertical),
     );
+
+    return AdaptiveIconButton(
+      icon: widget.icon ?? icon,
+      onPressed: widget.disabled ? null : showButtonMenu,
+    ).iOS(context);
   }
 }
 
-class _CupertinoPulldownItem<T> extends StatelessWidget {
-  const _CupertinoPulldownItem({
+class _CustomCupertinoPopupMenuItem<T> extends PopupMenuItem<T> {
+  const _CustomCupertinoPopupMenuItem({
     super.key,
     this.highlightColor,
-    this.disabledNoneColor,
     required this.item,
-    required this.enabled,
-    required this.onPressed,
     required this.selectionType,
-  });
-
-  final bool enabled;
+    required VoidCallback super.onTap,
+  }) : super(child: null);
 
   final Color? highlightColor;
-  final Color? disabledNoneColor;
-
-  final VoidCallback onPressed;
+  final SelectionType selectionType;
   final AdaptivePulldownMenuItem<T> item;
 
-  final SelectionType selectionType;
+  @override
+  PopupMenuItemState<T, PopupMenuItem<T>> createState() =>
+      _CustomPopupMenuItemState<T>();
+}
 
-  static const EdgeInsets _insetPadding = EdgeInsets.all(15.0);
-
+class _CustomPopupMenuItemState<T>
+    extends PopupMenuItemState<T, _CustomCupertinoPopupMenuItem<T>> {
   @override
   Widget build(BuildContext context) {
-    final isSingleSelection = selectionType == SelectionType.single;
+    final item = widget.item;
+    final isSingleSelection = widget.selectionType == SelectionType.single;
+    final enabled = item.enabled ?? !isSingleSelection;
 
     if (isSingleSelection) {
-      final highlightBackgroundColor = enabled
-          ? (highlightColor ?? CupertinoColors.secondarySystemFill)
+      final highlightColor = enabled
+          ? (widget.highlightColor ?? CupertinoColors.secondarySystemFill)
           : null;
 
-      return CupertinoListTile(
-        onTap: onPressed,
-        title: item.child,
-        leading: item.leading,
-        trailing: item.trailing,
-        padding: _insetPadding,
-        backgroundColor: highlightBackgroundColor,
+      return CupertinoListTile.notched(
+        onTap: widget.onTap,
+        title: mergeWithColor(item.child, highlightColor, enabled),
+        leading: mergeWithColor(item.leading, highlightColor, enabled),
+        trailing: mergeWithColor(item.trailing, highlightColor, enabled),
+        backgroundColor: highlightColor,
+        backgroundColorActivated: widget.highlightColor,
       );
     }
 
-    return CupertinoListTile(
+    return CupertinoListTile.notched(
       title: item.child,
       leading: item.leading,
       trailing: item.trailing,
-      onTap: enabled ? onPressed : null,
-      padding: _insetPadding,
-      backgroundColor: enabled
-          ? Colors.transparent
-          : (disabledNoneColor ?? CupertinoColors.placeholderText),
+      onTap: enabled ? widget.onTap : null,
+      backgroundColorActivated: widget.highlightColor,
+    ).applyDisabledEffect(!enabled);
+  }
+
+  Widget mergeWithColor(Widget? child, Color? highlightColor, bool enabled) {
+    if (child == null) return const SizedBox.shrink();
+
+    final brightness = CupertinoTheme.brightnessOf(context);
+
+    final fillColor = widget.highlightColor != null
+        ? brightness.isLight
+            ? enabled
+                ? CupertinoColors.white
+                : CupertinoColors.black
+            : CupertinoColors.white
+        : null;
+
+    return IconTheme.merge(
+      data: CupertinoIconThemeData(color: fillColor),
+      child: DefaultTextStyle.merge(
+          style: TextStyle(color: fillColor), child: child),
     );
   }
 }
 
-class PulldownMenuIOSProperty extends CoreIOSProperty {
-  const PulldownMenuIOSProperty({
-    this.cancelButtonLabel,
-    this.disabledNoneColor,
-  });
+extension CustomCupertinoPopupMenuItemEx<T>
+    on AdaptivePulldownMenuItemEntry<T> {
+  PopupMenuEntry<T> buildCustomCupertinoMenuItemEntry({
+    Color? highlightColor,
+    ValueChanged<AdaptivePulldownMenuItem<T>>? onSelected,
+    required BuildContext context,
+    required SelectionType selectionType,
+  }) {
+    if (this is AdaptivePulldownMenuItem<T>) {
+      final item = this as AdaptivePulldownMenuItem<T>;
+      return _CustomCupertinoPopupMenuItem<T>(
+        item: item,
+        selectionType: selectionType,
+        highlightColor: highlightColor,
+        onTap: () {
+          onSelected?.call(item);
+          item.onTap?.call();
 
-  final Color? disabledNoneColor;
-  final String? cancelButtonLabel;
+          Navigator.maybePop(context);
+        },
+      );
+    }
+
+    return const PopupMenuDivider();
+  }
 }

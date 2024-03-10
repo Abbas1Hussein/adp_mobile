@@ -6,7 +6,8 @@ abstract class AdaptivePulldownMenuItemEntry<T> {
   const AdaptivePulldownMenuItemEntry();
 }
 
-class AdaptivePulldownMenuDivider<T> implements AdaptivePulldownMenuItemEntry<T> {
+class AdaptivePulldownMenuDivider<T>
+    implements AdaptivePulldownMenuItemEntry<T> {
   const AdaptivePulldownMenuDivider();
 }
 
@@ -110,7 +111,8 @@ class AdaptivePulldownMenuItem<T> extends AdaptivePulldownMenuItemEntry<T> {
             ],
           ),
         ),
-        if (trailing != null)Flexible(
+        if (trailing != null)
+          Flexible(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: trailing,

@@ -25,8 +25,3 @@ enum SelectionType {
   single,
 }
 
-/// Callback type for handling the selection of items in a pulldown menu.
-///
-/// The [index] parameter represents the index of the selected item.
-/// The [value] parameter represents the selected value of generic type [T].
-typedef PulldownMenuSelectedCallback<T> = void Function(int index, T? value);

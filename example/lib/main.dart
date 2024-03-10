@@ -2,12 +2,10 @@ import 'package:adp_mobile/adp_mobile.dart';
 import 'package:adp_mobile_preview/adp_mobile_preview.dart';
 import 'package:flutter/material.dart';
 
-const themeMode = ThemeMode.dark;
+const themeMode = ThemeMode.light;
 
 void main() async {
-  DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
-  );
+  DefaultsPlatformManager.initialize(targetPlatform: MobileTargetPlatform.iOS);
   runApp(const App());
 }
 
@@ -88,42 +86,19 @@ class _FirstScreenState extends State<FirstScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            AdaptivePulldownMenuButton<String>.singleChoice(
-                highlightColor: Colors.redAccent,
-                onSelected: (index, value) {
-                  print('index $index');
-                  print('value $value');
-                },
-                items: const [
-                  AdaptivePulldownMenuItem(
-                    enabled: true,
-                    value: 'New folder',
-                    leading: AdaptiveIcon(AdpIcons.folderAdd),
-                    child: Text('New folder'),
-                  ),
-                  AdaptivePulldownMenuItem(
-                    leading: AdaptiveIcon(AdpIcons.folderOpen),
-                    child: Text('Open'),
-                  ),
-                  AdaptivePulldownMenuItem(
-                    leading: AdaptiveIcon(AdpIcons.wand),
-                    child: Text('Open with'),
-                  ),
-                  AdaptivePulldownMenuItem(
-                    leading: AdaptiveIcon(AdpIcons.delete),
-                    child: Text('Remove'),
-                    enabled: false, // this will disabled.
-                  ),
-                  AdaptivePulldownMenuItem(
-                    leading: AdaptiveIcon(AdpIcons.phone),
-                    child: Text('Import from phone ...'),
-                  ),
-                  AdaptivePulldownMenuDivider(),
-                  AdaptivePulldownMenuItem(
-                    leading: AdaptiveIcon(AdpIcons.star),
-                    child: Text('Give us a star'),
-                  ),
-                ]),
+            AdaptivePopupMenuButton<int>(
+              value: currentIndex,
+              isExpanded: true,
+              onChanged: (value) => setState(() => currentIndex = value!),
+              items: const [
+                AdaptivePopupMenuItem(value: 0, child: Text('Blue')),
+                AdaptivePopupMenuItem(value: 1, child: Text('Green')),
+                AdaptivePopupMenuItem(value: 2, child: Text('Red')),
+                AdaptivePopupMenuItem(value: 3, child: Text('Yellow')),
+                AdaptivePopupMenuItem(value: 4, child: Text('Purple')),
+                AdaptivePopupMenuItem(value: 5, child: Text('Orange')),
+              ],
+            ),
             const AdaptiveCloseButton(),
             const AdaptiveBackButton(),
           ],
@@ -132,3 +107,12 @@ class _FirstScreenState extends State<FirstScreen> {
     );
   }
 }
+// AdaptivePulldownMenuButton<int>(
+//   highlightColor: CupertinoColors.systemBlue,
+//   items: List.generate(10, (index) {
+//     return AdaptivePulldownMenuItem(
+//       child: Text('${index + 1}'),
+//       leading: const AdaptiveIcon(AdpIcons.checkMark, size: 18.0, color: Colors.black),
+//     );
+//   }),
+// ),
