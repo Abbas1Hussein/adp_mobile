@@ -11,7 +11,7 @@ import 'platforms/platforms.dart';
 /// Use this widget to create date picker with platform-specific
 /// styling and behavior:
 /// - On IOS, [CupertinoDatePicker] is utilized.
-/// - On Android, [DatePicker] is used.
+/// - On Android, [DatePickerDialog] is used.
 class AdaptiveDatePicker extends CoreAdaptiveComponent<
     DatePickerAndroidProperty, DatePickerIOSProperty> {
   /// Creates an instance of [AdaptiveDatePicker].

@@ -17,8 +17,8 @@ import '../navigation.dart';
 ///
 /// Use this widget to create a navigation view with platform-specific
 /// styling and behavior:
-/// - On macOS, [MacosWindow] is utilized.
-/// - On Windows, [NavigationView] is used.
+/// - On iOS, [CupertinoTabScaffold] is utilized.
+/// - On Android, [Scaffold] is used.
 class AdaptiveNavigationView extends CoreAdaptiveComponent<
     NavigationViewAndroidProperty, CoreIOSProperty> {
   /// Creates an adaptive navigation view.
@@ -45,7 +45,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     this.resizeToAvoidBottomInset = true,
     required this.navigationBar,
     required this.children,
-  }) : assert(children.length >= 2);
+  });
 
   /// The adaptive app bar displayed at the top of the navigation view.
   ///

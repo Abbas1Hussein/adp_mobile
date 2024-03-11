@@ -63,32 +63,43 @@ class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
   @override
   Widget build(BuildContext context) {
     Widget? child;
+    bool applyDisabledEffect = false;
 
     if (widget.selectedItemBuilder != null && isEnabled) {
-      child = DefaultTextStyle.merge(
-        style: widget.style,
-        child: widget.selectedItemBuilder!(context)[currentIndex],
-      );
+      final items = widget.selectedItemBuilder!(context);
+      final selectedItem =
+          items.length > currentIndex ? items[currentIndex] : null;
+
+      child = selectedItem != null
+          ? DefaultTextStyle.merge(style: widget.style, child: selectedItem)
+          : null;
     } else if (widget.hasValue) {
-      child = widget.items?[currentIndex].child;
+      applyDisabledEffect = !isEnabled;
+      child = widget.items
+          ?.firstWhere((element) => element.value == widget.value)
+          .child;
     } else if (isEnabled) {
+      applyDisabledEffect = true;
       child = widget.placeholder;
     } else {
-      child = widget.disabledPlaceholder;
+      applyDisabledEffect = true;
+      child = widget.disabledPlaceholder ?? widget.placeholder;
+    }
+
+    if (child != null) {
+      child = Padding(padding: widget.padding, child: child);
     }
 
     final Color? iconColor =
         isEnabled ? widget.iconEnabledColor : widget.iconDisabledColor;
 
-    final Widget? icon = widget.icon != null
-        ? IconTheme.merge(
+    final Widget? icon = widget.icon != null ? IconTheme.merge(
             data: CupertinoIconThemeData(
               color: iconColor,
               size: widget.iconSize,
             ),
             child: widget.icon!,
-          )
-        : null;
+          ) : null;
 
     return SizedBox(
       width: widget.isExpanded ? double.infinity : null,
@@ -98,47 +109,45 @@ class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
         pulldownColor: widget.popupColor,
         elevation: widget.elevation?.toDouble(),
         position: widget.isExpanded ? PopupMenuPosition.under : null,
-        constraints: widget.isExpanded
-            ? const BoxConstraints.tightFor(width: double.infinity)
-            : null,
+        constraints: widget.isExpanded ? const BoxConstraints.tightFor(width: double.infinity) : null,
         selectionType: SelectionType.single,
         onSelected: (index, valueX) {
-          widget.onChanged?.call(valueX);
           setState(() {
             value = valueX;
             currentIndex = index;
           });
+          widget.onChanged?.call(valueX);
         },
         items: _buildItems(context),
         childBuilder: (context, showMenu) {
-          final isSelected = value == widget.value;
-          final backgroundColor =
-              isSelected ? widget.focusColor : Colors.transparent;
+          final isSelected = value == widget.value ||
+              widget.items![currentIndex].value == value;
 
-          return CupertinoMenuAction(
-            padding: widget.padding,
-            backgroundColor: backgroundColor,
-            pressedColor:
-                isSelected ? widget.focusColor?.withOpacity(0.90) : null,
-            textStyle: CupertinoTheme.of(context)
-                .textTheme
-                .textStyle
-                .copyWith(fontWeight: FontWeight.w800),
-            trailing: widget.icon == null
-                ? Icon(CupertinoIcons.chevron_down,
-                    size: widget.iconSize, color: iconColor)
-                : icon,
-            onPressed: showMenu,
-            child: Padding(
-              padding: widget.padding.add(
-                const EdgeInsetsDirectional.only(end: 6.0),
-              ),
+          final backgroundColor = (isSelected && isEnabled)
+              ? widget.focusColor
+              : Colors.transparent;
+
+          return IntrinsicWidth(
+            child: CupertinoMenuAction(
+              padding: widget.padding,
+              backgroundColor: backgroundColor,
+              pressedColor:
+                  isSelected ? widget.focusColor?.withOpacity(0.90) : null,
+              textStyle: CupertinoTheme.of(context)
+                  .textTheme
+                  .textStyle
+                  .copyWith(fontWeight: FontWeight.w800),
+              trailing: widget.icon == null
+                  ? Icon(CupertinoIcons.chevron_down,
+                      size: widget.iconSize, color: iconColor)
+                  : icon,
+              onPressed: showMenu,
               child: child,
+            ).applyDisabledEffect(
+              applyDisabledEffect,
+              0.5,
+              !isEnabled,
             ),
-          ).applyDisabledEffect(
-            !widget.hasValue && widget.selectedItemBuilder == null,
-            0.75,
-            !isEnabled,
           );
         },
       ),
@@ -147,8 +156,7 @@ class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
 
   List<AdaptivePulldownMenuItemEntry<T>> _buildItems(BuildContext context) {
     final items = widget.items?.map((item) {
-      final isMarked =
-          value == item.value || widget.items?.indexOf(item) == currentIndex;
+      final isMarked = widget.value == item.value;
 
       return item.toIOS(context, isMarked, widget.style);
     });

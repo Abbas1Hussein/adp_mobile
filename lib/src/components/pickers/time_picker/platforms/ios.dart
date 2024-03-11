@@ -42,7 +42,7 @@ class CupertinoTimePickerButton extends IOSPickerButton {
       }
     }();
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: children,
     );
   }

@@ -6,7 +6,6 @@ import '../../button_picker/ios.dart';
 import '../../dialog_picker/ios.dart';
 import '../../button_picker/button_constraints.dart';
 
-
 /// available modes for CupertinoDatePicker
 enum CupertinoDatePickerModeStyle {
   /// Displayed CupertinoDatePicker with IOS-Style Dialog.
@@ -44,7 +43,7 @@ class CupertinoDatePickerButton extends IOSPickerButton {
       }
     }();
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: children,
     );
   }

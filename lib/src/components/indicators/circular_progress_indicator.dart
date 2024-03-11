@@ -18,10 +18,6 @@ class AdaptiveCircularProgressIndicator extends CoreAdaptiveComponent {
   /// Creates an AdaptiveCircularProgressIndicator.
   ///
   /// [radius] must be non-negative
-  ///
-  /// See also:
-  ///
-  ///   * [AdaptiveProgressBarIndicator], a progress widget that shows progress in a horizontal bar.
   const AdaptiveCircularProgressIndicator({
     super.key,
     super.builders,

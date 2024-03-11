@@ -150,18 +150,17 @@ class AdaptiveListTile extends CoreAdaptiveComponent {
         color: enabled ? tileColor : disabledColor,
       ),
       child: GestureDetector(
-        onTap: enabled ? onLongPress : null,
-        child: CupertinoListTile(
-          onTap: enabled ? onTap : null,
-          title: buildTitle,
-          leading: buildLeading,
-          trailing: buildTrailing,
-          leadingToTitle: leadingWidth,
-          subtitle: Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
-            child: subtitle,
+        onLongPress: enabled ? onLongPress : null,
+        child: IntrinsicHeight(
+          child: CupertinoListTile(
+            onTap: enabled ? onTap : null,
+            title: buildTitle,
+            subtitle: subtitle,
+            leading: buildLeading,
+            trailing: buildTrailing,
+            leadingToTitle: leadingWidth,
+            padding: contentPadding,
           ),
-          padding: contentPadding,
         ),
       ),
     ).applyDisabledEffect(!enabled, 0.4);

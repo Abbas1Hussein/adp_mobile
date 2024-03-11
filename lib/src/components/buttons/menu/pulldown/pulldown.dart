@@ -376,10 +376,12 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
       childBuilder: (disabledChild != null || child != null)
           ? (context, showMenu) {
               if (disabled) return disabledChild ?? const SizedBox.shrink();
-              return CupertinoMenuAction(
-                backgroundColor: Colors.transparent,
-                onPressed: showMenu,
-                child: child,
+              return IntrinsicWidth(
+                child: CupertinoMenuAction(
+                  backgroundColor: Colors.transparent,
+                  onPressed: showMenu,
+                  child: child,
+                ),
               );
             }
           : null,

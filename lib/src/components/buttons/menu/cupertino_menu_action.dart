@@ -34,6 +34,7 @@ class CupertinoMenuAction extends StatefulWidget {
     this.pressedColor,
     this.backgroundColor,
     this.onPressed,
+    this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
     required this.child,
   });
 
@@ -59,6 +60,8 @@ class CupertinoMenuAction extends StatefulWidget {
 
   /// The padding around the content of the action.
   final EdgeInsetsGeometry? padding;
+
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   State<CupertinoMenuAction> createState() => _CupertinoMenuActionState();
@@ -107,21 +110,19 @@ class _CupertinoMenuActionState extends State<CupertinoMenuAction> {
                       top: 8, bottom: 8, left: 15.5, right: 17.5),
               child: DefaultTextStyle(
                 style: _textStyle,
-                child: IntrinsicWidth(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      if (widget.child != null) Flexible(child: widget.child!),
-                      if (widget.trailing != null)
-                        IconTheme.merge(
-                          data: CupertinoIconThemeData(
-                            color: _textStyle.color,
-                            size: 21,
-                          ),
-                          child: widget.trailing!,
+                child: Row(
+                  mainAxisAlignment: widget.mainAxisAlignment,
+                  children: <Widget>[
+                    if (widget.child != null) Flexible(child: widget.child!),
+                    if (widget.trailing != null)
+                      IconTheme.merge(
+                        data: CupertinoIconThemeData(
+                          color: _textStyle.color,
+                          size: 21,
                         ),
-                    ],
-                  ),
+                        child: widget.trailing!,
+                      ),
+                  ],
                 ),
               ),
             ),

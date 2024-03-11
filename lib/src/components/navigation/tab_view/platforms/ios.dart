@@ -63,7 +63,7 @@ class TabViewIOS extends StatelessWidget {
             width: (property?.isExpended ?? true) ? double.infinity : null,
             child: Padding(
               padding:  property?.margin ?? const EdgeInsets.all(4.0),
-              child: CupertinoSlidingSegmentedControl(
+              child: CupertinoSlidingSegmentedControl<int>(
                 thumbColor: selectedTabColor ?? _kThumbColor,
                 backgroundColor: property?.backgroundColor ?? CupertinoColors.tertiarySystemFill,
                 children: List.generate(

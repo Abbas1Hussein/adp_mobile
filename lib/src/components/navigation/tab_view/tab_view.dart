@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../../core/common/construct/component.dart';
 import './tab.dart';
@@ -19,9 +18,10 @@ const kContentPadding = EdgeInsets.all(8.0);
 ///
 /// Use this widget to create tab view with platform-specific
 /// styling and behavior:
-/// - On macOS, [MacosTabView] is utilized.
-/// - On Windows, [TabView] is used.
-class AdaptiveTabView extends CoreAdaptiveComponent<TabViewAndroidProperty, TabViewIOSProperty> {
+/// - On iOS, [CupertinoSlidingSegmentedControl] is utilized.
+/// - On Android, [TabBar] is used.
+class AdaptiveTabView
+    extends CoreAdaptiveComponent<TabViewAndroidProperty, TabViewIOSProperty> {
   /// Creates a adaptive tab view
   ///
   /// A tab view contains a row of navigational items, [tabs], that move the
@@ -48,9 +48,9 @@ class AdaptiveTabView extends CoreAdaptiveComponent<TabViewAndroidProperty, TabV
     this.unselectedIconTheme,
     this.selectedLabelStyle,
     this.unselectedLabelStyle,
-    this.currentIndex = 0,
-    this.contentMargin,
     this.contentPadding = kContentPadding,
+    this.contentMargin,
+    this.currentIndex = 0,
     required this.tabs,
     required this.children,
   })  : assert(tabs.length >= 2),
