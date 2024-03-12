@@ -156,11 +156,14 @@ class _PulldownMenuIOSState<T> extends State<PulldownMenuIOS<T>> {
 
   @override
   Widget build(BuildContext context) {
+    final child = widget.childBuilder != null
+        ? widget.childBuilder?.call(context, showButtonMenu)
+        : _buildIconButton();
+
     return Tooltip(
       message:
           widget.tooltip ?? MaterialLocalizations.of(context).showMenuTooltip,
-      child: widget.childBuilder?.call(context, showButtonMenu) ??
-          _buildIconButton(),
+      child: child,
     );
   }
 
@@ -175,7 +178,8 @@ class _PulldownMenuIOSState<T> extends State<PulldownMenuIOS<T>> {
 
     return AdaptiveIconButton(
       icon: widget.icon ?? icon,
-      onPressed: widget.disabled ? null : showButtonMenu,
+      onPressed:
+          widget.disabled || _allItemsEntry.isEmpty ? null : showButtonMenu,
     ).iOS(context);
   }
 }

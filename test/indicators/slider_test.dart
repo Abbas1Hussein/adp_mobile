@@ -7,7 +7,7 @@ import '../slide_to.dart';
 import '../wrap_app.dart';
 
 void main() {
-  initializeMobileDefaultsTests(MobileTargetPlatform.android);
+  initializeMobileDefaultsTests();
 
   testWidgets(
     'AdaptiveSlider renders correctly with value',
@@ -15,10 +15,7 @@ void main() {
       const double value = 50.0;
       await tester.pumpWidget(
         wrapAppWithScaffold(
-          child: AdaptiveSlider(
-            value: value,
-            onChanged: (value) {},
-          ),
+          child: AdaptiveSlider(value: value, onChanged: (value) {}),
         ),
       );
       await tester.pumpAndSettle();
@@ -48,6 +45,8 @@ void main() {
     'AdaptiveSlider updates value correctly with slide gesture',
     (WidgetTester tester) async {
       double progressValue = 0;
+      bool startCallbackCalled = false;
+      bool endCallbackCalled = false;
 
       await tester.pumpWidget(
         wrapAppWithScaffold(
@@ -55,6 +54,8 @@ void main() {
             builder: (context, setState) {
               return AdaptiveSlider(
                 onChanged: (value) => setState(() => progressValue = value),
+                onChangeStart: (_) => startCallbackCalled = true,
+                onChangeEnd: (_) => endCallbackCalled = true,
                 value: progressValue,
               );
             },
@@ -65,6 +66,8 @@ void main() {
       await tester.slideToValue(find.byType(AdaptiveSlider), 85.8);
 
       expect(progressValue, isNot(0));
+      expect(startCallbackCalled, isTrue);
+      expect(endCallbackCalled, isTrue);
     },
   );
 }

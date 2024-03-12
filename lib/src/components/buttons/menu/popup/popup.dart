@@ -231,7 +231,7 @@ class AdaptivePopupMenuButton<T> extends CoreAdaptiveComponent {
       icon: icon,
       value: value,
       onTap: onTap,
-      items: items,
+      items: items ?? const [],
       style: style,
       padding: padding,
       iconSize: iconSize,

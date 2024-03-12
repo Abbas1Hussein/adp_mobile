@@ -32,18 +32,46 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool currentIndex = false;
+  int randomNumber = 0;
 
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffoldPage(
       appBar: const AdaptiveAppBarPage(title: Text('title')),
       content: Center(
-        child: AdaptiveCheckbox(
-          value: currentIndex,
-          onChanged: (value) => setState(() => currentIndex = value),
+        child: AdaptivePopupMenuButton<String>(
+          value: foodItems[randomNumber],
+          placeholder: const Text('placeholder'),
+          disabledPlaceholder: const Text('disabledPlaceholder'),
+          // onChanged: (value) {
+          //   print(value);
+          //   setState(() => randomNumber = foodItems.indexOf(value!));
+          // },
+          items: foodItems.map((food) {
+            return AdaptivePopupMenuItem<String>(child: Text(food), value: food);
+          }).toList(),
         ),
       ),
     );
   }
+
+  final List<String> foodItems = [
+    'Pizza',
+    'Burger',
+    'Salad',
+    'Sushi',
+    'Tacos',
+    'Pasta',
+    'Chicken Curry',
+    'Ice Cream',
+    'Steak',
+    'Fried Rice',
+    'Pancakes',
+    'Shrimp Scampi',
+    'Lobster',
+    'Caesar Salad',
+    'Chocolate Cake',
+    'Grilled Cheese Sandwich',
+    'Hot Dog',
+  ];
 }

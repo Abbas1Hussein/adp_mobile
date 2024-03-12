@@ -156,7 +156,11 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
             child: IconTheme.merge(
               data: IconTheme.of(context).copyWith(color: foregroundColor),
               child: DefaultTextStyle.merge(
-                style: CupertinoTheme.of(context).textTheme.navLargeTitleTextStyle.copyWith(color: foregroundColor, fontWeight: FontWeight.w400),
+                style: CupertinoTheme.of(context)
+                    .textTheme
+                    .navLargeTitleTextStyle
+                    .copyWith(
+                        color: foregroundColor, fontWeight: FontWeight.w400),
                 child: label!,
               ),
             ),
