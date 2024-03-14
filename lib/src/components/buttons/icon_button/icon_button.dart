@@ -8,10 +8,7 @@ const _kAdpIconConstraints = BoxConstraints(minHeight: 20, minWidth: 30);
 
 /// A custom icon button widget that adapts its appearance based on the platform.
 ///
-/// Use this widget to create flat buttons with platform-specific
-/// styling and behavior:
-/// - On macOS, [MacosIconButton] is utilized.
-/// - On Windows, [IconButton] is used.
+/// Use this widget to create icon buttons with platform-specific:
 class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// Creates an instance of [AdaptiveIconButton].
   ///
@@ -62,11 +59,6 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// If this is set to null, the button will be disabled and [disabledColor] will used.
   final VoidCallback? onPressed;
 
-  /// The additional constraints to impose on the child.
-  ///
-  /// if null, default [_kAdpIconConstraints] will be used.
-  final BoxConstraints constraints;
-
   /// Defines the mouse cursor to be displayed when hovering over the icon button.
   final MouseCursor mouseCursor;
 
@@ -75,6 +67,14 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   ///
   /// if null, default radius is 4px.
   final BorderRadius? borderRadius;
+
+  /// The additional constraints to impose on the child.
+  ///
+  /// if null, default [_kAdpIconConstraints] will be used.
+  final BoxConstraints constraints;
+
+  /// The color of the button's background when the mouse hovers over it.
+  final Color? hoverColor;
 
   /// The background color of the icon button.
   ///
@@ -86,16 +86,11 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// If null, the default disabled color for the respective platform will be used.
   final Color? disabledColor;
 
-  /// The color of the button's background when the mouse hovers over it.
-  ///
-  /// if null, [color].withOpacity(0.8) will be used.
-  final Color? hoverColor;
-
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     final buildLabel = label != null
         ? DefaultTextStyle.merge(
-            style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w300,
                 ),
             child: label!,
@@ -110,7 +105,7 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
       constraints: constraints,
       disabledColor: disabledColor,
       icon: icon.margeWith(buildLabel),
-    );
+    ).applyDisabledEffect(onPressed == null);
   }
 
   @override
@@ -124,17 +119,12 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
     return IOSButton(
       pressedOpacity: 0.45,
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(4.0),
       mouseCursor: mouseCursor,
-      pressedColor: Colors.transparent,
       hoverColor: hoverColor ?? Colors.transparent,
+      pressedColor: hoverColor ?? Colors.transparent,
       onPressed: onPressed,
       constraints: constraints,
-      // disabledColor: disabledColor,
-      // backgroundColor: color,
-      shape: borderRadius != null
-          ? RoundedRectangleBorder(borderRadius: borderRadius!)
-          : null,
       child: Align(
         widthFactor: 1.0,
         heightFactor: 1.0,
@@ -142,9 +132,9 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
           fit: BoxFit.scaleDown,
           child: IconTheme.merge(
             data: CupertinoIconThemeData(
-              color: onPressed != null ? color : disabledColor,
+              color: onPressed != null ? color : (disabledColor ?? CupertinoColors.systemGrey),
             ).resolve(context),
-            child: icon.margeWith(buildLabel),
+            child: icon.margeWith(buildLabel, 6.0),
           ),
         ),
       ),

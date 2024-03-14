@@ -191,6 +191,7 @@ class AdaptivePopupMenuButton<T> extends CoreAdaptiveComponent {
   /// Defaults to 8, the appropriate elevation for dropdown buttons.
   final int elevation;
 
+  /// true if the current value of the popup button is not null.
   bool get hasValue => value != null;
 
   @override

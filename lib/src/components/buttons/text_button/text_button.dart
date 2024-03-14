@@ -54,32 +54,45 @@ class AdaptiveTextButton extends AdaptiveBaseButton {
     required Widget this.icon,
   }) : super(child: label);
 
+  /// The label widget for the button, typically is [Text].
   final Widget? label;
+
+  /// The icon widget for the button, typically is [AdaptiveIcon].
   final Widget? icon;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return TextButton(
-      style: androidDefaultStyle(),
-      onLongPress: onLongPress,
-      onPressed: onPressed,
-      child: child.margeWith(icon, 8.0),
-    );
+    if (icon != null) {
+      return TextButton.icon(
+        icon: icon!,
+        label: child,
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: androidDefaultStyle(),
+      );
+    } else {
+      return TextButton(
+        onPressed: onPressed,
+        onLongPress: onLongPress,
+        style: androidDefaultStyle(),
+        child: child.margeWith(icon, 8.0),
+      );
+    }
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     final theme = CupertinoTheme.of(context);
     return IOSButton(
-      pressedOpacity: 0.6,
       shape: shape,
       onPressed: onPressed,
-      mouseCursor: mouseCursor,
       onLongPress: onLongPress,
-      hoverColor: hoverColor ?? Colors.transparent,
-      pressedColor: pressedColor ?? CupertinoColors.quaternaryLabel,
       disabledColor: disabledColor,
       backgroundColor: backgroundColor,
+      hoverColor: hoverColor ?? Colors.transparent,
+      pressedColor: pressedColor ?? Colors.transparent,
+      mouseCursor: mouseCursor,
+      pressedOpacity: 0.65,
       padding: const EdgeInsets.all(2.0),
       child: DefaultTextStyle.merge(
         style: theme.textTheme.textStyle.copyWith(
@@ -87,7 +100,10 @@ class AdaptiveTextButton extends AdaptiveBaseButton {
           color: theme.primaryColor,
           fontWeight: FontWeight.w500,
         ),
-        child: child.margeWith(icon, 8.0),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: child.margeWith(icon, 8.0),
+        ),
       ),
     );
   }

@@ -1,15 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../core/common/construct/component.dart';
-import '../../core/extension/icon.dart';
 import 'icons.dart';
 
+/// An adaptive icon widget that provides platform-specific styling and behavior.
 class AdaptiveIcon extends CoreAdaptiveComponent {
   /// Creates an adp icon.
   ///
   /// The [size] and [color] default to the value given by the current platform Theme.
   const AdaptiveIcon(
-    this.adaptiveIcons, {
+    AdpIcons this.adaptiveIcons, {
     super.key,
     super.builders,
     this.size,
@@ -43,28 +43,22 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
     this.color,
     this.semanticLabel,
     this.textDirection,
-  })  : cupertino = iconData,
-        material = iconData,
+  })  : material = iconData,
+        cupertino = iconData,
         adaptiveIcons = null;
 
-  /// The size of the icon in logical pixels.
-  ///
-  /// Icons occupy a square with width and height equal to size.
-  ///
-  /// Defaults to the current platform theme size,
-  /// if any defaults to 24.0.
-  final double? size;
-
   /// The color to use when drawing the icon.
-  ///
-  /// Defaults to the current [AdaptiveIconTheme] color, if any.
   final Color? color;
 
-  /// The icon to display, used for different platforms.
-  /// The available icons are described in [CupertinoIcons], [materialIcons].
+  /// The size of the icon in logical pixels. icons occupy a square with width and height equal to size.
   ///
-  /// The icon can be null, in which case the widget will render as an empty
-  /// space of the specified [size].
+  /// Defaults to the current platform theme size.
+  final double? size;
+
+  /// The icon to display, used for different platforms.
+  /// The available icons are described in [CupertinoIcons] snd [MaterialIcons].
+  ///
+  /// The icon cannot be null.
   final AdpIcons? adaptiveIcons;
 
   /// The material UI icon data to be displayed on Android [materialIcons].
@@ -77,7 +71,8 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   /// used on [AdaptiveIcon.from].
   final IconData? cupertino;
 
-  /// Semantic label for the icon.
+  /// A semantic label providing accessibility information
+  /// for the icon.
   final String? semanticLabel;
 
   /// The text direction to use for rendering the icon.
@@ -99,9 +94,8 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     final icon = cupertino ?? adaptiveIcons?.cupertino;
-
     return IconTheme.merge(
-      data: IconTheme.of(context).toCupertino(context),
+      data: const CupertinoIconThemeData().resolve(context),
       child: Icon(
         icon,
         key: key,

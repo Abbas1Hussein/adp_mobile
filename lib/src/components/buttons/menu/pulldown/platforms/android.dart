@@ -38,7 +38,7 @@ class _CustomPopupMenuItemState<T>
         color: highlightColor,
         child: PopupMenuItem(
           value: item.value,
-          onTap: item.onTap,
+          onTap: widget.onTap,
           child: item.buildListTile(context),
         ),
       );
@@ -47,7 +47,7 @@ class _CustomPopupMenuItemState<T>
     return PopupMenuItem(
       enabled: enabled,
       value: item.value,
-      onTap: item.onTap,
+      onTap: widget.onTap,
       child: item.buildListTile(context),
     );
   }

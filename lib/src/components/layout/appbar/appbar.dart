@@ -553,7 +553,7 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
       primary: primary,
       elevation: elevation,
       shadowColor: shadowColor,
-      centerTitle: centerTitle,
+      centerTitle: centerTitle ?? true,
       titleSpacing: titleSpacing,
       clipBehavior: clipBehavior,
       leadingWidth: leadingWidth,

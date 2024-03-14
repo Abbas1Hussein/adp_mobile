@@ -18,14 +18,10 @@ class AdaptiveCircularProgressIndicator extends CoreAdaptiveComponent {
   /// Creates an AdaptiveCircularProgressIndicator.
   ///
   /// [radius] must be non-negative
-  const AdaptiveCircularProgressIndicator({
-    super.key,
-    super.builders,
-    this.color,
-    this.radius = 15,
-  });
+  const AdaptiveCircularProgressIndicator(
+      { super.key, super.builders, this.color, this.radius = 15 });
 
-  /// The border color of the progress circle.
+  /// The color of the progress circle.
   final Color? color;
 
   /// The radius of the progress circle, Defaults to 15px.

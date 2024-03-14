@@ -111,73 +111,62 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
   /// {@macro flutter.cupertino.CupertinoSwitch.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
 
+  /// The color of the switch knob based on the current value of the switch.
+  Color? get knobColor => value ? activeKnobColor : inactiveKnobColor;
+
+  /// Checks whether the radio button is enabled or disabled based,
+  /// on the presence of the [onChanged] callback.
   bool get _enabled => onChanged != null;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final buildLabel = label != null
-        ? GestureDetector(
-            onTap: _enabled ? () => onChanged?.call(!value) : null,
-            child: IconTheme.merge(
-              data: IconTheme.of(context).copyWith(color: foregroundColor),
-              child: DefaultTextStyle.merge(
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineMedium!
-                    .copyWith(color: foregroundColor),
-                child: label!,
-              ),
-            ),
-          )
-        : null;
+    final labelStyle = Theme.of(context).textTheme.headlineMedium!;
     return Switch(
       value: value,
-      activeColor: activeColor,
-      inactiveTrackColor: inactiveColor,
-      thumbColor: MaterialStateProperty.all(
-        value ? activeKnobColor : inactiveKnobColor,
-      ),
       autofocus: autofocus,
       onChanged: onChanged,
       focusNode: focusNode,
       focusColor: focusColor,
+      activeColor: activeColor,
       onFocusChange: onFocusChange,
+      inactiveTrackColor: inactiveColor,
       dragStartBehavior: dragStartBehavior,
-    ).margeWith(buildLabel, 6.0);
+      thumbColor: MaterialStateProperty.all(knobColor),
+    ).margeWith(_buildLabelWidget(context, labelStyle), 6.0);
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final knobColor = value ? activeKnobColor : inactiveKnobColor;
-
-    final buildLabel = label != null
-        ? GestureDetector(
-            onTap: _enabled ? () => onChanged?.call(!value) : null,
-            child: IconTheme.merge(
-              data: IconTheme.of(context).copyWith(color: foregroundColor),
-              child: DefaultTextStyle.merge(
-                style: CupertinoTheme.of(context)
-                    .textTheme
-                    .navLargeTitleTextStyle
-                    .copyWith(
-                        color: foregroundColor, fontWeight: FontWeight.w400),
-                child: label!,
-              ),
-            ),
-          )
-        : null;
+    final labelStyle = CupertinoTheme.of(context)
+        .textTheme
+        .navLargeTitleTextStyle
+        .copyWith(fontWeight: FontWeight.w400);
 
     return CupertinoSwitch(
       value: value,
-      thumbColor: knobColor,
-      trackColor: inactiveColor,
-      activeColor: activeColor,
       autofocus: autofocus,
       onChanged: onChanged,
       focusNode: focusNode,
+      thumbColor: knobColor,
       focusColor: focusColor,
+      activeColor: activeColor,
+      trackColor: inactiveColor,
       onFocusChange: onFocusChange,
       dragStartBehavior: dragStartBehavior,
-    ).margeWith(buildLabel, 10.0);
+    ).margeWith(_buildLabelWidget(context, labelStyle), 10.0);
+  }
+
+  Widget? _buildLabelWidget(BuildContext context, [TextStyle? style]) {
+    if (label != null) {
+      return GestureDetector(
+        onTap: _enabled ? () => onChanged?.call(!value) : null,
+        child: IconTheme.merge(
+          data: IconTheme.of(context).copyWith(color: foregroundColor),
+          child: DefaultTextStyle.merge(
+              style: style?.copyWith(color: foregroundColor), child: label!),
+        ),
+      );
+    }
+    return null;
   }
 }

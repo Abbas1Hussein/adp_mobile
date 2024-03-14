@@ -8,9 +8,10 @@ import '../../../core/common/adaptive.dart';
 /// Use this function to display a dialog with platform-specific styling and behavior.
 /// The appearance and behavior of the dialog adapt to the current platform (iOS, Android).
 ///
-/// see also:
-/// * [DialogPresenter]: A utility class for presenting different types of adaptive dialogs.
-/// * [AdaptiveDialog]: A custom dialog widget that adapts its appearance based on the platform.
+/// See also:
+///
+/// * [DialogPresenter], A utility class for presenting different types of adaptive dialogs.
+/// * [AdaptiveDialog], A custom dialog widget that adapts its appearance based on the platform.
 Future<T?>? showAdpDialog<T>({
   required BuildContext context,
   required WidgetBuilder builder,

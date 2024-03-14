@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../wrap_app.dart';
 
 void main() {
-  initializeMobileDefaultsTests(MobileTargetPlatform.iOS);
+  initializeMobileDefaultsTests();
 
   testWidgets(
     'AdaptiveListTile should render correctly',
@@ -69,8 +69,8 @@ void main() {
   testWidgets(
     'AdaptiveListTile should not trigger when click onTap and onLongPress callback disabled state',
     (widgetTester) async {
-      bool longPressTriggered = false;
       bool onTap = false;
+      bool longPressTriggered = false;
 
       await widgetTester.pumpWidget(
         wrapAppWithScaffold(
@@ -85,13 +85,12 @@ void main() {
         ),
       );
 
-      await widgetTester.longPress(find.byType(AdaptiveListTile));
+      await widgetTester.longPress(find.byType(AdaptiveListTile), warnIfMissed: false);
       await widgetTester.pumpAndSettle();
-
-      await widgetTester.tap(find.byType(AdaptiveListTile));
-      await widgetTester.pumpAndSettle();
-
       expect(longPressTriggered, false);
+
+      await widgetTester.tap(find.byType(AdaptiveListTile), warnIfMissed: false);
+      await widgetTester.pumpAndSettle();
       expect(onTap, false);
     },
   );

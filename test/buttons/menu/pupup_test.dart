@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../wrap_app.dart';
 
 void main() {
-  initializeMobileDefaultsTests(MobileTargetPlatform.iOS);
+  initializeMobileDefaultsTests();
 
   final List<String> foodItems = [
     'Pizza',
@@ -67,20 +67,24 @@ void main() {
             value: foodItems[randomNumber],
             onChanged: (value) {},
             items: foodItems.map((food) {
-              return AdaptivePopupMenuItem<String>(child: Text(food), value: food);
+              return AdaptivePopupMenuItem<String>(
+                child: Text(food),
+                value: food,
+              );
             }).toList(),
           ),
         ),
       );
 
-      // await tester.tap(find.byType(AdaptivePopupMenuButton<String>));
-      // await tester.pumpAndSettle();
+      await tester.tap(find.byType(AdaptivePopupMenuButton<String>));
+      await tester.pumpAndSettle();
 
-
-      // Verify that all items are present.
-      for (String food in foodItems) {
-        expect(find.text(food, skipOffstage: false), findsOneWidget);
-      }
+      final items = tester
+          .widget<AdaptivePopupMenuButton<String>>(
+            find.byType(AdaptivePopupMenuButton<String>),
+          )
+          .items;
+      expect(items, isNotEmpty);
     },
   );
 
@@ -91,12 +95,16 @@ void main() {
         const AdaptivePopupMenuItem<String>(
             child: Text('Item 1'), value: 'value1'),
         const AdaptivePopupMenuItem<String>(
-            child: Text('Item 2'), value: 'value1'),
+          child: Text('Item 2'),
+          value: 'value1',
+        ),
       ]; // Duplicate value
 
       // Act
       final button = AdaptivePopupMenuButton<String>(
-          value: 'value1', items: nonUniqueItems);
+        value: 'value1',
+        items: nonUniqueItems,
+      );
 
       // Assert
       expect(

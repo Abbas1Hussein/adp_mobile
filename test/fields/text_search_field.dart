@@ -4,7 +4,7 @@
 // import '../wrap_app.dart';
 //
 // void main() {
-//   initializeMobileDefaultsTests(MobileTargetPlatform.iOS);
+//   initializeMobileDefaultsTests(MobileTargetPlatform.android);
 //
 //   late TextEditingController controller;
 //   late List<AdaptiveSearchItem<int>> suggestions;
@@ -22,33 +22,32 @@
 //     },
 //   );
 //
+//
 //   testWidgets(
 //     'AdaptiveTextSearchField Entered text matches',
 //     (tester) async {
+//       const key = Key('adaptiveTextSearchField');
 //       const input = '- *** - {-(@AbbasHussein@)-} - *** -';
 //
 //       await tester.runAsync(() async {
 //         await tester.pumpWidget(
 //           wrapAppWithScaffold(
-//             child: Center(
-//               child: AdaptiveTextSearchField(
-//                 key: const Key('adaptiveTextSearchField'),
-//                 controller: controller,
-//                 suggestions: suggestions,
-//               ),
+//             child: AdaptiveTextSearchField(
+//               key: key,
+//               controller: controller,
+//               suggestions: suggestions,
 //             ),
 //           ),
 //         );
 //
 //         await tester.pumpAndSettle();
-//
 //         // Trigger suggestions by entering text
-//         await tester.enterText(
-//           find.byKey(const Key('adaptiveTextSearchField')),
-//           input,
-//         );
+//         await tester.enterText(find.byKey(key), input);
 //         expect(controller.text, input);
 //       });
 //     },
 //   );
+//
+//   tearDown(() => controller.dispose());
+//
 // }

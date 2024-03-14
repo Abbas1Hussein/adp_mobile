@@ -25,8 +25,8 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   ///
   /// ```dart
   /// AdaptivePulldownMenuButton<String>(
-  ///   title: 'Adp Menu',
-  ///   onSelected: (String? value) {
+  ///   child: Text('Adp Menu'),
+  ///   onSelected: (int index, String? value) {
   ///     // Handle the selected value
   ///   },
   ///   items: const [
@@ -120,7 +120,7 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
     this.offset = Offset.zero,
     this.position,
     this.enableFeedback,
-    this.padding = EdgeInsets.zero,
+    this.padding = const EdgeInsets.all(8.0),
     this.elevation,
     this.clipBehavior = Clip.none,
     this.shadowColor,
@@ -172,12 +172,18 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   /// title for the pull-down button.
   final Widget? disabledChild;
 
+  /// If true, the pulldown button won't be clickable.
+  ///
+  /// Default is false.
+  final bool disabled;
+
   /// The pulldown color. If null,
   ///
   /// on windows: [FluentThemeData.menuColor] is used.
   /// on macos: [MacosPulldownButtonTheme.pulldownColor] is used.
   final Color? pulldownColor;
 
+  /// The color used to highlight the selected item in the pulldown menu.
   final Color? highlightColor;
 
   /// If provided, this color is used for the button icon.
@@ -188,10 +194,6 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   final Color? iconColor;
 
   /// If provided, the size of the [Icon].
-  ///
-  /// If this property is null, then [IconThemeData.size] is used.
-  /// If [IconThemeData.size] is also null, then
-  /// default size is 24.0 pixels.
   final double? iconSize;
 
   /// The z-coordinate at which to place the menu when open. This controls the
@@ -201,19 +203,9 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   final double? elevation;
 
   /// The color used to paint the shadow below the menu.
-  ///
-  /// If null then the ambient [PopupMenuThemeData.shadowColor] is used.
-  /// If that is null too, then the overall theme's [ThemeData.shadowColor]
-  /// (default black) is used.
   final Color? shadowColor;
 
   /// The color used as an overlay on [color] to indicate elevation.
-  ///
-  /// If null, [PopupMenuThemeData.surfaceTintColor] is used. If that
-  /// is also null, the default value is [ColorScheme.surfaceTint].
-  ///
-  /// See [Material.surfaceTintColor] for more details on how this
-  /// overlay is applied.
   final Color? surfaceTintColor;
 
   /// Matches IconButton's 8 dps padding by default. In some cases, notably where
@@ -244,17 +236,7 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   final BoxConstraints? constraints;
 
   /// If provided, the shape used for the menu.
-  ///
-  /// If this property is null, then [PopupMenuThemeData.shape] is used.
-  /// If [PopupMenuThemeData.shape] is also null, then the default shape for
-  /// [MaterialType.card] is used. This default shape is a rectangle with
-  /// rounded edges of BorderRadius.circular(2.0).
   final ShapeBorder? shape;
-
-  /// If true, the pulldown button won't be clickable.
-  ///
-  /// Default is false.
-  final bool disabled;
 
   /// Whether detected gestures should provide acoustic and/or haptic feedback.
   ///
@@ -270,11 +252,6 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   ///
   /// [offset] is used to change the position of the popup menu relative to the
   /// position set by this parameter.
-  ///
-  /// If this property is `null`, then [PopupMenuThemeData.position] is used. If
-  /// [PopupMenuThemeData.position] is also `null`, then the position defaults
-  /// to [PopupMenuPosition.over] which makes the popup menu appear directly
-  /// over the button that was used to create it.
   final PopupMenuPosition? position;
 
   /// {@macro flutter.material.Material.clipBehavior}
@@ -284,15 +261,15 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
   /// Defaults to [Clip.none].
   final Clip clipBehavior;
 
-  /// Called when the pull-down button is tapped.
-  ///
-  /// The callback will not be invoked if the pull-down button is disabled.
-  final VoidCallback? onOpened;
-
   /// Called when the user dismisses the popup menu without selecting an item.
   ///
   /// If the user selects a value, [onSelected] is called instead.
   final PopupMenuCanceled? onCanceled;
+
+  /// Called when the pull-down button is tapped.
+  ///
+  /// The callback will not be invoked if the pull-down button is disabled.
+  final VoidCallback? onOpened;
 
   /// Text that describes the action that will occur when the button is pressed.
   ///
@@ -345,7 +322,9 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
         }).toList();
       },
       icon: disabled ? disabledIcon : icon,
-      child: disabled ? disabledChild : child,
+      child: disabledChild != null || child != null
+          ? Padding(padding: padding, child: disabled ? disabledChild : child)
+          : null,
     );
   }
 

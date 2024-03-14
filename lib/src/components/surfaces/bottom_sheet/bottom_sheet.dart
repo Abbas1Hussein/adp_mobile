@@ -61,7 +61,7 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// Typically this is a list of [AdaptiveBottomSheetAction] widgets.
   final List<Widget>? actions;
 
-  /// Padding around the set of [actions] at the bottom of the dialog.
+  /// Padding around the set of [actions] at the bottom of the bottom sheet.
   ///
   /// Typically used to provide padding to the button bar between the button bar
   /// and the edges of the dialog.
@@ -90,7 +90,7 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
                 child: title!,
               ),
             ),
-          Flexible(
+            Flexible(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: DefaultTextStyle.merge(

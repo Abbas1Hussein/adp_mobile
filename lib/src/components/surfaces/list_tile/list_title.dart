@@ -149,9 +149,9 @@ class AdaptiveListTile extends CoreAdaptiveComponent {
         shape: shape ?? LinearBorder.none,
         color: enabled ? tileColor : disabledColor,
       ),
-      child: GestureDetector(
-        onLongPress: enabled ? onLongPress : null,
-        child: IntrinsicHeight(
+      child: IntrinsicHeight(
+        child: GestureDetector(
+          onLongPress: enabled ? onLongPress : null,
           child: CupertinoListTile(
             onTap: enabled ? onTap : null,
             title: buildTitle,
@@ -163,6 +163,6 @@ class AdaptiveListTile extends CoreAdaptiveComponent {
           ),
         ),
       ),
-    ).applyDisabledEffect(!enabled, 0.4);
+    ).applyDisabledEffect(!enabled);
   }
 }

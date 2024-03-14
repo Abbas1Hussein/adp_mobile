@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-const _kTabBorderRadius = BorderRadius.all(Radius.circular(4.0));
 
 /// Represents a tab in the adaptive tab view.
 ///
@@ -9,7 +8,7 @@ const _kTabBorderRadius = BorderRadius.all(Radius.circular(4.0));
 ///   * [AdaptiveTabView], the widget that uses [AdaptiveTab] to create a
 ///     consistent tab view experience.
 class AdaptiveTab {
-  const AdaptiveTab({this.icon, required this.label});
+  const AdaptiveTab({ this.icon, required this.label });
 
   /// The main content of the tab, typically an [Text].
   final Widget label;

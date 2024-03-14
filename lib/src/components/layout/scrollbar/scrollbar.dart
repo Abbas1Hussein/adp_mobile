@@ -3,7 +3,19 @@ import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
 
+/// A scrollbar is a crucial interaction element in user interfaces, facilitating the navigation of content within a limited viewport.
+/// It allows users to access all the content, even if it exceeds the available screen space,
+/// by scrolling in various directions such as up, down, left, or right.
+///
+/// Use this widget to create scrollbar buttons with platform-specific
+/// styling and behavior:
+/// - On iOS, [CupertinoScrollbar] is utilized.
+/// - On Android, [Scrollbar] is used.
 class AdaptiveScrollbar extends CoreAdaptiveComponent {
+  /// Creates an adaptive style scrollbar that wraps the given [child].
+  ///
+  /// The [child] should be a source of [ScrollNotification] notifications,
+  /// typically a [Scrollable] widget.
   const AdaptiveScrollbar({
     super.key,
     super.builders,

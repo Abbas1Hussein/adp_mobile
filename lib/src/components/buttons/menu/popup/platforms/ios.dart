@@ -103,6 +103,7 @@ class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
         tooltip: '',
         onOpened: widget.onTap,
         pulldownColor: widget.popupColor,
+        highlightColor: widget.popupColor,
         elevation: widget.elevation?.toDouble(),
         position: widget.isExpanded ? PopupMenuPosition.under : null,
         constraints: widget.isExpanded
@@ -140,7 +141,8 @@ class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
   }
 
   Widget _buildIcon() {
-    final iconColor = isEnabled ? widget.iconEnabledColor : widget.iconDisabledColor;
+    final iconColor =
+        isEnabled ? widget.iconEnabledColor : widget.iconDisabledColor;
 
     return widget.icon != null
         ? IconTheme.merge(

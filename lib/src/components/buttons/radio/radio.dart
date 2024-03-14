@@ -28,7 +28,6 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
   ///   * [AdaptiveSlider], which let the user lie within a range of values,
   ///     (for example, 10, 20, 30, ... 100).
   ///   * [AdaptiveCheckbox], which let the user select multiple options.
-  ///   * [AdaptivePopup], which let the user select multiple options from a popup
   const AdaptiveRadio({
     super.key,
     super.builders,
@@ -104,25 +103,13 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
+  /// Checks whether the radio button is enabled or disabled based,
+  /// on the presence of the [onChanged] callback.
   bool get _enabled => onChanged != null;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final buildLabel = label != null
-        ? GestureDetector(
-            onTap: _enabled ? () => onChanged?.call(value) : null,
-            child: IconTheme.merge(
-              data: IconTheme.of(context).copyWith(color: foregroundColor),
-              child: DefaultTextStyle.merge(
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: foregroundColor),
-                child: label!,
-              ),
-            ),
-          )
-        : null;
+    final labelStyle = Theme.of(context).textTheme.labelLarge!;
     return Radio<T>(
       value: value,
       groupValue: groupValue,
@@ -143,36 +130,41 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
           return null;
         },
       ),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      overlayColor: MaterialStateProperty.all(activeColor?.withOpacity(0.5)),
       onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
-    ).margeWith(buildLabel, 2.0);
+    ).margeWith(_buildLabelWidget(context, labelStyle), 2.0);
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final buildLabel = label != null
-        ? GestureDetector(
-            onTap: _enabled ? () => onChanged?.call(value) : null,
-            child: IconTheme.merge(
-              data: IconTheme.of(context).copyWith(color: foregroundColor),
-              child: DefaultTextStyle.merge(
-                style: CupertinoTheme.of(context)
-                    .textTheme
-                    .navTitleTextStyle
-                    .copyWith(fontSize: 13.5, color: foregroundColor),
-                child: label!,
-              ),
-            ),
-          )
-        : null;
+    final labelStyle = CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(fontSize: 13.5);
     return CupertinoRadio<T>(
       value: value,
-      activeColor: activeColor,
-      inactiveColor: inactiveColor,
       groupValue: groupValue,
       autofocus: autofocus,
       focusNode: focusNode,
+      fillColor: activeColor,
       focusColor: focusColor,
+      activeColor: activeColor,
+      inactiveColor: inactiveColor,
       onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
-    ).margeWith(buildLabel);
+    ).margeWith(_buildLabelWidget(context, labelStyle));
+  }
+
+  Widget? _buildLabelWidget(BuildContext context, [TextStyle? style]) {
+    if (label != null) {
+      return GestureDetector(
+        onTap: _enabled ? () => onChanged?.call(value) : null,
+        child: IconTheme.merge(
+          data: IconTheme.of(context).copyWith(color: foregroundColor),
+          child: DefaultTextStyle.merge(
+            style: style?.copyWith(color: foregroundColor),
+            child: label!,
+          ),
+        ),
+      );
+    }
+    return null;
   }
 }

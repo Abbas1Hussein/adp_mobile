@@ -66,7 +66,7 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
         onSelected?.call(AdaptiveSearchItem.from(searchFieldItem));
       },
       suggestionsDecoration:
-          suggestionDecoration(Theme.of(context).highlightColor),
+          suggestionDecoration(Theme.of(context).canvasColor),
     );
   }
 
@@ -86,8 +86,12 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
       onSuggestionSelected: (searchFieldItem) {
         onSelected?.call(AdaptiveSearchItem.from(searchFieldItem));
       },
-      suggestionsDecoration:
-          suggestionDecoration(CupertinoColors.tertiarySystemFill),
+      suggestionsDecoration: suggestionDecoration(
+        CupertinoDynamicColor.resolve(
+          CupertinoTheme.of(context).barBackgroundColor,
+          context,
+        ),
+      ),
     );
   }
 
@@ -96,7 +100,7 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
       color: decoration?.color ?? color,
       border: decoration?.border,
       gradient: decoration?.gradient,
-      boxShadow: decoration?.boxShadow,
+      boxShadow: decoration?.boxShadow ,
       marginSuggestions: decoration?.marginSuggestions,
       paddingSuggestions: decoration?.paddingSuggestions,
       borderRadius: decoration?.borderRadius ?? BorderRadius.circular(8.0),

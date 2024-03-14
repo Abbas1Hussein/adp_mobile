@@ -4,34 +4,43 @@ import '../icon/icon.dart';
 import '../icon/icons.dart';
 import 'icon_button/icon_button.dart';
 
+/// An adaptive close button widget that provides platform-specific styling and behavior.
 class AdaptiveCloseButton extends StatelessWidget {
   const AdaptiveCloseButton({
     super.key,
     this.color,
+    this.tooltip,
     this.hoverColor,
     this.afterClose,
     this.onPressed,
     this.mouseCursor = MouseCursor.defer,
   });
 
-  /// The color of the close button.
+  /// The color of the back button.
   final Color? color;
 
   /// The color of the button's background when the mouse hovers over it.
   final Color? hoverColor;
 
-  /// The mouse cursor to be displayed when hovering over the close button.
-  final MouseCursor mouseCursor;
+  /// Callback function triggered when the back button is pressed.
+  final VoidCallback? onPressed;
 
   /// Callback function to be executed after navigating close.
   final VoidCallback? afterClose;
 
-  /// Callback function triggered when the close button is pressed.
-  final VoidCallback? onPressed;
+  /// The mouse cursor to be displayed when hovering over the back button.
+  final MouseCursor mouseCursor;
+
+  /// A message for the Tooltip widget and a semantic label providing accessibility information
+  /// for the close button.
+  ///
+  /// By Default is [MaterialLocalizations.of(context).closeButtonLabel].
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
-    final closeLabel = MaterialLocalizations.of(context).closeButtonLabel;
+    final closeLabel =
+        tooltip ?? MaterialLocalizations.of(context).closeButtonLabel;
 
     return Semantics(
       button: true,
@@ -52,8 +61,6 @@ class AdaptiveCloseButton extends StatelessWidget {
     onPressed?.call();
 
     final canPop = await Navigator.maybePop(context);
-
     if (canPop) afterClose?.call();
   }
 }
-

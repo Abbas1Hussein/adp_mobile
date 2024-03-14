@@ -5,7 +5,7 @@ const themeMode = ThemeMode.dark;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.android,
   );
   runApp(const App());
 }
@@ -32,46 +32,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int randomNumber = 0;
+  bool currentValue = false;
+
+  static const title = Text('What is Lorem Ipsum?');
+  static const content = Text(
+      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
 
   @override
   Widget build(BuildContext context) {
-    return AdaptiveScaffoldPage(
-      appBar: const AdaptiveAppBarPage(title: Text('title')),
-      content: Center(
-        child: AdaptivePopupMenuButton<String>(
-          value: foodItems[randomNumber],
-          placeholder: const Text('placeholder'),
-          disabledPlaceholder: const Text('disabledPlaceholder'),
-          // onChanged: (value) {
-          //   print(value);
-          //   setState(() => randomNumber = foodItems.indexOf(value!));
-          // },
-          items: foodItems.map((food) {
-            return AdaptivePopupMenuItem<String>(child: Text(food), value: food);
-          }).toList(),
-        ),
-      ),
+    return AdaptiveScaffold(
+      appBar: AdaptiveAppBar(title: const Text('title')),
+      body: const Center(child: AdaptiveDatePicker()),
     );
   }
-
-  final List<String> foodItems = [
-    'Pizza',
-    'Burger',
-    'Salad',
-    'Sushi',
-    'Tacos',
-    'Pasta',
-    'Chicken Curry',
-    'Ice Cream',
-    'Steak',
-    'Fried Rice',
-    'Pancakes',
-    'Shrimp Scampi',
-    'Lobster',
-    'Caesar Salad',
-    'Chocolate Cake',
-    'Grilled Cheese Sandwich',
-    'Hot Dog',
-  ];
 }

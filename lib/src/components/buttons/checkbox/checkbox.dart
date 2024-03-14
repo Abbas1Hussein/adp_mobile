@@ -49,8 +49,8 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
   /// If this callback is null, the checkbox will be displayed as disabled
   /// and will not respond to input gestures.
   ///
-  /// When the checkbox is tapped, if [tristate] is false (the default) then
-  /// the [onChanged] callback will be applied to `!value`. If [tristate] is
+  /// When the checkbox is tapped, if [value] is null (the default) then
+  /// the [onChanged] callback will be applied to `!value`. If [value] is
   /// true this callback cycle from false to true to null and back to false
   /// again.
   ///
@@ -87,9 +87,7 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
   /// The color to use for the check icon when this checkbox is checked.
   final Color? checkColor;
 
-  /// The color for the checkbox's border shadow when it has the input focus.
-  ///
-  /// If null, then a paler form of the [activeColor] will be used.
+  /// The color for the checkbox border shadow when it has the input focus.
   final Color? focusColor;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -98,10 +96,7 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
-  /// The color and width of the checkbox's border.
-  ///
-  /// If this property is null, then the side defaults to a one pixel wide
-  /// black, solid border.
+  /// The color and width of the checkbox border.
   final BorderSide? side;
 
   /// The shape of the checkbox.
@@ -110,21 +105,14 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
   /// [RoundedRectangleBorder] with a circular corner radius of 4.0.
   final OutlinedBorder? shape;
 
+  /// if onChanged callback is not null, indicating that the checkbox is enabled.
   bool get isEnabled => onChanged != null;
 
+  /// if the value of the checkbox is null, indicating it's in a tri-state mode.
   bool get isTriState => value == null;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final buildLabel = label != null
-        ? GestureDetector(
-            onTap: isEnabled ? () => onChanged?.call(value == false) : null,
-            child: DefaultTextStyle.merge(
-              style: Theme.of(context).typography.dense.titleMedium!,
-              child: label!,
-            ),
-          )
-        : null;
     return Checkbox(
       side: side ??
           (inactiveColor != null ? BorderSide(color: inactiveColor!) : null),
@@ -147,17 +135,13 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
         },
       ),
       onChanged: isEnabled ? (value) => onChanged?.call(value == true) : null,
-    ).margeWith(buildLabel);
+    ).margeWith(
+      _buildLabelWidget(Theme.of(context).textTheme.titleMedium!),
+    );
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final buildLabel = label != null
-        ? GestureDetector(
-            onTap: isEnabled ? () => onChanged?.call(value == false) : null,
-            child: label,
-          )
-        : null;
     return CupertinoCheckbox(
       side: side,
       shape: shape,
@@ -170,6 +154,19 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
       activeColor: activeColor,
       inactiveColor: inactiveColor,
       onChanged: isEnabled ? (value) => onChanged?.call(value == true) : null,
-    ).margeWith(buildLabel, 0.0);
+    ).margeWith(
+      _buildLabelWidget(CupertinoTheme.of(context).textTheme.navTitleTextStyle),
+      0.0,
+    );
+  }
+
+  Widget? _buildLabelWidget([TextStyle? style]) {
+    if (label != null) {
+      return GestureDetector(
+        onTap: isEnabled ? () => onChanged?.call(value == false) : null,
+        child: DefaultTextStyle.merge(style: style, child: label!),
+      );
+    }
+    return null;
   }
 }

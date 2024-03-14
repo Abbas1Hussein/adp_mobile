@@ -4,17 +4,21 @@ import 'package:flutter/material.dart';
 import '../../../core/common/construct/component.dart';
 import 'platforms/platforms.dart';
 
-/// A custom dialog widget that adapts its appearance based on the platform.
+/// A dialog is a user interface element that appears on top of the main content to prompt the user for information or to confirm an action.
+/// It typically contains a title, optional content, and one or more action buttons for the user to interact with.
+/// Dialogs are commonly used to display alerts, messages, warnings, or to request input from the user.
+/// They provide a way to temporarily interrupt the user's workflow and require their attention before proceeding.
+///
+/// See also:
+///
+/// * [showAdpDialog], A function to display an adaptive platform-specific dialog.
+/// * [DialogPresenter], A utility class for presenting different types of adaptive dialogs.
+/// * [AdaptiveDialogAction], which is an adp-style dialog button.
 ///
 /// Use this widget to create dialog with platform-specific
 /// styling and behavior:
 /// - On iOS, [CupertinoAlertDialog] is utilized.
 /// - On Android, [AlertDialog] is used.
-///
-/// See also:
-/// * [showAdpDialog], A function to display an adaptive platform-specific dialog.
-/// * [DialogPresenter], A utility class for presenting different types of adaptive dialogs.
-/// * [AdaptiveDialogAction], which is an adp-style dialog button.
 class AdaptiveDialog
     extends CoreAdaptiveComponent<DialogAndroidProperty, DialogIOSProperty> {
   /// Creates an adp dialog-Style.
@@ -188,8 +192,7 @@ class AdaptiveDialog
       scrollController: property?.scrollController,
       actionScrollController: property?.actionScrollController,
       insetAnimationCurve: property?.insetAnimationCurve ?? Curves.decelerate,
-      insetAnimationDuration:
-          property?.insetAnimationDuration ?? const Duration(milliseconds: 100),
+      insetAnimationDuration: property?.insetAnimationDuration ?? const Duration(milliseconds: 100),
     );
   }
 }
@@ -214,14 +217,14 @@ class AdaptiveDialogAction extends CoreAdaptiveComponent {
   /// Typically a [Text] widget.
   final Widget child;
 
+  /// [TextStyle] to apply to any text that appears in this button.
+  final TextStyle? textStyle;
+
   /// The callback that is called when the button is tapped or otherwise
   /// activated.
   ///
   /// If this is set to null, the button will be disabled.
   final VoidCallback? onPressed;
-
-  /// [TextStyle] to apply to any text that appears in this button.
-  final TextStyle? textStyle;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
