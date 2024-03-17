@@ -1,11 +1,11 @@
 import 'package:adp_mobile/adp_mobile.dart';
 import 'package:adp_mobile_preview/adp_mobile_preview.dart';
 
-const themeMode = ThemeMode.dark;
+const themeMode = ThemeMode.light;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.android,
+    targetPlatform: MobileTargetPlatform.iOS,
   );
   runApp(const App());
 }
@@ -34,15 +34,35 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool currentValue = false;
 
-  static const title = Text('What is Lorem Ipsum?');
-  static const content = Text(
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.');
-
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
       appBar: AdaptiveAppBar(title: const Text('title')),
-      body: const Center(child: AdaptiveDatePicker()),
+      body: Center(
+        child: AdaptiveTextSearchField<String>(
+          onSelected: (value) => debugPrint('You just selected ${value.searchKey}'),
+          suggestions: _kOptions.map(
+            (searchKey) => AdaptiveSearchItem<String>(searchKey: searchKey),
+          ).toList(),
+        ),
+      ),
     );
   }
+
+  static final List<String> _kOptions = <String>[
+    '0',
+    '1',
+    '10',
+    '100',
+    '1000',
+    '10000',
+    '100000',
+    '1000000',
+    '10000000',
+    '100000000',
+    '1000000000',
+    '10000000000',
+    '100000000000',
+    '1000000000000',
+  ];
 }

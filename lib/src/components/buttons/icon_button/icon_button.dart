@@ -73,13 +73,13 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// if null, default [_kAdpIconConstraints] will be used.
   final BoxConstraints constraints;
 
-  /// The color of the button's background when the mouse hovers over it.
-  final Color? hoverColor;
-
   /// The background color of the icon button.
   ///
   /// If null, the default platform-specific background color will be used.
   final Color? color;
+
+  /// The color of the button's background when the mouse hovers over it.
+  final Color? hoverColor;
 
   /// The color to be used when the icon button is in a disabled state.
   ///
@@ -88,14 +88,12 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final buildLabel = label != null
-        ? DefaultTextStyle.merge(
+    final buildLabel = label != null ? DefaultTextStyle.merge(
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w300,
                 ),
             child: label!,
-          )
-        : null;
+          ) : null;
 
     return IconButton(
       color: color,
@@ -105,17 +103,15 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
       constraints: constraints,
       disabledColor: disabledColor,
       icon: icon.margeWith(buildLabel),
-    ).applyDisabledEffect(onPressed == null);
+    );
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final buildLabel = label != null
-        ? DefaultTextStyle.merge(
+    final buildLabel = label != null ? DefaultTextStyle.merge(
             style: CupertinoTheme.of(context).textTheme.textStyle,
             child: label!,
-          )
-        : null;
+          ) : null;
 
     return IOSButton(
       pressedOpacity: 0.45,

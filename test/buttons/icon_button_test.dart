@@ -40,15 +40,17 @@ void main() {
       bool checkValue = false;
 
       await tester.pumpWidget(
-        wrapApp(
-          child: AdaptiveIconButton(
-            onPressed: () => checkValue = true,
-            icon: const AdaptiveIcon(AdpIcons.add),
+        wrapAppWithScaffold(
+          child: Center(
+            child: AdaptiveIconButton(
+              onPressed: () => checkValue = true,
+              icon: const AdaptiveIcon(AdpIcons.add),
+            ),
           ),
         ),
       );
 
-      await tester.tap(find.byType(AdaptiveIcon));
+      await tester.tap(find.byType(AdaptiveIconButton));
       await tester.pumpAndSettle();
       expect(checkValue, true);
     },
@@ -58,19 +60,21 @@ void main() {
     'AdaptiveIconButton disabled state',
     (WidgetTester tester) async {
       await tester.pumpWidget(
-        wrapApp(
-          child: const AdaptiveIconButton(
-            onPressed: null,
-            icon: AdaptiveIcon(AdpIcons.app),
+        wrapAppWithScaffold(
+          child: const Center(
+            child: AdaptiveIconButton(
+              onPressed: null,
+              icon: AdaptiveIcon(AdpIcons.app),
+            ),
           ),
         ),
       );
 
       // Verify that the button is disabled and not tappable
       expect(find.byType(AdaptiveIconButton), findsOneWidget);
-
-      final iconButton =
-          tester.widget<AdaptiveIconButton>(find.byType(AdaptiveIconButton));
+      final iconButton = tester.widget<AdaptiveIconButton>(
+        find.byType(AdaptiveIconButton),
+      );
 
       expect(iconButton.onPressed, isNull);
 

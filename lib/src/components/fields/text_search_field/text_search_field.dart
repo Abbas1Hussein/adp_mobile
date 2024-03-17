@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:search_field_autocomplete/search_field_autocomplete.dart';
 
 import '../../../core/core.dart';
 import '../base_text_field.dart';
+import 'platform/platform.dart';
 import 'search_item.dart';
 
 /// A custom text search field widget that adapts its appearance based on the platform.
 ///
 /// Use this widget to create text search field  with platform-specific
 /// styling and behavior.
-final class AdaptiveTextSearchField<T> extends BaseTextField {
+final class AdaptiveTextSearchField<T extends Object> extends BaseTextField {
   /// An AdaptiveTextSearchField provides a list of suggestions for a user to select from
   /// as they type.
   ///
@@ -44,66 +43,18 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
   final ValueChanged<AdaptiveSearchItem<T>>? onSelected;
 
   /// The decoration for the suggestion list.
-  final SuggestionDecoration? decoration;
+  final Decoration? decoration;
 
   /// Callback widget to show when the search returns no results.
   final Widget? Function(String)? emptyBuilder;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return SearchFieldAutoComplete(
-      enabled: enabled,
-      autofocus: autofocus,
-      focusNode: focusNode,
-      controller: controller,
-      suggestionStyle: style,
-      suggestions: suggestions,
-      emptyBuilder: emptyBuilder,
-      placeholder: placeholder,
-      placeholderStyle: placeholderStyle,
-      appearance: Appearance.material,
-      onSuggestionSelected: (searchFieldItem) {
-        onSelected?.call(AdaptiveSearchItem.from(searchFieldItem));
-      },
-      suggestionsDecoration:
-          suggestionDecoration(Theme.of(context).canvasColor),
-    );
+    return MaterialAutocomplete(options: suggestions, onSelected: onSelected);
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    return SearchFieldAutoComplete(
-      enabled: enabled,
-      autofocus: autofocus,
-      focusNode: focusNode,
-      controller: controller,
-      suggestionStyle: style,
-      suggestions: suggestions,
-      emptyBuilder: emptyBuilder,
-      placeholder: placeholder,
-      placeholderStyle: placeholderStyle,
-      appearance: Appearance.cupertino,
-      onSuggestionSelected: (searchFieldItem) {
-        onSelected?.call(AdaptiveSearchItem.from(searchFieldItem));
-      },
-      suggestionsDecoration: suggestionDecoration(
-        CupertinoDynamicColor.resolve(
-          CupertinoTheme.of(context).barBackgroundColor,
-          context,
-        ),
-      ),
-    );
-  }
-
-  SuggestionDecoration? suggestionDecoration(Color color) {
-    return SuggestionDecoration(
-      color: decoration?.color ?? color,
-      border: decoration?.border,
-      gradient: decoration?.gradient,
-      boxShadow: decoration?.boxShadow ,
-      marginSuggestions: decoration?.marginSuggestions,
-      paddingSuggestions: decoration?.paddingSuggestions,
-      borderRadius: decoration?.borderRadius ?? BorderRadius.circular(8.0),
-    );
+    return CupertinoAutocomplete(options: suggestions, onSelected: onSelected);
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-const Color _kBackgroundColor = CupertinoDynamicColor.withBrightness(
+const Color kCupertinoMenuActionBackgroundColor = CupertinoDynamicColor.withBrightness(
   color: Color(0xFFF1F1F1),
   darkColor: Color(0xFF212122),
 );
-const Color _kBackgroundColorPressed = CupertinoDynamicColor.withBrightness(
+const Color kCupertinoMenuActionBackgroundColorPressed = CupertinoDynamicColor.withBrightness(
   color: Color(0xFFDDDDDD),
   darkColor: Color(0xFF3F3F40),
 );
@@ -33,6 +33,7 @@ class CupertinoMenuAction extends StatefulWidget {
     this.textStyle,
     this.pressedColor,
     this.backgroundColor,
+    this.borderRadius,
     this.onPressed,
     this.mainAxisAlignment = MainAxisAlignment.spaceBetween,
     required this.child,
@@ -57,6 +58,8 @@ class CupertinoMenuAction extends StatefulWidget {
 
   /// The color of the action when pressed.
   final Color? pressedColor;
+
+  final BorderRadiusGeometry? borderRadius;
 
   /// The padding around the content of the action.
   final EdgeInsetsGeometry? padding;
@@ -100,7 +103,7 @@ class _CupertinoMenuActionState extends State<CupertinoMenuAction> {
             button: true,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: widget.borderRadius ?? BorderRadius.circular(8.0),
                 color: _isPressed
                     ? CupertinoDynamicColor.resolve(pressedColor, context)
                     : CupertinoDynamicColor.resolve(backgroundColor, context),
@@ -132,9 +135,9 @@ class _CupertinoMenuActionState extends State<CupertinoMenuAction> {
     );
   }
 
-  Color get backgroundColor => widget.backgroundColor ?? _kBackgroundColor;
+  Color get backgroundColor => widget.backgroundColor ?? kCupertinoMenuActionBackgroundColor;
 
-  Color get pressedColor => widget.pressedColor ?? _kBackgroundColorPressed;
+  Color get pressedColor => widget.pressedColor ?? kCupertinoMenuActionBackgroundColorPressed;
 
   TextStyle get _textStyle {
     return widget.textStyle ??

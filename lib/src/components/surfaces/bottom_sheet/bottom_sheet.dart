@@ -47,7 +47,7 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// Typically a [Text] widget.
   final Widget content;
 
-  /// Style for the text in the [content] of this [AlertDialog].
+  /// Style for the text in the [content] of this [AdaptiveBottomSheet].
   final TextStyle? contentTextStyle;
 
   /// Padding around the content.
@@ -61,6 +61,9 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// Typically this is a list of [AdaptiveBottomSheetAction] widgets.
   final List<Widget>? actions;
 
+  /// Style for the text in the [content] of this [AdaptiveBottomSheet].
+  final TextStyle? actionsTextStyle;
+
   /// Padding around the set of [actions] at the bottom of the bottom sheet.
   ///
   /// Typically used to provide padding to the button bar between the button bar
@@ -72,67 +75,67 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// If there are no [actions], then no padding will be included.
   final EdgeInsetsGeometry? actionsPadding;
 
-  /// Style for the text in the [content] of this [AlertDialog].
-  final TextStyle? actionsTextStyle;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     return IntrinsicHeight(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DefaultTextStyle.merge(
-                style: titleTextStyle ??
-                    Theme.of(context).textTheme.titleSmall,
-                child: title!,
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (title != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DefaultTextStyle.merge(
+                  style:
+                      titleTextStyle ?? Theme.of(context).textTheme.titleSmall,
+                  child: title!,
+                ),
               ),
-            ),
             Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DefaultTextStyle.merge(
-                style: contentTextStyle ??
-                    Theme.of(context).textTheme.bodySmall,
-                child: SingleChildScrollView(child: content),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: DefaultTextStyle.merge(
+                  style:
+                      contentTextStyle ?? Theme.of(context).textTheme.bodySmall,
+                  child: SingleChildScrollView(child: content),
+                ),
               ),
             ),
-          ),
-          if (actions != null && actions!.isNotEmpty)
-            if (actions!.length <= 2)
-              Row(
-                children: actions!.map(
-                  (child) {
-                    return Expanded(
-                      child: Padding(
+            if (actions != null && actions!.isNotEmpty)
+              if (actions!.length <= 2)
+                Row(
+                  children: actions!.map(
+                    (child) {
+                      return Expanded(
+                        child: Padding(
+                          padding: actionsPadding ?? const EdgeInsets.all(4.0),
+                          child: DefaultTextStyle.merge(
+                            style: actionsTextStyle,
+                            child: child,
+                          ),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                )
+              else
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: actions!.map(
+                    (child) {
+                      return Padding(
                         padding: actionsPadding ?? const EdgeInsets.all(4.0),
                         child: DefaultTextStyle.merge(
                           style: actionsTextStyle,
                           child: child,
                         ),
-                      ),
-                    );
-                  },
-                ).toList(),
-              )
-            else
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: actions!.map(
-                  (child) {
-                    return Padding(
-                      padding: actionsPadding ?? const EdgeInsets.all(4.0),
-                      child: DefaultTextStyle.merge(
-                        style: actionsTextStyle,
-                        child: child,
-                      ),
-                    );
-                  },
-                ).toList(),
-              ),
-        ],
+                      );
+                    },
+                  ).toList(),
+                ),
+          ],
+        ),
       ),
     );
   }
@@ -143,21 +146,14 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
       title: title != null
           ? DefaultTextStyle.merge(style: titleTextStyle, child: title!)
           : null,
-      message: DefaultTextStyle.merge(
-        style: contentTextStyle,
-        child: content,
-      ),
-      actions: actions
-          ?.map(
-            (child) => Padding(
+      message: DefaultTextStyle.merge(style: contentTextStyle, child: content),
+      actions: actions?.map( (child) => Padding(
               padding: actionsPadding ?? EdgeInsets.zero,
               child: DefaultTextStyle.merge(
                 style: actionsTextStyle,
                 child: child,
               ),
-            ),
-          )
-          .toList(),
+            ), ).toList(),
     );
   }
 }
@@ -177,8 +173,6 @@ class AdaptiveBottomSheetAction extends CoreAdaptiveComponent {
 
   /// The callback that is called when the button is tapped or otherwise
   /// activated.
-  ///
-  /// If this is set to null, the button will be disabled.
   final VoidCallback onPressed;
 
   /// [TextStyle] to apply to any text that appears in this button.
