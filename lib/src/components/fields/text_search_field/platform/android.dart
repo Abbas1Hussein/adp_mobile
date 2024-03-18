@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
@@ -16,6 +17,10 @@ class MaterialAutocomplete<T> extends CustomAutocomplete<T> {
     super.optionsBuilder,
     super.fieldViewBuilder,
     super.optionsViewBuilder,
+    super.decoration,
+    super.fieldProperties,
+    super.suffixMode,
+    super.onSuffixTap,
     required super.options,
   });
 
@@ -28,8 +33,12 @@ class MaterialAutocomplete<T> extends CustomAutocomplete<T> {
   ) {
     return _MaterialAutocompleteField(
       focusNode: focusNode,
+      decoration: decoration,
+      suffixMode: suffixMode,
+      onSuffixTap: onSuffixTap,
+      fieldProperties: fieldProperties,
       onFieldSubmitted: onFieldSubmitted,
-      textEditingController: textEditingController,
+      textEditingController:fieldProperties?.controller ?? textEditingController,
     );
   }
 
@@ -43,9 +52,6 @@ class MaterialAutocomplete<T> extends CustomAutocomplete<T> {
       options: options,
       onSelected: onSelected,
       maxOptionsHeight: optionsMaxHeight,
-      decoration: const OptionsDecoration(
-        optionDecoration: OptionDecoration(),
-      ),
       displayStringForOption: displayStringForOption,
     );
   }
@@ -53,6 +59,10 @@ class MaterialAutocomplete<T> extends CustomAutocomplete<T> {
 
 class _MaterialAutocompleteField extends CustomAutocompleteFulField {
   const _MaterialAutocompleteField({
+    super.suffixMode,
+    super.onSuffixTap,
+    super.decoration,
+    super.fieldProperties,
     required super.focusNode,
     required super.onFieldSubmitted,
     required super.textEditingController,
@@ -60,23 +70,55 @@ class _MaterialAutocompleteField extends CustomAutocompleteFulField {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      focusNode: focusNode,
-
-      /// borderRadius: BorderRadius.zero,
-      controller: textEditingController,
-      decoration: InputDecoration(
-        hintText: MaterialLocalizations.of(context).searchFieldLabel,
-        prefixIcon: const Icon(Icons.search),
-        suffixIcon: textEditingController.text.isNotEmpty
-            ? IconButton(
-                onPressed: textEditingController.clear,
-                icon: const Icon(Icons.clear),
-              )
-            : null,
-      ),
-      onSubmitted: (String value) => onFieldSubmitted(),
+    final suffix = IconButton(
+      icon: fieldProperties?.suffix ?? const Icon(Icons.clear),
+      onPressed: onSuffixTap ?? textEditingController.clear,
     );
+
+    final showClearButton = _shouldShowAttachment(
+      hasText: textEditingController.text.isNotEmpty,
+      attachment: suffixMode ?? OverlayVisibilityMode.editing,
+    );
+
+    return DecoratedBox(
+      decoration: decoration ?? const BoxDecoration(),
+      child: TextField(
+        maxLines: 1,
+        controller: textEditingController,
+        focusNode: fieldProperties?.focusNode ?? focusNode,
+        enabled: fieldProperties?.enabled,
+        onTap: fieldProperties?.onTap,
+        onChanged: fieldProperties?.onChanged,
+        autofocus: fieldProperties?.autofocus ?? false,
+        autocorrect: fieldProperties?.autocorrect ?? true,
+        restorationId: fieldProperties?.restorationId,
+        smartDashesType: fieldProperties?.smartDashesType,
+        smartQuotesType: fieldProperties?.smartQuotesType,
+        keyboardType: fieldProperties?.keyboardType,
+        style: fieldProperties?.style,
+        enableIMEPersonalizedLearning:
+            fieldProperties?.enableIMEPersonalizedLearning ?? true,
+        decoration: InputDecoration(
+          suffixIcon: showClearButton ? suffix : null,
+          prefixIcon: fieldProperties?.prefix ?? const Icon(Icons.search),
+          hintText: fieldProperties?.placeholder ??
+              MaterialLocalizations.of(context).searchFieldLabel,
+          hintStyle: fieldProperties?.placeholderStyle,
+          border: decoration != null ? InputBorder.none : null,
+        ),
+        onSubmitted: (String value) => onFieldSubmitted(),
+      ),
+    );
+  }
+
+  static bool _shouldShowAttachment(
+      {required OverlayVisibilityMode attachment, required bool hasText}) {
+    return switch (attachment) {
+      OverlayVisibilityMode.never => false,
+      OverlayVisibilityMode.always => true,
+      OverlayVisibilityMode.editing => hasText,
+      OverlayVisibilityMode.notEditing => !hasText,
+    };
   }
 }
 
@@ -93,7 +135,8 @@ class _MaterialAutocompleteOptions<T> extends CustomAutocompleteOptions<T> {
   @override
   Widget backgroundWrapper(BuildContext context, Widget child) {
     return Padding(
-      padding: decoration?.margin ?? const EdgeInsets.only(right: 7.5),
+      padding:
+          decoration?.margin ?? const EdgeInsets.only(top: 6.0, right: 7.5),
       child: Material(
         elevation: 4.0,
         color: decoration?.color,

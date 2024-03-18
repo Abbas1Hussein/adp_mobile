@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../../buttons/menu/cupertino_menu_action.dart';
+import '../../../icon/icon.dart';
+import '../../fields_properties.dart';
 import '../search_item.dart';
 import 'common.dart';
 import 'model.dart';
@@ -17,6 +19,10 @@ class CupertinoAutocomplete<T> extends CustomAutocomplete<T> {
     super.optionsBuilder,
     super.fieldViewBuilder,
     super.optionsViewBuilder,
+    super.decoration,
+    super.fieldProperties,
+    super.suffixMode,
+    super.onSuffixTap,
     required super.options,
   });
 
@@ -29,6 +35,10 @@ class CupertinoAutocomplete<T> extends CustomAutocomplete<T> {
   ) {
     return _CupertinoAutocompleteField(
       focusNode: focusNode,
+      decoration: decoration,
+      suffixMode: suffixMode,
+      onSuffixTap: onSuffixTap,
+      fieldProperties:fieldProperties,
       onFieldSubmitted: onFieldSubmitted,
       textEditingController: textEditingController,
     );
@@ -51,6 +61,10 @@ class CupertinoAutocomplete<T> extends CustomAutocomplete<T> {
 
 class _CupertinoAutocompleteField extends CustomAutocompleteField {
   const _CupertinoAutocompleteField({
+    super.suffixMode,
+    super.onSuffixTap,
+    super.decoration,
+    super.fieldProperties,
     required super.focusNode,
     required super.onFieldSubmitted,
     required super.textEditingController,
@@ -58,10 +72,28 @@ class _CupertinoAutocompleteField extends CustomAutocompleteField {
 
   @override
   Widget build(BuildContext context) {
+    final Icon? suffixIcon = (fieldProperties?.suffix as AdaptiveIcon?)?.iOS(context);
     return CupertinoSearchTextField(
-      focusNode: focusNode,
-      borderRadius: BorderRadius.zero,
-      controller: textEditingController,
+      decoration: decoration,
+      controller: fieldProperties?.controller ?? textEditingController,
+      enabled: fieldProperties?.enabled,
+      onTap: fieldProperties?.onTap,
+      onChanged: fieldProperties?.onChanged,
+      restorationId: fieldProperties?.restorationId,
+      style: fieldProperties?.style,
+      placeholder: fieldProperties?.placeholder,
+      placeholderStyle: fieldProperties?.placeholderStyle,
+      focusNode: fieldProperties?.focusNode ?? focusNode,
+      autofocus: fieldProperties?.autofocus ?? false,
+      autocorrect: fieldProperties?.autocorrect ?? true,
+      smartDashesType: fieldProperties?.smartDashesType,
+      smartQuotesType: fieldProperties?.smartQuotesType,
+      keyboardType: fieldProperties?.keyboardType,
+      onSuffixTap: onSuffixTap,
+      prefixIcon: fieldProperties?.prefix ?? const Icon(CupertinoIcons.search),
+      suffixIcon: suffixIcon?? const Icon(CupertinoIcons.xmark_circle_fill),
+      suffixMode: suffixMode ?? OverlayVisibilityMode.editing,
+      enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
       onSubmitted: (String value) => onFieldSubmitted(),
     );
   }
@@ -80,9 +112,7 @@ class _CupertinoAutocompleteOptions<T> extends CustomAutocompleteOptions<T> {
   @override
   Widget backgroundWrapper(BuildContext context, Widget child) {
     return Padding(
-      padding: decoration?.margin ?? const EdgeInsets.only(
-        right: 8.0
-      ),
+      padding: decoration?.margin ?? const EdgeInsets.only(right: 8.0),
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: CupertinoDynamicColor.resolve(
@@ -100,7 +130,8 @@ class _CupertinoAutocompleteOptions<T> extends CustomAutocompleteOptions<T> {
   }
 
   @override
-  Widget optionBuilder(BuildContext context, bool isHighlight, VoidCallback onTap, String searchKey) {
+  Widget optionBuilder(BuildContext context, bool isHighlight,
+      VoidCallback onTap, String searchKey) {
     final OptionDecoration? option = decoration?.optionDecoration;
 
     return ClipRRect(

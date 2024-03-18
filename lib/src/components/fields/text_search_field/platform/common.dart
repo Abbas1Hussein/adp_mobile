@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../fields_properties.dart';
 import '../search_item.dart';
 import 'model.dart';
 
@@ -22,6 +23,10 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
     this.optionsViewBuilder,
     this.fieldViewBuilder,
     this.optionsBuilder,
+    this.suffixMode,
+    this.onSuffixTap,
+    this.decoration,
+    this.fieldProperties,
     required this.options,
   });
 
@@ -74,6 +79,12 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
   static String defaultStringForOption(AdaptiveSearchItem option) =>
       option.searchKey;
 
+
+  final BoxDecoration? decoration;
+  final VoidCallback? onSuffixTap;
+  final OverlayVisibilityMode? suffixMode;
+  final FieldProperties? fieldProperties;
+
   @override
   Widget build(BuildContext context) {
     return RawAutocomplete<AdaptiveSearchItem<T>>(
@@ -120,6 +131,10 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
 abstract class CustomAutocompleteField extends StatelessWidget {
   const CustomAutocompleteField({
     super.key,
+    this.decoration,
+    this.suffixMode,
+    this.onSuffixTap,
+    this.fieldProperties,
     required this.focusNode,
     required this.onFieldSubmitted,
     required this.textEditingController,
@@ -128,11 +143,20 @@ abstract class CustomAutocompleteField extends StatelessWidget {
   final FocusNode focusNode;
   final VoidCallback onFieldSubmitted;
   final TextEditingController textEditingController;
+
+  final BoxDecoration? decoration;
+  final VoidCallback? onSuffixTap;
+  final OverlayVisibilityMode? suffixMode;
+  final FieldProperties? fieldProperties;
 }
 
 abstract class CustomAutocompleteFulField extends StatefulWidget {
   const CustomAutocompleteFulField({
     super.key,
+    this.decoration,
+    this.suffixMode,
+    this.onSuffixTap,
+    this.fieldProperties,
     required this.focusNode,
     required this.onFieldSubmitted,
     required this.textEditingController,
@@ -141,6 +165,11 @@ abstract class CustomAutocompleteFulField extends StatefulWidget {
   final FocusNode focusNode;
   final VoidCallback onFieldSubmitted;
   final TextEditingController textEditingController;
+
+  final BoxDecoration? decoration;
+  final VoidCallback? onSuffixTap;
+  final OverlayVisibilityMode? suffixMode;
+  final FieldProperties? fieldProperties;
 
   Widget build(BuildContext context) => const SizedBox.shrink();
 
@@ -151,10 +180,14 @@ abstract class CustomAutocompleteFulField extends StatefulWidget {
 
 class _CustomAutocompleteFulFieldState
     extends State<CustomAutocompleteFulField> {
+
   @override
   void initState() {
     super.initState();
-    widget.textEditingController.addListener(_listener);
+    if (widget.fieldProperties?.controller == null){
+      widget.textEditingController.addListener(_listener);
+
+    }
   }
 
   void _listener() => setState(() {});
@@ -164,7 +197,9 @@ class _CustomAutocompleteFulFieldState
 
   @override
   void dispose() {
-    widget.textEditingController.removeListener(_listener);
+    if (widget.fieldProperties?.controller == null){
+      widget.textEditingController.removeListener(_listener);
+    }
     super.dispose();
   }
 }

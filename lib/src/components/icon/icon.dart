@@ -79,7 +79,7 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   final TextDirection? textDirection;
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
+  Icon android(BuildContext context, [CoreAndroidProperty? property]) {
     final icon = material ?? adaptiveIcons?.material;
     return Icon(
       icon,
@@ -92,18 +92,21 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   }
 
   @override
-  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
+  Icon iOS(BuildContext context, [CoreIOSProperty? property]) {
     final icon = cupertino ?? adaptiveIcons?.cupertino;
-    return IconTheme.merge(
-      data: const CupertinoIconThemeData().resolve(context),
-      child: Icon(
-        icon,
-        key: key,
-        size: size,
-        color: color,
-        semanticLabel: semanticLabel,
-        textDirection: textDirection,
-      ),
+    final iconStyle = const CupertinoIconThemeData().resolve(context);
+    return Icon(
+      icon,
+      key: key,
+      fill: iconStyle.fill,
+      grade: iconStyle.grade,
+      weight: iconStyle.weight,
+      shadows: iconStyle.shadows,
+      size: size ?? iconStyle.size,
+      color: color ?? iconStyle.color,
+      opticalSize: iconStyle.opticalSize,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection,
     );
   }
 }

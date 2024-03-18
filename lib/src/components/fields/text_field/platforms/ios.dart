@@ -37,11 +37,7 @@ const BoxDecoration kDefaultRoundedBorderDecoration = BoxDecoration(
 );
 
 class TextFieldIOS extends StatelessWidget {
-  const TextFieldIOS({
-    super.key,
-    this.property,
-    this.fieldProperties,
-  });
+  const TextFieldIOS({super.key, this.property, this.fieldProperties});
 
   final FieldIOSProperty? property;
   final FieldProperties? fieldProperties;
@@ -57,24 +53,24 @@ class TextFieldIOS extends StatelessWidget {
         onSubmitted: fieldProperties?.onSubmitted,
         onEditingComplete: fieldProperties?.onEditingComplete,
         placeholder: fieldProperties?.placeholder,
-        placeholderStyle: fieldProperties?.placeholderStyle ??
-            kDefaultPlaceholderStyle,
+        placeholderStyle: fieldProperties?.placeholderStyle ?? kDefaultPlaceholderStyle,
         padding: fieldProperties?.padding ?? const EdgeInsets.all(4.0),
         decoration: property?.decoration ?? kDefaultRoundedBorderDecoration,
         clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
         textDirection: fieldProperties?.textDirection,
         scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
         spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
-        enableIMEPersonalizedLearning: fieldProperties
-            ?.enableIMEPersonalizedLearning ?? true,
+        enableIMEPersonalizedLearning:
+            fieldProperties?.enableIMEPersonalizedLearning ?? true,
         cursorOpacityAnimates: fieldProperties?.cursorOpacityAnimates ?? true,
-        contentInsertionConfiguration: fieldProperties
-            ?.contentInsertionConfiguration,
+        contentInsertionConfiguration:
+            fieldProperties?.contentInsertionConfiguration,
         magnifierConfiguration: fieldProperties?.magnifierConfiguration,
         style: fieldProperties?.style,
         suffixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
         prefixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
-        clearButtonMode: property?.clearButtonMode ?? OverlayVisibilityMode.never,
+        clearButtonMode:
+            property?.clearButtonMode ?? OverlayVisibilityMode.never,
         prefix: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: fieldProperties?.prefix,
@@ -114,30 +110,32 @@ class TextFieldIOS extends StatelessWidget {
         obscuringCharacter: fieldProperties?.obscuringCharacter ?? '•',
         keyboardAppearance: fieldProperties?.keyboardAppearance,
         contextMenuBuilder:
-        fieldProperties?.contextMenuBuilder ?? kDefaultContextMenuBuilder,
+            fieldProperties?.contextMenuBuilder ?? kDefaultContextMenuBuilder,
         textAlign: fieldProperties?.textAlign ?? TextAlign.start,
         maxLengthEnforcement: fieldProperties?.maxLengthEnforcement,
         enableSuggestions: fieldProperties?.enableSuggestions ?? true,
         cursorRadius:
-        fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
+            fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
         scrollPadding:
-        fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
+            fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
         enableInteractiveSelection:
-        fieldProperties?.enableInteractiveSelection ?? true,
+            fieldProperties?.enableInteractiveSelection ?? true,
         selectionWidthStyle:
-        fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
+            fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
         dragStartBehavior:
-        fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
+            fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
         selectionHeightStyle:
-        fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
+            fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
         textCapitalization:
-        fieldProperties?.textCapitalization ?? TextCapitalization.none,
+            fieldProperties?.textCapitalization ?? TextCapitalization.none,
       ),
     );
   }
 
-  static Widget kDefaultContextMenuBuilder(BuildContext context,
-      EditableTextState editableTextState,) {
+  static Widget kDefaultContextMenuBuilder(
+    BuildContext context,
+    EditableTextState editableTextState,
+  ) {
     return CupertinoAdaptiveTextSelectionToolbar.editableText(
       editableTextState: editableTextState,
     );

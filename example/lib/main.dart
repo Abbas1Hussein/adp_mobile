@@ -5,7 +5,7 @@ const themeMode = ThemeMode.light;
 
 void main() async {
   DefaultsPlatformManager.initialize(
-    targetPlatform: MobileTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.android,
   );
   runApp(const App());
 }
@@ -34,15 +34,33 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool currentValue = false;
 
+  final textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
       appBar: AdaptiveAppBar(title: const Text('title')),
       body: Center(
         child: AdaptiveTextSearchField<String>(
-          onSelected: (value) => debugPrint('You just selected ${value.searchKey}'),
+          controller: textEditingController,
+          decoration: BoxDecoration(
+          color: AdpColors.red,
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+          suffixMode: OverlayVisibilityMode.always,
+          // suffix: const AdaptiveIcon(AdpIcons.cloudError),
+          // onSuffixTap: () {
+          //   print('object');
+          //   textEditingController.clear();
+          // },
+          prefix: const AdaptiveIcon(AdpIcons.search),
+          onSelected: (value) {
+            debugPrint('You just selected ${value.searchKey}');
+          },
           suggestions: _kOptions.map(
-            (searchKey) => AdaptiveSearchItem<String>(searchKey: searchKey),
+            (searchKey) {
+              return AdaptiveSearchItem<String>(searchKey: searchKey);
+            },
           ).toList(),
         ),
       ),

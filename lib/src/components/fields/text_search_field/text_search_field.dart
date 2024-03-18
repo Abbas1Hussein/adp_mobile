@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../../core/core.dart';
+import '../../icon/icon.dart';
 import '../base_text_field.dart';
 import 'platform/platform.dart';
 import 'search_item.dart';
@@ -9,7 +10,7 @@ import 'search_item.dart';
 ///
 /// Use this widget to create text search field  with platform-specific
 /// styling and behavior.
-final class AdaptiveTextSearchField<T extends Object> extends BaseTextField {
+final class AdaptiveTextSearchField<T> extends BaseTextField {
   /// An AdaptiveTextSearchField provides a list of suggestions for a user to select from
   /// as they type.
   ///
@@ -28,9 +29,13 @@ final class AdaptiveTextSearchField<T extends Object> extends BaseTextField {
     super.focusNode,
     super.placeholder,
     super.placeholderStyle,
+    super.prefix,
+    AdaptiveIcon? super.suffix,
     this.decoration,
     this.emptyBuilder,
     this.onSelected,
+    this.suffixMode,
+    this.onSuffixTap,
     required this.suggestions,
   });
 
@@ -42,19 +47,34 @@ final class AdaptiveTextSearchField<T extends Object> extends BaseTextField {
   /// Callback function called when the user selects a value from the search results.
   final ValueChanged<AdaptiveSearchItem<T>>? onSelected;
 
-  /// The decoration for the suggestion list.
-  final Decoration? decoration;
+  final BoxDecoration? decoration;
+  final VoidCallback? onSuffixTap;
+  final OverlayVisibilityMode? suffixMode;
 
   /// Callback widget to show when the search returns no results.
   final Widget? Function(String)? emptyBuilder;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return MaterialAutocomplete(options: suggestions, onSelected: onSelected);
+    return MaterialAutocomplete<T>(
+      decoration: decoration,
+      suffixMode: suffixMode,
+      options: suggestions,
+      onSuffixTap: onSuffixTap,
+      onSelected: onSelected,
+      fieldProperties: fieldProperties,
+    );
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    return CupertinoAutocomplete(options: suggestions, onSelected: onSelected);
+    return CupertinoAutocomplete<T>(
+      decoration: decoration,
+      suffixMode: suffixMode,
+      onSuffixTap: onSuffixTap,
+      options: suggestions,
+      onSelected: onSelected,
+      fieldProperties: fieldProperties,
+    );
   }
 }
