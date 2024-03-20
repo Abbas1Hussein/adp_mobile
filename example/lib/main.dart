@@ -1,7 +1,7 @@
 import 'package:adp_mobile/adp_mobile.dart';
 import 'package:adp_mobile_preview/adp_mobile_preview.dart';
 
-const themeMode = ThemeMode.light;
+const themeMode = ThemeMode.dark;
 
 void main() async {
   DefaultsPlatformManager.initialize(
@@ -34,34 +34,20 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool currentValue = false;
 
-  final textEditingController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
       appBar: AdaptiveAppBar(title: const Text('title')),
       body: Center(
         child: AdaptiveTextSearchField<String>(
-          controller: textEditingController,
-          decoration: BoxDecoration(
-          color: AdpColors.red,
-          borderRadius: BorderRadius.circular(12.0),
-        ),
-          suffixMode: OverlayVisibilityMode.always,
-          // suffix: const AdaptiveIcon(AdpIcons.cloudError),
-          // onSuffixTap: () {
-          //   print('object');
-          //   textEditingController.clear();
-          // },
-          prefix: const AdaptiveIcon(AdpIcons.search),
-          onSelected: (value) {
-            debugPrint('You just selected ${value.searchKey}');
-          },
-          suggestions: _kOptions.map(
+          options: _kOptions.map(
             (searchKey) {
               return AdaptiveSearchItem<String>(searchKey: searchKey);
             },
           ).toList(),
+          onSelected: (value) {
+            debugPrint('You just selected: ${value.searchKey}');
+          },
         ),
       ),
     );

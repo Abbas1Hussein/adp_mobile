@@ -1,32 +1,35 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import '../../fields_properties.dart';
 import '../search_item.dart';
+import 'empty_widget.dart';
 import 'model.dart';
 
+///
+///
 /// See also:
 ///
 ///  * [RawAutocomplete], which is what Autocomplete is built upon, and which
 ///    contains more detailed examples.
-abstract class CustomAutocomplete<T> extends StatelessWidget {
-  /// Creates an instance of [CustomAutocomplete].
-  const CustomAutocomplete({
+abstract class BaseAutocomplete<T> extends StatelessWidget {
+  /// Creates an instance of [BaseAutocomplete].
+  const BaseAutocomplete({
     super.key,
     this.onSelected,
     this.initialValue,
     this.optionsMaxHeight = 200.0,
-    this.optionsViewOpenDirection = OptionsViewOpenDirection.down,
     this.displayStringForOption = defaultStringForOption,
     this.optionsViewBuilder,
     this.fieldViewBuilder,
     this.optionsBuilder,
-    this.suffixMode,
     this.onSuffixTap,
+    this.suffixMode,
     this.decoration,
+    this.emptyBuilder,
     this.fieldProperties,
+    this.optionsDecoration,
     required this.options,
   });
 
@@ -36,7 +39,7 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
   final List<AdaptiveSearchItem<T>> options;
 
   /// {@macro flutter.widgets.RawAutocomplete.displayStringForOption}
-  final AutocompleteOptionToString<AdaptiveSearchItem<T>>
+  final AutocompleteOptionToString<AdaptiveSearchItem<T>>?
       displayStringForOption;
 
   /// {@macro flutter.widgets.RawAutocomplete.fieldViewBuilder}
@@ -58,9 +61,6 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
   final AutocompleteOptionsViewBuilder<AdaptiveSearchItem<T>>?
       optionsViewBuilder;
 
-  /// {@macro flutter.widgets.RawAutocomplete.optionsViewOpenDirection}
-  final OptionsViewOpenDirection optionsViewOpenDirection;
-
   /// The maximum height used for the default Material options list widget.
   ///
   /// When [optionsViewBuilder] is `null`, this property sets the maximum height
@@ -79,22 +79,25 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
   static String defaultStringForOption(AdaptiveSearchItem option) =>
       option.searchKey;
 
-
   final BoxDecoration? decoration;
   final VoidCallback? onSuffixTap;
   final OverlayVisibilityMode? suffixMode;
+
+  final EmptyBuilder? emptyBuilder;
   final FieldProperties? fieldProperties;
+  final OptionsDecoration? optionsDecoration;
 
   @override
   Widget build(BuildContext context) {
     return RawAutocomplete<AdaptiveSearchItem<T>>(
       onSelected: onSelected,
       initialValue: initialValue,
-      displayStringForOption: displayStringForOption,
-      optionsViewOpenDirection: optionsViewOpenDirection,
-      optionsBuilder: optionsBuilder ?? _optionsBuilder,
+      optionsBuilder: _optionsBuilder,
+      focusNode: fieldProperties?.focusNode,
+      textEditingController: fieldProperties?.controller,
       fieldViewBuilder: fieldViewBuilder ?? defaultFieldViewBuilder,
       optionsViewBuilder: optionsViewBuilder ?? defaultAutoCompleteOptions,
+      displayStringForOption: displayStringForOption ?? defaultStringForOption,
     );
   }
 
@@ -114,27 +117,41 @@ abstract class CustomAutocomplete<T> extends StatelessWidget {
   FutureOr<Iterable<AdaptiveSearchItem<T>>> _optionsBuilder(
     TextEditingValue textEditingValue,
   ) {
-    if (textEditingValue.text == '') {
+    if (textEditingValue.text.trim().isEmpty) {
       return Iterable<AdaptiveSearchItem<T>>.empty();
     }
 
-    return options.where(
-      (AdaptiveSearchItem<T> option) {
-        return option.searchKey.contains(
-          textEditingValue.text.toLowerCase(),
-        );
-      },
-    );
+    final Iterable<AdaptiveSearchItem<T>> filteredOptions =
+        (optionsBuilder?.call(textEditingValue) ??
+            options.where((AdaptiveSearchItem<T> option) {
+              return option.searchKey
+                  .toLowerCase()
+                  .contains(textEditingValue.text.toLowerCase());
+            })) as Iterable<AdaptiveSearchItem<T>>;
+
+    if (filteredOptions.isEmpty) {
+      return [
+        AdaptiveSearchItem<T>(
+          searchKey: EmptyModel(
+            searchKey: emptyKey,
+            enteredText: textEditingValue.text,
+          ).toString(),
+        ),
+      ];
+    }
+
+    return filteredOptions;
   }
 }
 
-abstract class CustomAutocompleteField extends StatelessWidget {
-  const CustomAutocompleteField({
+abstract class BaseAutocompleteField<T> extends StatelessWidget {
+  const BaseAutocompleteField({
     super.key,
     this.decoration,
     this.suffixMode,
     this.onSuffixTap,
     this.fieldProperties,
+    required this.options,
     required this.focusNode,
     required this.onFieldSubmitted,
     required this.textEditingController,
@@ -148,15 +165,17 @@ abstract class CustomAutocompleteField extends StatelessWidget {
   final VoidCallback? onSuffixTap;
   final OverlayVisibilityMode? suffixMode;
   final FieldProperties? fieldProperties;
+  final Iterable<AdaptiveSearchItem<T>> options;
 }
 
-abstract class CustomAutocompleteFulField extends StatefulWidget {
-  const CustomAutocompleteFulField({
+abstract class BaseAutocompleteFulField<T> extends StatefulWidget {
+  const BaseAutocompleteFulField({
     super.key,
     this.decoration,
     this.suffixMode,
     this.onSuffixTap,
     this.fieldProperties,
+    required this.options,
     required this.focusNode,
     required this.onFieldSubmitted,
     required this.textEditingController,
@@ -170,24 +189,20 @@ abstract class CustomAutocompleteFulField extends StatefulWidget {
   final VoidCallback? onSuffixTap;
   final OverlayVisibilityMode? suffixMode;
   final FieldProperties? fieldProperties;
+  final Iterable<AdaptiveSearchItem<T>> options;
 
   Widget build(BuildContext context) => const SizedBox.shrink();
 
   @override
-  State<CustomAutocompleteFulField> createState() =>
-      _CustomAutocompleteFulFieldState();
+  State<BaseAutocompleteFulField> createState() =>
+      _BaseAutocompleteFulFieldState();
 }
 
-class _CustomAutocompleteFulFieldState
-    extends State<CustomAutocompleteFulField> {
-
+class _BaseAutocompleteFulFieldState extends State<BaseAutocompleteFulField> {
   @override
   void initState() {
     super.initState();
-    if (widget.fieldProperties?.controller == null){
-      widget.textEditingController.addListener(_listener);
-
-    }
+    widget.textEditingController.addListener(_listener);
   }
 
   void _listener() => setState(() {});
@@ -197,29 +212,26 @@ class _CustomAutocompleteFulFieldState
 
   @override
   void dispose() {
-    if (widget.fieldProperties?.controller == null){
-      widget.textEditingController.removeListener(_listener);
-    }
+    widget.textEditingController.removeListener(_listener);
     super.dispose();
   }
 }
 
-abstract class CustomAutocompleteOptions<T> extends StatelessWidget {
-  const CustomAutocompleteOptions({
+abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
+  const BaseAutocompleteOptions({
     super.key,
     this.decoration,
+    this.displayStringForOption,
     required this.options,
     required this.onSelected,
     required this.maxOptionsHeight,
-    required this.displayStringForOption,
   });
 
   final double maxOptionsHeight;
-  final Iterable<AdaptiveSearchItem<T>> options;
   final OptionsDecoration? decoration;
+  final Iterable<AdaptiveSearchItem<T>> options;
   final AutocompleteOnSelected<AdaptiveSearchItem<T>> onSelected;
-  final AutocompleteOptionToString<AdaptiveSearchItem<T>>
-      displayStringForOption;
+  final AutocompleteOptionToString<AdaptiveSearchItem<T>>? displayStringForOption;
 
   @override
   Widget build(BuildContext context) {
@@ -227,37 +239,65 @@ abstract class CustomAutocompleteOptions<T> extends StatelessWidget {
       alignment: Alignment.topLeft,
       child: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: maxOptionsHeight),
-        child: backgroundWrapper(
-          context,
-          ListView.builder(
-            shrinkWrap: true,
-            padding: EdgeInsets.zero,
-            itemCount: options.length,
-            itemBuilder: (BuildContext context, int index) {
-              final AdaptiveSearchItem<T> option = options.elementAt(index);
+        child: _emptyBuilder ??
+            backgroundWrapper(
+              context,
+              ListView.builder(
+                shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                itemCount: options.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final AdaptiveSearchItem<T> option = options.elementAt(index);
 
-              final bool isHighlight =
-                  AutocompleteHighlightedOption.of(context) == index;
+                  final bool isHighlight =
+                      AutocompleteHighlightedOption.of(context) == index;
 
-              if (option.builder != null) {
-                return option.builder!(isHighlight, () => onSelected(option));
-              }
+                  if (option.builder != null) {
+                    return option.builder!(
+                        isHighlight, () => onSelected(option));
+                  }
 
-              return optionBuilder(
-                context,
-                isHighlight,
-                () => onSelected(option),
-                displayStringForOption(option),
-              );
-            },
-          ),
-        ),
+                  final defaultStringForOption =
+                      displayStringForOption?.call(option) ??
+                          BaseAutocomplete.defaultStringForOption(option);
+
+                  return optionBuilder(
+                    context,
+                    index,
+                    isHighlight,
+                    () => onSelected(option),
+                    defaultStringForOption,
+                  );
+                },
+              ),
+            ),
       ),
     );
   }
 
+  Widget emptyBuilder(BuildContext context, String value);
+
+  Widget? get _emptyBuilder {
+    if (options.isEmpty) return null;
+
+    final option = options.firstWhere(
+      (element) {
+        final key = EmptyModel.from(element.searchKey);
+        return key.searchKey == emptyKey;
+      },
+      orElse: () => const AdaptiveSearchItem(searchKey: ''),
+    );
+
+    if (option.searchKey.isNotEmpty) {
+      final key = EmptyModel.from(option.searchKey);
+      return Builder(builder: (context) {
+        return emptyBuilder(context, key.enteredText);
+      });
+    }
+    return null;
+  }
+
   Widget backgroundWrapper(BuildContext context, Widget child);
 
-  Widget optionBuilder(BuildContext context, bool isHighlight,
-      VoidCallback onTap, String searchKey);
+  Widget optionBuilder(BuildContext context, int index, bool isHighlight, VoidCallback onTap, String searchKey);
 }

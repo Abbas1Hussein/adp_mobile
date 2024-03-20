@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import '../../../core/core.dart';
 import '../../icon/icon.dart';
 import '../base_text_field.dart';
+import 'platform/empty_widget.dart';
+import 'platform/model.dart';
 import 'platform/platform.dart';
 import 'search_item.dart';
 
@@ -31,50 +33,105 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
     super.placeholderStyle,
     super.prefix,
     AdaptiveIcon? super.suffix,
-    this.decoration,
+    this.fieldViewBuilder,
+    this.optionsBuilder,
+    this.optionsMaxHeight = 200,
+    this.optionInitialValue,
+    this.optionsViewBuilder,
+    this.displayStringForOption,
     this.emptyBuilder,
     this.onSelected,
     this.suffixMode,
     this.onSuffixTap,
-    required this.suggestions,
+    this.decoration,
+    this.optionsDecoration,
+    required this.options,
   });
 
   /// A list of suggestions for the SearchFieldAutoComplete.
   ///
   /// Each suggestion should have a unique searchKey.
-  final List<AdaptiveSearchItem<T>> suggestions;
+  final List<AdaptiveSearchItem<T>> options;
 
   /// Callback function called when the user selects a value from the search results.
   final ValueChanged<AdaptiveSearchItem<T>>? onSelected;
 
-  final BoxDecoration? decoration;
+  /// {@macro flutter.widgets.RawAutocomplete.displayStringForOption}
+  final AutocompleteOptionToString<AdaptiveSearchItem<T>>?
+      displayStringForOption;
+
+  /// {@macro flutter.widgets.RawAutocomplete.fieldViewBuilder}
+  ///
+  /// If not provided, will build a standard Material-style text field by
+  /// default.
+  final AutocompleteFieldViewBuilder? fieldViewBuilder;
+
+  /// {@macro flutter.widgets.RawAutocomplete.optionsBuilder}
+  final AutocompleteOptionsBuilder<AdaptiveSearchItem<T>>? optionsBuilder;
+
+  /// {@macro flutter.widgets.RawAutocomplete.optionsViewBuilder}
+  ///
+  /// If not provided, will build a standard Material-style list of results by
+  /// default.
+  final AutocompleteOptionsViewBuilder<AdaptiveSearchItem<T>>?
+      optionsViewBuilder;
+
+  /// The maximum height used for the default Material options list widget.
+  ///
+  /// When [optionsViewBuilder] is `null`, this property sets the maximum height
+  /// that the options widget can occupy.
+  ///
+  /// The default value is set to 200.
+  final double optionsMaxHeight;
+
+  /// {@macro flutter.widgets.RawAutocomplete.initialValue}
+  final TextEditingValue? optionInitialValue;
+
   final VoidCallback? onSuffixTap;
   final OverlayVisibilityMode? suffixMode;
 
-  /// Callback widget to show when the search returns no results.
-  final Widget? Function(String)? emptyBuilder;
+  final BoxDecoration? decoration;
+  final OptionsDecoration? optionsDecoration;
+
+  final EmptyBuilder? emptyBuilder;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     return MaterialAutocomplete<T>(
-      decoration: decoration,
+      options: options,
       suffixMode: suffixMode,
-      options: suggestions,
-      onSuffixTap: onSuffixTap,
       onSelected: onSelected,
+      decoration: decoration,
+      onSuffixTap: onSuffixTap,
+      emptyBuilder: emptyBuilder,
+      optionsBuilder: optionsBuilder,
+      initialValue: optionInitialValue,
       fieldProperties: fieldProperties,
+      fieldViewBuilder: fieldViewBuilder,
+      optionsMaxHeight: optionsMaxHeight,
+      optionsDecoration: optionsDecoration,
+      optionsViewBuilder: optionsViewBuilder,
+      displayStringForOption: displayStringForOption,
     );
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     return CupertinoAutocomplete<T>(
-      decoration: decoration,
+      options: options,
       suffixMode: suffixMode,
-      onSuffixTap: onSuffixTap,
-      options: suggestions,
       onSelected: onSelected,
+      decoration: decoration,
+      onSuffixTap: onSuffixTap,
+      emptyBuilder: emptyBuilder,
+      optionsBuilder: optionsBuilder,
+      initialValue: optionInitialValue,
       fieldProperties: fieldProperties,
+      fieldViewBuilder: fieldViewBuilder,
+      optionsMaxHeight: optionsMaxHeight,
+      optionsDecoration: optionsDecoration,
+      optionsViewBuilder: optionsViewBuilder,
+      displayStringForOption: displayStringForOption,
     );
   }
 }

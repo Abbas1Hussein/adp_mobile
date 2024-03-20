@@ -35,7 +35,7 @@ void main() {
               child: AdaptiveTextSearchField(
                 key: key,
                 controller: controller,
-                suggestions: suggestions,
+                options: suggestions,
               ),
             ),
           );

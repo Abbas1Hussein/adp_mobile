@@ -3,26 +3,26 @@ import 'package:flutter/scheduler.dart';
 
 import '../../../buttons/menu/cupertino_menu_action.dart';
 import '../../../icon/icon.dart';
-import '../../fields_properties.dart';
 import '../search_item.dart';
 import 'common.dart';
 import 'model.dart';
 
-class CupertinoAutocomplete<T> extends CustomAutocomplete<T> {
+class CupertinoAutocomplete<T> extends BaseAutocomplete<T> {
   const CupertinoAutocomplete({
     super.key,
     super.onSelected,
     super.initialValue,
     super.optionsMaxHeight,
-    super.optionsViewOpenDirection,
     super.displayStringForOption,
     super.optionsBuilder,
     super.fieldViewBuilder,
     super.optionsViewBuilder,
-    super.decoration,
     super.fieldProperties,
-    super.suffixMode,
     super.onSuffixTap,
+    super.suffixMode,
+    super.decoration,
+    super.emptyBuilder,
+    super.optionsDecoration,
     required super.options,
   });
 
@@ -34,11 +34,12 @@ class CupertinoAutocomplete<T> extends CustomAutocomplete<T> {
     VoidCallback onFieldSubmitted,
   ) {
     return _CupertinoAutocompleteField(
+      options: options,
       focusNode: focusNode,
       decoration: decoration,
       suffixMode: suffixMode,
       onSuffixTap: onSuffixTap,
-      fieldProperties:fieldProperties,
+      fieldProperties: fieldProperties,
       onFieldSubmitted: onFieldSubmitted,
       textEditingController: textEditingController,
     );
@@ -53,18 +54,20 @@ class CupertinoAutocomplete<T> extends CustomAutocomplete<T> {
     return _CupertinoAutocompleteOptions<T>(
       options: options,
       onSelected: onSelected,
+      decoration: optionsDecoration,
       maxOptionsHeight: optionsMaxHeight,
       displayStringForOption: displayStringForOption,
     );
   }
 }
 
-class _CupertinoAutocompleteField extends CustomAutocompleteField {
+class _CupertinoAutocompleteField extends BaseAutocompleteField {
   const _CupertinoAutocompleteField({
     super.suffixMode,
     super.onSuffixTap,
     super.decoration,
     super.fieldProperties,
+    required super.options,
     required super.focusNode,
     required super.onFieldSubmitted,
     required super.textEditingController,
@@ -72,34 +75,47 @@ class _CupertinoAutocompleteField extends CustomAutocompleteField {
 
   @override
   Widget build(BuildContext context) {
-    final Icon? suffixIcon = (fieldProperties?.suffix as AdaptiveIcon?)?.iOS(context);
+    final Icon? suffixIcon =
+        (fieldProperties?.suffix as AdaptiveIcon?)?.iOS(context);
+
+    final placeholderStyle =
+        CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+              color: CupertinoDynamicColor.resolve(
+                  CupertinoColors.secondaryLabel, context),
+            );
+
     return CupertinoSearchTextField(
       decoration: decoration,
-      controller: fieldProperties?.controller ?? textEditingController,
+      focusNode: focusNode,
+      controller: textEditingController,
       enabled: fieldProperties?.enabled,
       onTap: fieldProperties?.onTap,
       onChanged: fieldProperties?.onChanged,
-      restorationId: fieldProperties?.restorationId,
       style: fieldProperties?.style,
       placeholder: fieldProperties?.placeholder,
-      placeholderStyle: fieldProperties?.placeholderStyle,
-      focusNode: fieldProperties?.focusNode ?? focusNode,
+      placeholderStyle: fieldProperties?.placeholderStyle ?? placeholderStyle,
+      restorationId: fieldProperties?.restorationId,
       autofocus: fieldProperties?.autofocus ?? false,
       autocorrect: fieldProperties?.autocorrect ?? true,
       smartDashesType: fieldProperties?.smartDashesType,
       smartQuotesType: fieldProperties?.smartQuotesType,
       keyboardType: fieldProperties?.keyboardType,
-      onSuffixTap: onSuffixTap,
       prefixIcon: fieldProperties?.prefix ?? const Icon(CupertinoIcons.search),
-      suffixIcon: suffixIcon?? const Icon(CupertinoIcons.xmark_circle_fill),
+      onSuffixTap: onSuffixTap,
+      suffixIcon: suffixIcon ?? const Icon(CupertinoIcons.xmark_circle_fill),
       suffixMode: suffixMode ?? OverlayVisibilityMode.editing,
       enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
-      onSubmitted: (String value) => onFieldSubmitted(),
+      onSubmitted: (String value) {
+        if (options.where((element) => element.searchKey == value).length ==
+            1) {
+          onFieldSubmitted();
+        }
+      },
     );
   }
 }
 
-class _CupertinoAutocompleteOptions<T> extends CustomAutocompleteOptions<T> {
+class _CupertinoAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
   const _CupertinoAutocompleteOptions({
     super.key,
     super.decoration,
@@ -111,15 +127,20 @@ class _CupertinoAutocompleteOptions<T> extends CustomAutocompleteOptions<T> {
 
   @override
   Widget backgroundWrapper(BuildContext context, Widget child) {
+    const effectedPadding = EdgeInsets.only(right: 8.0);
+
     return Padding(
-      padding: decoration?.margin ?? const EdgeInsets.only(right: 8.0),
+      padding: decoration?.margin?.add(effectedPadding) ?? effectedPadding,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: CupertinoDynamicColor.resolve(
             decoration?.color ?? kCupertinoMenuActionBackgroundColor,
             context,
           ),
-          shape: decoration?.shape ?? const RoundedRectangleBorder(),
+          shape: decoration?.shape ??
+              const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
+              ),
         ),
         child: Padding(
           padding: decoration?.padding ?? EdgeInsets.zero,
@@ -130,36 +151,69 @@ class _CupertinoAutocompleteOptions<T> extends CustomAutocompleteOptions<T> {
   }
 
   @override
-  Widget optionBuilder(BuildContext context, bool isHighlight,
+  Widget emptyBuilder(BuildContext context, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 4.0, right: 8.0),
+      child: CupertinoPopupSurface(
+        child: SizedBox(
+          width: double.infinity,
+          child: Padding(
+            padding: kDefaultOptionPadding,
+            child: Align(
+              alignment: Alignment.center,
+              widthFactor: 1,
+              heightFactor: 1,
+              child: Text(
+                'No matches found: $value',
+                style: CupertinoTheme.of(context).textTheme.textStyle.copyWith(
+                      fontWeight: FontWeight.w300,
+                    ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget optionBuilder(BuildContext context, int index, bool isHighlight,
       VoidCallback onTap, String searchKey) {
     final OptionDecoration? option = decoration?.optionDecoration;
 
-    return ClipRRect(
-      borderRadius: option?.borderRadius ?? BorderRadius.zero,
-      child: CupertinoListTile(
-        onTap: onTap,
-        padding: option?.padding ?? kDefaultOptionPadding,
-        backgroundColorActivated: option?.pressColor,
-        backgroundColor: CupertinoDynamicColor.maybeResolve(
-            isHighlight
-                ? (option?.highlightColor ?? CupertinoColors.quaternaryLabel)
-                : null,
-            context),
-        title: Builder(
-          builder: (BuildContext context) {
-            if (isHighlight) {
-              SchedulerBinding.instance.addPostFrameCallback(
-                (Duration timeStamp) {
-                  Scrollable.ensureVisible(context, alignment: 0.5);
-                },
+    return Padding(
+      padding: option?.margin ?? kDefaultOptionMargin,
+      child: ClipRRect(
+        borderRadius: option?.borderRadius ??
+            (index == 0
+                ? const BorderRadius.vertical(top: Radius.circular(8.0))
+                : BorderRadius.zero),
+        child: CupertinoListTile(
+          onTap: onTap,
+          padding: option?.padding ?? kDefaultOptionPadding,
+          backgroundColorActivated: option?.pressColor,
+          backgroundColor: CupertinoDynamicColor.maybeResolve(
+              isHighlight
+                  ? (option?.highlightColor ?? CupertinoColors.quaternaryLabel)
+                  : null,
+              context),
+          title: Builder(
+            builder: (BuildContext context) {
+              if (isHighlight) {
+                SchedulerBinding.instance.addPostFrameCallback(
+                  (Duration timeStamp) {
+                    Scrollable.ensureVisible(context, alignment: 0.5);
+                  },
+                );
+              }
+              return Text(
+                searchKey,
+                style: option?.textStyle ??
+                    CupertinoTheme.of(context).textTheme.textStyle,
               );
-            }
-            return Text(
-              searchKey,
-              style: option?.textStyle ??
-                  CupertinoTheme.of(context).textTheme.textStyle,
-            );
-          },
+            },
+          ),
         ),
       ),
     );

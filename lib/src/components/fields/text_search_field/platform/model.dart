@@ -27,11 +27,13 @@ class OptionsDecoration {
 }
 
 const kDefaultOptionPadding =  EdgeInsets.all(16.0);
+const kDefaultOptionMargin =  EdgeInsets.symmetric(vertical: 1.0);
 
 /// A class to customize the appearance of individual autocomplete options.
 class OptionDecoration {
   const OptionDecoration({
-    this.padding,
+    this.margin = kDefaultOptionMargin,
+    this.padding = kDefaultOptionPadding,
     this.textStyle,
     this.borderRadius,
     this.pressColor,
@@ -46,10 +48,12 @@ class OptionDecoration {
   /// The text style of the autocomplete option.
   final TextStyle? textStyle;
 
+  /// The margin within the autocomplete option.
+  final EdgeInsetsGeometry? margin;
+
   /// The padding within the autocomplete option.
   final EdgeInsetsGeometry? padding;
 
   /// The border radius of the autocomplete option.
   final BorderRadiusGeometry? borderRadius;
-
 }
