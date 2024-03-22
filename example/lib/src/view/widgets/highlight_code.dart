@@ -44,7 +44,6 @@ class HighlightViewCode extends StatelessWidget {
     return FutureBuilder(
       future: rootBundle.loadString(path),
       builder: (context, snapshot) {
-
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: AdaptiveCircularProgressIndicator());
         }
@@ -60,7 +59,6 @@ class HighlightViewCode extends StatelessWidget {
   }
 
   Widget _buildErrorWidget(BuildContext context, String error) {
-    print(error);
     return Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +80,6 @@ class HighlightViewCode extends StatelessWidget {
 
   Widget _buildCodeView(BuildContext context, String code) {
     final localizations = MaterialLocalizations.of(context);
-
     return SingleChildScrollView(
       child: Stack(
         alignment: AlignmentDirectional.topEnd,

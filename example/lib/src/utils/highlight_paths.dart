@@ -1,7 +1,7 @@
 abstract final class HighlightPaths {
   const HighlightPaths._();
 
-  static const String _basePath = 'lib/app/view/screens/home/tabs';
+  static const String _basePath = 'lib/src/view/screens/home/tabs';
 
   static const String navigationView =
       '$_basePath/navigation/navigation_view.dart';
@@ -18,8 +18,7 @@ abstract final class HighlightPaths {
 
   static const String textField = '$_basePath/fields/text_field.dart';
   static const String textFormField = '$_basePath/fields/text_form_field.dart';
-  static const String textSearchField =
-      '$_basePath/fields/text_search_field.dart';
+  static const String textSearchField = '$_basePath/fields/text_search_field.dart';
 
   static const String icon = '$_basePath/icons/icon.dart';
   static const String iconAll = '$_basePath/icons/icon_all.dart';

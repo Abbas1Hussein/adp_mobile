@@ -15,9 +15,13 @@ class BottomSheetPreview extends StatelessWidget {
               content: Text(DummyText.generateAnswer),
               actions: [
                 AdaptiveBottomSheetAction(
-                    child: const Text('Action 1'), onPressed: () {}),
+                  child: const Text('Action 1'),
+                  onPressed: () {},
+                ),
                 AdaptiveBottomSheetAction(
-                    child: const Text('Action 2'), onPressed: () {}),
+                  child: const Text('Action 2'),
+                  onPressed: () {},
+                ),
               ],
             );
           },

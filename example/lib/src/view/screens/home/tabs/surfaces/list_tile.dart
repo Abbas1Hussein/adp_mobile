@@ -6,12 +6,10 @@ class ListTitlePreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AdaptiveListTile(
-      leading: const AdaptiveIcon(AdpIcons.info),
-      trailing: const AdaptiveIcon(AdpIcons.app),
       title: Text(DummyText.generateQuestion),
       subtitle: Text(DummyText.generateAnswer),
-
-      ///  useBackgroundColor: true,
+      leading: const AdaptiveIcon(AdpIcons.info),
+      trailing: const AdaptiveIcon(AdpIcons.app),
     );
   }
 }

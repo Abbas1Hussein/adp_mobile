@@ -1,7 +1,9 @@
 import 'package:adp_mobile/adp_mobile.dart';
 import 'package:adp_mobile_preview/adp_mobile_preview.dart';
+import 'package:flutter/services.dart';
 
 import 'controllers/theme_controller.dart';
+import 'utils/highlight_paths.dart';
 import 'view/screens/home/home.dart';
 
 class App extends StatefulWidget {
