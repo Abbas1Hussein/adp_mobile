@@ -7,8 +7,6 @@ import '../search_item.dart';
 import 'empty_widget.dart';
 import 'model.dart';
 
-///
-///
 /// See also:
 ///
 ///  * [RawAutocomplete], which is what Autocomplete is built upon, and which
@@ -76,8 +74,9 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
   /// [displayStringForOption].
   ///
   /// Uses the `toString` method of the given `option`.
-  static String defaultStringForOption(AdaptiveSearchItem option) =>
-      option.searchKey;
+  static String defaultStringForOption(AdaptiveSearchItem option) {
+    return option.searchKey;
+  }
 
   final BoxDecoration? decoration;
   final VoidCallback? onSuffixTap;
@@ -97,7 +96,11 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
       textEditingController: fieldProperties?.controller,
       fieldViewBuilder: fieldViewBuilder ?? defaultFieldViewBuilder,
       optionsViewBuilder: optionsViewBuilder ?? defaultAutoCompleteOptions,
-      displayStringForOption: displayStringForOption ?? defaultStringForOption,
+      displayStringForOption: (option) {
+        if (option.searchKey.contains(emptyKey)) return '';
+
+        return (displayStringForOption ?? defaultStringForOption).call(option);
+      },
     );
   }
 
@@ -231,7 +234,8 @@ abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
   final OptionsDecoration? decoration;
   final Iterable<AdaptiveSearchItem<T>> options;
   final AutocompleteOnSelected<AdaptiveSearchItem<T>> onSelected;
-  final AutocompleteOptionToString<AdaptiveSearchItem<T>>? displayStringForOption;
+  final AutocompleteOptionToString<AdaptiveSearchItem<T>>?
+      displayStringForOption;
 
   @override
   Widget build(BuildContext context) {
@@ -299,5 +303,6 @@ abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
 
   Widget backgroundWrapper(BuildContext context, Widget child);
 
-  Widget optionBuilder(BuildContext context, int index, bool isHighlight, VoidCallback onTap, String searchKey);
+  Widget optionBuilder(BuildContext context, int index, bool isHighlight,
+      VoidCallback onTap, String searchKey);
 }

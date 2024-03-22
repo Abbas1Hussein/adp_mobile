@@ -16,7 +16,7 @@ import '../navigation.dart';
 /// On iOS, the [BottomNavigationBar] and [NavigationRail] used.
 /// On Android, the [CupertinoTabBar] used.
 class AdaptiveNavigationBar
-    extends CoreModel<(BottomNavigationBar, NavigationRail), CupertinoTabBar> {
+    extends CoreModel<(BottomNavigationBar, Widget), CupertinoTabBar> {
   /// Creates a adp nav bar
   ///
   /// [items] must have at least 2 items
@@ -107,9 +107,8 @@ class AdaptiveNavigationBar
   final IconThemeData? unselectedIconTheme;
 
   @override
-  (BottomNavigationBar, NavigationRail) toAndroid(BuildContext context) {
+  (BottomNavigationBar, Widget) toAndroid(BuildContext context) {
     final property = properties?.android;
-
     final navigationRail = NavigationRail(
       key: key,
       leading: property?.leading,
@@ -132,8 +131,17 @@ class AdaptiveNavigationBar
       unselectedIconTheme: unselectedIconTheme,
       destinations: items.map((e) => e.toNavigationRailDestination()).toList(),
     );
+
     final bottomNavigationBar = BottomNavigationBar(
+      items: items,
+      onTap: onChanged,
       type: property?.type,
+      currentIndex: currentIndex,
+      selectedItemColor: selectedItemColor,
+      unselectedItemColor: unselectedItemColor,
+      selectedIconTheme: selectedIconTheme,
+      unselectedIconTheme: unselectedIconTheme,
+      backgroundColor: backgroundColor,
       elevation: property?.elevation,
       mouseCursor: property?.mouseCursor,
       enableFeedback: property?.enableFeedback,
@@ -142,17 +150,9 @@ class AdaptiveNavigationBar
       unselectedFontSize: property?.unselectedFontSize ?? 12.0,
       showSelectedLabels: property?.showSelectedLabels,
       showUnselectedLabels: property?.showUnselectedLabels,
-      unselectedLabelStyle: property?.unselectedLabelStyle,
       selectedLabelStyle: property?.selectedLabelStyle,
+      unselectedLabelStyle: property?.unselectedLabelStyle,
       useLegacyColorScheme: property?.useLegacyColorScheme ?? true,
-      onTap: onChanged,
-      currentIndex: currentIndex,
-      selectedItemColor: selectedItemColor,
-      unselectedItemColor: unselectedItemColor,
-      selectedIconTheme: selectedIconTheme,
-      unselectedIconTheme: unselectedIconTheme,
-      backgroundColor: backgroundColor,
-      items: items,
     );
     return (bottomNavigationBar, navigationRail);
   }

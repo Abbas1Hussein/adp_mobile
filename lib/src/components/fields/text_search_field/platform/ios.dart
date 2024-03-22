@@ -104,13 +104,9 @@ class _CupertinoAutocompleteField extends BaseAutocompleteField {
       onSuffixTap: onSuffixTap,
       suffixIcon: suffixIcon ?? const Icon(CupertinoIcons.xmark_circle_fill),
       suffixMode: suffixMode ?? OverlayVisibilityMode.editing,
-      enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
-      onSubmitted: (String value) {
-        if (options.where((element) => element.searchKey == value).length ==
-            1) {
-          onFieldSubmitted();
-        }
-      },
+      enableIMEPersonalizedLearning:
+          fieldProperties?.enableIMEPersonalizedLearning ?? true,
+      onSubmitted: (String value) => onFieldSubmitted(),
     );
   }
 }

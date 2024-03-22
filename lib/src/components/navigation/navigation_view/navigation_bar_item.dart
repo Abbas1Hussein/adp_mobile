@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class AdaptiveNavigationBarItem extends BottomNavigationBarItem {
-  AdaptiveNavigationBarItem({
+  const AdaptiveNavigationBarItem({
+    super.tooltip,
     super.activeIcon,
     super.backgroundColor,
-    super.tooltip,
     required super.icon,
     required super.label,
   });
@@ -12,9 +12,9 @@ class AdaptiveNavigationBarItem extends BottomNavigationBarItem {
   NavigationRailDestination toNavigationRailDestination() {
     return NavigationRailDestination(
       icon: icon,
-      indicatorColor: backgroundColor,
-      label: Text(label ?? '* - *'),
       selectedIcon: activeIcon,
+      label: Text(label ?? '* - *'),
+      indicatorColor: backgroundColor,
     );
   }
 }

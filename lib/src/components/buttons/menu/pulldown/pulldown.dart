@@ -73,7 +73,7 @@ class AdaptivePulldownMenuButton<T> extends CoreAdaptiveComponent {
     this.offset = Offset.zero,
     this.position,
     this.enableFeedback,
-    this.padding = EdgeInsets.zero,
+    this.padding = const EdgeInsets.all(8.0),
     this.elevation,
     this.clipBehavior = Clip.none,
     this.shadowColor,

@@ -13,7 +13,6 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
     this.border,
     this.foregroundColor,
     this.actionsIconTheme,
-    this.centerTitle,
     this.titleSpacing,
     this.toolbarOpacity = 1.0,
     this.leadingWidth,
@@ -25,9 +24,6 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
   ///
   /// Typically a [Text] widget that contains the app name.
   final Widget? title;
-
-  /// Whether the [title] should be centered, Defaults is false.
-  final bool? centerTitle;
 
   /// The spacing around [title] content on the horizontal axis. This spacing is
   /// applied even if there is no [leading] content or [actions]. If you want
@@ -119,7 +115,6 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
       leading: leading,
       actions: actions,
       elevation: 1.0,
-      centerTitle: centerTitle,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       actionsIconTheme: actionsIconTheme,
@@ -148,18 +143,18 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
           )
         : null;
 
+    // The icon size will be scaled by a factor of the accessibility text scale,
+    // to follow the behavior of `UISearchTextField`.
+    final double scaledIconSize = MediaQuery.textScalerOf(context)
+        .scale(actionsIconTheme?.size ?? iconTheme.size ?? 21);
+
     return CupertinoNavigationBar(
       border: border,
-      leading: centerTitle == false
-          ? Row(children: [
-              if (leading != null) leading!,
-              SizedBox(width: titleSpacing),
-              if (title != null) styledTitle!
-            ])
-          : leading,
+      leading: leading,
       trailing: actions != null
           ? IconTheme.merge(
               data: (actionsIconTheme ?? iconTheme).copyWith(
+                size: scaledIconSize,
                 color: foregroundColor ??
                     CupertinoDynamicColor.maybeResolve(
                         iconTheme.color, context),
@@ -167,11 +162,12 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
               child: Row(mainAxisSize: MainAxisSize.min, children: actions!),
             )
           : null,
-      middle: centerTitle != false ? styledTitle : null,
+      middle: SizedBox(width: titleSpacing, child: styledTitle),
       backgroundColor: (backgroundColor ?? defaultBackgroundColor)
           .withOpacity(toolbarOpacity),
       automaticallyImplyMiddle: true,
       transitionBetweenRoutes: true,
+      padding: const EdgeInsetsDirectional.all(4.0),
       automaticallyImplyLeading: automaticallyImplyLeading,
     );
   }

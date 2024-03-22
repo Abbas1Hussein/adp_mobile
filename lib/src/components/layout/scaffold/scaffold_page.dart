@@ -68,7 +68,10 @@ class AdaptiveScaffoldPage extends CoreAdaptiveComponent {
       backgroundColor: backgroundColor,
       appBar: appBar?.toAndroid(context),
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      body: Padding(padding: contentPadding, child: content),
+      body: Padding(
+        padding: contentPadding,
+        child: content != null ? SafeArea(child: content!) : null,
+      ),
     );
   }
 
@@ -78,7 +81,10 @@ class AdaptiveScaffoldPage extends CoreAdaptiveComponent {
       backgroundColor: backgroundColor,
       navigationBar: appBar?.toIOS(context),
       resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      child: Padding(padding: contentPadding, child: content),
+      child: Padding(
+        padding: contentPadding,
+        child: content != null ? SafeArea(child: content!) : null,
+      ),
     );
   }
 }

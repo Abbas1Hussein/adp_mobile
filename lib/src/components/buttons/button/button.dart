@@ -103,6 +103,7 @@ class AdaptiveButton extends AdaptiveBaseButton {
           pressedColor: pressedColor,
           disabledColor: disabledColor,
           backgroundColor: backgroundColor,
+
           child: child,
         );
       case AdaptiveButtonType.filled:

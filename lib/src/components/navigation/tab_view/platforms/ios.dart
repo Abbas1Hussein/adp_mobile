@@ -57,71 +57,73 @@ class TabViewIOS extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       backgroundColor: primaryColor,
-      child: Column(
-        children: [
-          SizedBox(
-            width: (property?.isExpended ?? true) ? double.infinity : null,
-            child: Padding(
-              padding:  property?.margin ?? const EdgeInsets.all(4.0),
-              child: CupertinoSlidingSegmentedControl<int>(
-                thumbColor: selectedTabColor ?? _kThumbColor,
-                backgroundColor: property?.backgroundColor ?? CupertinoColors.tertiarySystemFill,
-                children: List.generate(
-                  tabs.length,
-                  (index) {
-                    final isSelected = currentIndex == index;
-
-                    final icon = tabs[index].icon;
-                    final label = tabs[index].label;
-
-                    final iconTheme = icon != null
-                        ? IconTheme.merge(
-                            data: (isSelected
-                                    ? selectedIconTheme
-                                    : unselectedIconTheme) ??
-                                IconTheme.of(context),
-                            child: icon,
-                          )
-                        : null;
-
-                    final labelTheme = DefaultTextStyle.merge(
-                      style: isSelected ? selectedLabelStyle : unselectedLabelStyle,
-                      child: label,
-                    );
-
-                    final color = isSelected ? null : unselectedTabColor;
-
-                    return ColoredBox(
-                      color: color ?? Colors.transparent,
-                      child: Align(
-                        alignment: property?.alignment ?? Alignment.center,
-                        child: labelTheme.margeWith(iconTheme, 8.0),
-                      ),
-                    );
-                  },
-                ).asMap(),
-                onValueChanged: (value) => onChanged?.call(value!),
-                groupValue: currentIndex,
+      child: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(
+              width: (property?.isExpended ?? true) ? double.infinity : null,
+              child: Padding(
+                padding:  property?.margin ?? const EdgeInsets.all(4.0),
+                child: CupertinoSlidingSegmentedControl<int>(
+                  thumbColor: selectedTabColor ?? _kThumbColor,
+                  backgroundColor: property?.backgroundColor ?? CupertinoColors.tertiarySystemFill,
+                  children: List.generate(
+                    tabs.length,
+                    (index) {
+                      final isSelected = currentIndex == index;
+        
+                      final icon = tabs[index].icon;
+                      final label = tabs[index].label;
+        
+                      final iconTheme = icon != null
+                          ? IconTheme.merge(
+                              data: (isSelected
+                                      ? selectedIconTheme
+                                      : unselectedIconTheme) ??
+                                  IconTheme.of(context),
+                              child: icon,
+                            )
+                          : null;
+        
+                      final labelTheme = DefaultTextStyle.merge(
+                        style: isSelected ? selectedLabelStyle : unselectedLabelStyle,
+                        child: label,
+                      );
+        
+                      final color = isSelected ? null : unselectedTabColor;
+        
+                      return ColoredBox(
+                        color: color ?? Colors.transparent,
+                        child: Align(
+                          alignment: property?.alignment ?? Alignment.center,
+                          child: labelTheme.margeWith(iconTheme, 8.0),
+                        ),
+                      );
+                    },
+                  ).asMap(),
+                  onValueChanged: (value) => onChanged?.call(value!),
+                  groupValue: currentIndex,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: children.map(
-              (child) {
-                return Padding(
-                  padding: contentMargin ?? EdgeInsets.zero,
-                  child: ColoredBox(
-                    color: secondaryColor ?? Colors.transparent,
-                    child: Padding(
-                      padding: contentPadding ?? EdgeInsets.zero,
-                      child: child,
+            Expanded(
+              child: children.map(
+                (child) {
+                  return Padding(
+                    padding: contentMargin ?? EdgeInsets.zero,
+                    child: ColoredBox(
+                      color: secondaryColor ?? Colors.transparent,
+                      child: Padding(
+                        padding: contentPadding ?? EdgeInsets.zero,
+                        child: child,
+                      ),
                     ),
-                  ),
-                );
-              },
-            ).toList()[currentIndex],
-          ),
-        ],
+                  );
+                },
+              ).toList()[currentIndex],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -157,16 +157,17 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
   }
 
   Widget? _buildLabelWidget(BuildContext context, [TextStyle? style]) {
-    if (label != null) {
-      return GestureDetector(
-        onTap: _enabled ? () => onChanged?.call(!value) : null,
-        child: IconTheme.merge(
-          data: IconTheme.of(context).copyWith(color: foregroundColor),
-          child: DefaultTextStyle.merge(
-              style: style?.copyWith(color: foregroundColor), child: label!),
+    if (label == null) return null;
+
+    return GestureDetector(
+      onTap: _enabled ? () => onChanged?.call(!value) : null,
+      child: IconTheme.merge(
+        data: IconTheme.of(context).copyWith(color: foregroundColor),
+        child: DefaultTextStyle.merge(
+          style: style?.copyWith(color: foregroundColor),
+          child: label!,
         ),
-      );
-    }
-    return null;
+      ),
+    );
   }
 }

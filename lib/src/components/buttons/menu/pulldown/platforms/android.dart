@@ -36,7 +36,7 @@ class _CustomPopupMenuItemState<T>
 
       return ColoredBox(
         color: highlightColor,
-        child: PopupMenuItem(
+        child: PopupMenuItem<T>(
           value: item.value,
           onTap: widget.onTap,
           child: item.buildListTile(context),
@@ -44,7 +44,7 @@ class _CustomPopupMenuItemState<T>
       );
     }
 
-    return PopupMenuItem(
+    return PopupMenuItem<T>(
       enabled: enabled,
       value: item.value,
       onTap: widget.onTap,

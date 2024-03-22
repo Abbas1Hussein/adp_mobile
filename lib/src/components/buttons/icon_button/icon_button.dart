@@ -116,11 +116,11 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
     return IOSButton(
       pressedOpacity: 0.45,
       padding: const EdgeInsets.all(4.0),
+      onPressed: onPressed,
+      constraints: constraints,
       mouseCursor: mouseCursor,
       hoverColor: hoverColor ?? Colors.transparent,
       pressedColor: hoverColor ?? Colors.transparent,
-      onPressed: onPressed,
-      constraints: constraints,
       child: Align(
         widthFactor: 1.0,
         heightFactor: 1.0,

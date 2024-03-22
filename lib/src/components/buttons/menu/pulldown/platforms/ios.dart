@@ -255,8 +255,7 @@ class _CustomPopupMenuItemState<T>
   }
 }
 
-extension CustomCupertinoPopupMenuItemEx<T>
-    on AdaptivePulldownMenuItemEntry<T> {
+extension CustomCupertinoPopupMenuItemEx<T> on AdaptivePulldownMenuItemEntry<T> {
   PopupMenuEntry<T> buildCustomCupertinoMenuItemEntry({
     Color? highlightColor,
     ValueChanged<AdaptivePulldownMenuItem<T>>? onSelected,

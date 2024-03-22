@@ -32,6 +32,8 @@ final class AdaptiveTextSearchField<T> extends BaseTextField {
     super.placeholder,
     super.placeholderStyle,
     super.prefix,
+    super.onChanged,
+    super.onTap,
     AdaptiveIcon? super.suffix,
     this.fieldViewBuilder,
     this.optionsBuilder,

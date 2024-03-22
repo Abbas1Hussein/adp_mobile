@@ -1,23 +1,48 @@
 import 'package:adp_mobile/adp_mobile.dart';
+import 'package:adp_mobile/src/components/fields/text_search_field/platform/platform.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../wrap_app.dart';
 
 void main() {
-  initializeMobileDefaultsTests(MobileTargetPlatform.android);
+  initializeMobileDefaultsTests();
 
   late TextEditingController controller;
-  late List<AdaptiveSearchItem<int>> suggestions;
+  late List<AdaptiveSearchItem<int>> options;
 
   setUp(
     () {
       controller = TextEditingController();
-      suggestions = List.generate(
+      options = List.generate(
         10,
         (index) => AdaptiveSearchItem(
           searchKey: '${index + 1}',
           value: index + 1,
         ),
+      );
+    },
+  );
+
+  testWidgets(
+    'AdaptiveTextSearchField render correctly',
+    (tester) async {
+      await tester.pumpWidget(
+        wrapAppWithScaffold(
+          child: Center(child: AdaptiveTextSearchField(options: options)),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      adaptiveValue(
+        ios: () {
+          expect(find.byType(MaterialAutocomplete<int>), findsNothing);
+          expect(find.byType(CupertinoAutocomplete<int>), findsOneWidget);
+        },
+        android: () {
+          expect(find.byType(MaterialAutocomplete<int>), findsOneWidget);
+          expect(find.byType(CupertinoAutocomplete<int>), findsNothing);
+        },
       );
     },
   );
@@ -34,15 +59,16 @@ void main() {
             wrapAppWithScaffold(
               child: AdaptiveTextSearchField(
                 key: key,
+                focusNode: FocusNode(),
                 controller: controller,
-                options: suggestions,
+                options: options,
               ),
             ),
           );
 
           await tester.pumpAndSettle();
 
-          // Trigger suggestions by entering text
+          // Trigger options by entering text
           await tester.enterText(find.byKey(key), input);
           expect(controller.text, input);
         },

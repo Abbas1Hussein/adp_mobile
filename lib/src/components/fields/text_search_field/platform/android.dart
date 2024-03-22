@@ -95,30 +95,23 @@ class _MaterialAutocompleteField extends BaseAutocompleteFulField {
         enabled: fieldProperties?.enabled,
         onTap: fieldProperties?.onTap,
         onChanged: fieldProperties?.onChanged,
+        style: fieldProperties?.style,
         autofocus: fieldProperties?.autofocus ?? false,
         autocorrect: fieldProperties?.autocorrect ?? true,
         restorationId: fieldProperties?.restorationId,
         smartDashesType: fieldProperties?.smartDashesType,
         smartQuotesType: fieldProperties?.smartQuotesType,
         keyboardType: fieldProperties?.keyboardType,
-        style: fieldProperties?.style,
-        enableIMEPersonalizedLearning:
-            fieldProperties?.enableIMEPersonalizedLearning ?? true,
+        enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
         textInputAction: TextInputAction.search,
         decoration: InputDecoration(
           suffixIcon: showClearButton ? suffix : null,
           prefixIcon: fieldProperties?.prefix ?? const Icon(Icons.search),
-          hintText: fieldProperties?.placeholder ??
-              MaterialLocalizations.of(context).searchFieldLabel,
-          hintStyle: fieldProperties?.placeholderStyle,
+          hintText:   fieldProperties?.placeholder ?? MaterialLocalizations.of(context).searchFieldLabel,
+          hintStyle:  fieldProperties?.placeholderStyle,
           border: decoration != null ? InputBorder.none : null,
         ),
-        onSubmitted: (String value) {
-          if (options.where((element) => element.searchKey == value).length ==
-              1) {
-            onFieldSubmitted();
-          }
-        },
+        onSubmitted: (String value) => onFieldSubmitted(),
       ),
     );
   }

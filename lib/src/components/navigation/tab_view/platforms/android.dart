@@ -55,76 +55,78 @@ class TabViewAndroid extends StatelessWidget {
       animationDuration: property?.animationDuration,
       child: Material(
         color: primaryColor,
-        child: Column(
-          children: [
-            TabBar(
-              overlayColor: property?.overlayColor,
-              dividerColor: property?.dividerColor,
-              indicator: property?.indicator,
-              indicatorColor: property?.indicatorColor,
-              enableFeedback: property?.enableFeedback,
-              dragStartBehavior:
-                  property?.dragStartBehavior ?? DragStartBehavior.start,
-              physics: property?.physics,
-              splashFactory: property?.splashFactory,
-              automaticIndicatorColorAdjustment:
-                  property?.automaticIndicatorColorAdjustment ?? true,
-              indicatorPadding: property?.indicatorPadding ?? EdgeInsets.zero,
-              indicatorSize: property?.indicatorSize,
-              indicatorWeight: property?.indicatorWeight ?? 2.0,
-              isScrollable: property?.isScrollable ?? false,
-              labelPadding: property?.labelPadding,
-              splashBorderRadius: property?.splashBorderRadius,
-              tabAlignment: property?.tabAlignment,
-              labelColor: selectedTabColor,
-              unselectedLabelColor: unselectedTabColor,
-              labelStyle: selectedLabelStyle,
-              unselectedLabelStyle: unselectedLabelStyle,
-              padding: property?.padding,
-              tabs: tabs.map((tab) {
-                final isSelected = tabs.indexOf(tab) == currentIndex;
-
-                final iconTheme = tab.icon != null
-                    ? IconTheme.merge(
-                        data: (isSelected
-                                ? selectedIconTheme
-                                : unselectedIconTheme) ??
-                            IconTheme.of(context),
-                        child: tab.icon!,
-                      )
-                    : null;
-
-                if (property?.direction == TabDirection.up) {
-                  return Tab(
-                    iconMargin: EdgeInsets.zero,
-                    icon: iconTheme,
-                    child: tab.label,
-                  );
-                }
-                return Tab(child: tab.label.margeWith(iconTheme, 8.0));
-              }).toList(),
-              onTap: onChanged,
-            ),
-            Expanded(
-              child: TabBarView(
-                physics: property?.physics,
+        child: SafeArea(
+          child: Column(
+            children: [
+              TabBar(
+                overlayColor: property?.overlayColor,
+                dividerColor: property?.dividerColor,
+                indicator: property?.indicator,
+                indicatorColor: property?.indicatorColor,
+                enableFeedback: property?.enableFeedback,
                 dragStartBehavior:
                     property?.dragStartBehavior ?? DragStartBehavior.start,
-                children: children.map((child) {
-                  return Padding(
-                    padding: contentMargin ?? EdgeInsets.zero,
-                    child: ColoredBox(
-                      color: secondaryColor ?? Colors.transparent,
-                      child: Padding(
-                        padding: contentPadding ?? EdgeInsets.zero,
-                        child: child,
-                      ),
-                    ),
-                  );
+                physics: property?.physics,
+                splashFactory: property?.splashFactory,
+                automaticIndicatorColorAdjustment:
+                    property?.automaticIndicatorColorAdjustment ?? true,
+                indicatorPadding: property?.indicatorPadding ?? EdgeInsets.zero,
+                indicatorSize: property?.indicatorSize,
+                indicatorWeight: property?.indicatorWeight ?? 2.0,
+                isScrollable: property?.isScrollable ?? false,
+                labelPadding: property?.labelPadding,
+                splashBorderRadius: property?.splashBorderRadius,
+                tabAlignment: property?.tabAlignment,
+                labelColor: selectedTabColor,
+                unselectedLabelColor: unselectedTabColor,
+                labelStyle: selectedLabelStyle,
+                unselectedLabelStyle: unselectedLabelStyle,
+                padding: property?.padding,
+                tabs: tabs.map((tab) {
+                  final isSelected = tabs.indexOf(tab) == currentIndex;
+
+                  final iconTheme = tab.icon != null
+                      ? IconTheme.merge(
+                          data: (isSelected
+                                  ? selectedIconTheme
+                                  : unselectedIconTheme) ??
+                              IconTheme.of(context),
+                          child: tab.icon!,
+                        )
+                      : null;
+
+                  if (property?.direction == TabDirection.up) {
+                    return Tab(
+                      iconMargin: EdgeInsets.zero,
+                      icon: iconTheme,
+                      child: tab.label,
+                    );
+                  }
+                  return Tab(child: tab.label.margeWith(iconTheme, 8.0));
                 }).toList(),
+                onTap: onChanged,
               ),
-            ),
-          ],
+              Expanded(
+                child: TabBarView(
+                  physics: property?.physics,
+                  dragStartBehavior:
+                      property?.dragStartBehavior ?? DragStartBehavior.start,
+                  children: children.map((child) {
+                    return Padding(
+                      padding: contentMargin ?? EdgeInsets.zero,
+                      child: ColoredBox(
+                        color: secondaryColor ?? Colors.transparent,
+                        child: Padding(
+                          padding: contentPadding ?? EdgeInsets.zero,
+                          child: child,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -119,18 +119,18 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
         : false;
 
     final body = Padding(
-      padding: contentPadding,
-      child: children[navigationBar.currentIndex],
-    );
+        padding: contentPadding, child: children[navigationBar.currentIndex]);
 
     final bar = navigationBar.toAndroid(context);
 
     final buildNavigationRail = isLandscape
-        ? Row(children: [
-            bar.$2,
-            const VerticalDivider(thickness: 0.3),
-            Expanded(child: body),
-          ])
+        ? Row(
+            children: [
+              bar.$2,
+              const VerticalDivider(thickness: 0.3),
+              Expanded(child: body),
+            ],
+          )
         : null;
 
     return Scaffold(

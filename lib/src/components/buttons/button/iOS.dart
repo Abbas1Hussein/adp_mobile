@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/extension/widget.dart';
+import '../menu/cupertino_menu_action.dart';
 
 const EdgeInsets _kButtonPadding = EdgeInsets.all(16.0);
 const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
@@ -140,11 +141,13 @@ class IOSButtonState extends State<IOSButton>
 
     final hoverColor = widget.hoverColor ??
         widget.backgroundColor?.withOpacity(0.7) ??
-        CupertinoColors.quaternaryLabel;
+        CupertinoDynamicColor.resolve(
+            kCupertinoMenuActionBackgroundColor, context);
 
     final pressedColor = widget.pressedColor ??
         widget.backgroundColor?.withOpacity(0.7) ??
-        CupertinoColors.placeholderText;
+        CupertinoDynamicColor.resolve(
+            kCupertinoMenuActionBackgroundColorPressed, context);
 
     final foregroundColor = widget.backgroundColor != null
         ? theme.primaryContrastingColor

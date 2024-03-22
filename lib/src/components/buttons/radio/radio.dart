@@ -138,18 +138,30 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final labelStyle = CupertinoTheme.of(context).textTheme.navTitleTextStyle.copyWith(fontSize: 13.5);
-    return CupertinoRadio<T>(
-      value: value,
-      groupValue: groupValue,
-      autofocus: autofocus,
-      focusNode: focusNode,
-      fillColor: activeColor,
-      focusColor: focusColor,
-      activeColor: activeColor,
-      inactiveColor: inactiveColor,
-      onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
-    ).margeWith(_buildLabelWidget(context, labelStyle));
+    final labelStyle = CupertinoTheme.of(context)
+        .textTheme
+        .navTitleTextStyle
+        .copyWith(fontSize: 13.5);
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: SizedBox(
+        height: 20.0,
+        width: 20.0,
+        child: FittedBox(
+          child: CupertinoRadio<T>(
+            value: value,
+            groupValue: groupValue,
+            autofocus: autofocus,
+            focusNode: focusNode,
+            fillColor: activeColor,
+            focusColor: focusColor,
+            activeColor: activeColor,
+            inactiveColor: inactiveColor,
+            onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
+          ),
+        ),
+      ).margeWith(_buildLabelWidget(context, labelStyle), 6.0),
+    );
   }
 
   Widget? _buildLabelWidget(BuildContext context, [TextStyle? style]) {

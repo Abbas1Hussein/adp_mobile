@@ -7,7 +7,6 @@ class AdaptiveNavigationAppbar extends AdaptiveAppBarPage {
     super.automaticallyImplyLeading,
     super.backgroundColor,
     super.border,
-    super.centerTitle,
     super.foregroundColor,
     super.leading,
     super.leadingWidth,

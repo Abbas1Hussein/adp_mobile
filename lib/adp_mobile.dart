@@ -1,16 +1,20 @@
 library adp_mobile;
 
-export 'package:flutter/widgets.dart' ;
+export 'package:flutter/widgets.dart';
 export 'package:flutter/cupertino.dart'
     show
-        CupertinoColors,
+        CupertinoTheme,
         CupertinoThemeData,
+        CupertinoColors,
         CupertinoDatePickerMode,
         CupertinoTimerPickerMode,
         OverlayVisibilityMode;
 export 'package:flutter/material.dart'
     show
+        Card,
+        Tooltip,
         Colors,
+        Theme,
         ThemeData,
         ThemeMode,
         InputBorder,
@@ -31,7 +35,9 @@ export 'package:flutter/material.dart'
         VerticalDirection,
         FloatingLabelAlignment,
         BottomNavigationBarLandscapeLayout,
-        BottomNavigationBarType, Divider, VerticalDivider;
+        BottomNavigationBarType,
+        Divider,
+        VerticalDivider;
 
 export 'src/components/components.dart';
 export 'src/core/core.dart';
