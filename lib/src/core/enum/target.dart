@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+import 'package:adp_mobile/adp_mobile.dart';
 
 import '../exception/platform_exceptions.dart';
 
@@ -23,14 +23,24 @@ extension TargetPlatformEx on MobileTargetPlatform {
 
 extension DesktopTargetPlatformEx on TargetPlatform {
   MobileTargetPlatform get mobileTargetPlatform {
+    if (this == TargetPlatform.macOS || this == TargetPlatform.windows) {
+      switch (this) {
+        case TargetPlatform.macOS:
+          return MobileTargetPlatform.iOS;
+        case TargetPlatform.windows:
+          return MobileTargetPlatform.android;
+        default:
+          throw UnsupportedPlatformException(name);
+      }
+    }
     switch (this) {
       case TargetPlatform.iOS:
         return MobileTargetPlatform.iOS;
       case TargetPlatform.android:
         return MobileTargetPlatform.android;
 
-      default: throw UnsupportedPlatformException(name);
+      default:
+        throw UnsupportedPlatformException(name);
     }
   }
 }
-

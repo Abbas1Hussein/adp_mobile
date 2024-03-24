@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PlatformController {
   Future<MobileTargetPlatform> get targetPlatform async {
     final sharedPreferences = await SharedPreferences.getInstance();
-
     final platform = sharedPreferences.getString('targetPlatform') ?? defaultTargetPlatform.name;
 
     return MobileTargetPlatform.values.firstWhere(
@@ -20,7 +19,6 @@ class PlatformController {
 
   Future<void> togglePlatformFrom(MobileTargetPlatform targetPlatform) async {
     final sharedPreferences = await SharedPreferences.getInstance();
-
     await sharedPreferences.setString('targetPlatform', targetPlatform.name);
   }
 

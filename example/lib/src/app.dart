@@ -1,9 +1,7 @@
 import 'package:adp_mobile/adp_mobile.dart';
 import 'package:adp_mobile_preview/adp_mobile_preview.dart';
-import 'package:flutter/services.dart';
 
 import 'controllers/theme_controller.dart';
-import 'utils/highlight_paths.dart';
 import 'view/screens/home/home.dart';
 
 class App extends StatefulWidget {
@@ -46,5 +44,43 @@ class _AppState extends State<App> {
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+}
+
+class HomeScreen2 extends StatelessWidget {
+  const HomeScreen2({super.key, required this.controller});
+
+  final ThemeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return AdaptiveScaffoldPage(
+      appBar: AdaptiveAppBarPage(
+        title: const Text('AppBar'),
+        actions: [
+          AdaptiveTextButton(
+            onPressed: () {},
+            child: const Text('Action 1'),
+          ),
+          AdaptiveTextButton(
+            onPressed: () {},
+            child: const Text('Action 2'),
+          ),
+          AdaptiveIconButton(
+            onPressed: () {},
+            icon: const AdaptiveIcon(AdpIcons.camera),
+          ),
+          AdaptivePulldownMenuButton(
+            items: List.generate(
+              10,
+              (index) => AdaptivePulldownMenuItem(
+                child: Text('${index + 1}'),
+                onTap: () {},
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

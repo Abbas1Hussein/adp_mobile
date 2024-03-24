@@ -1,5 +1,4 @@
 import 'package:adp_mobile/adp_mobile.dart';
-import 'package:flutter/services.dart';
 
 class MenusButtonsPreview extends StatefulWidget {
   const MenusButtonsPreview({super.key});
@@ -14,17 +13,6 @@ class _MenusButtonsPreviewState extends State<MenusButtonsPreview> {
 
   @override
   Widget build(BuildContext context) {
-
-    rootBundle
-        .loadString('lib/app/view/screens/home/tabs/buttons/menus.dart')
-        .then((value) => debugPrint(value));
-
-    print('-----------------------------------------------------------');
-
-    rootBundle
-        .loadString('lib/src/view/screens/home/tabs/buttons/menus.dart')
-        .then((value) => debugPrint(value));
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

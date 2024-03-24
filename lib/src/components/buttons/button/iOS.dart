@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/extension/widget.dart';
-import '../menu/cupertino_menu_action.dart';
 
 const EdgeInsets _kButtonPadding = EdgeInsets.all(16.0);
 const EdgeInsets _kBackgroundButtonPadding = EdgeInsets.symmetric(
@@ -22,7 +21,7 @@ class IOSButton extends StatefulWidget {
     this.backgroundColor,
     this.disabledColor,
     this.padding,
-    this.pressedOpacity = 1.0,
+    this.pressedOpacity = 0.90,
     this.mouseCursor = SystemMouseCursors.basic,
     this.constraints,
     required this.child,
@@ -134,20 +133,25 @@ class IOSButtonState extends State<IOSButton>
         widget.disabledColor ?? CupertinoColors.quaternarySystemFill;
 
     final backgroundColor =
-        CupertinoDynamicColor.maybeResolve(widget.backgroundColor, context) ??
-            Colors.transparent;
+        CupertinoDynamicColor.maybeResolve(widget.backgroundColor, context);
 
     final fillColor = enabled ? backgroundColor : disableBackgroundColor;
 
-    final hoverColor = widget.hoverColor ??
-        widget.backgroundColor?.withOpacity(0.7) ??
-        CupertinoDynamicColor.resolve(
-            kCupertinoMenuActionBackgroundColor, context);
+    Color hoverColor = CupertinoDynamicColor.resolve(
+      widget.backgroundColor != null &&
+              widget.backgroundColor != Colors.transparent
+          ? widget.backgroundColor!.withOpacity(0.7)
+          : widget.hoverColor ?? Colors.transparent,
+      context,
+    );
 
-    final pressedColor = widget.pressedColor ??
-        widget.backgroundColor?.withOpacity(0.7) ??
-        CupertinoDynamicColor.resolve(
-            kCupertinoMenuActionBackgroundColorPressed, context);
+    Color pressedColor = CupertinoDynamicColor.resolve(
+      widget.backgroundColor != null &&
+              widget.backgroundColor != Colors.transparent
+          ? widget.backgroundColor!.withOpacity(0.7)
+          : widget.pressedColor ?? Colors.transparent,
+      context,
+    );
 
     final foregroundColor = widget.backgroundColor != null
         ? theme.primaryContrastingColor

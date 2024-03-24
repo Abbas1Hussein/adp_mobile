@@ -95,15 +95,15 @@ class AdaptiveButton extends AdaptiveBaseButton {
     switch (_type) {
       case AdaptiveButtonType.base:
         return IOSButton(
+          pressedOpacity: 0.95,
           shape: shape,
           onPressed: onPressed,
           hoverColor: hoverColor,
           mouseCursor: mouseCursor,
           onLongPress: onLongPress,
-          pressedColor: pressedColor,
+          pressedColor: pressedColor ?? CupertinoColors.systemFill,
           disabledColor: disabledColor,
           backgroundColor: backgroundColor,
-
           child: child,
         );
       case AdaptiveButtonType.filled:

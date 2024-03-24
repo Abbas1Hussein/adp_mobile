@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(Brightness.dark.name),
               ),
             ],
-            icon: Icon(
+            icon: AdaptiveIcon.all(
               context.brightness.isDark ? Icons.dark_mode : Icons.light_mode,
             ),
           ),

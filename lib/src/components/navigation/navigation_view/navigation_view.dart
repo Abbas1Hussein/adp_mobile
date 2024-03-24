@@ -126,7 +126,17 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     final buildNavigationRail = isLandscape
         ? Row(
             children: [
-              bar.$2,
+              ScrollConfiguration(
+                behavior: ScrollConfiguration.of(context).copyWith(
+                  scrollbars: false,
+                ),
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    height: MediaQuery.sizeOf(context).height,
+                    child: bar.$2,
+                  ),
+                ),
+              ),
               const VerticalDivider(thickness: 0.3),
               Expanded(child: body),
             ],

@@ -1,3 +1,4 @@
+import 'package:adp_mobile/adp_mobile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -136,22 +137,28 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
             CupertinoTheme.of(context).barBackgroundColor;
 
     final styledTitle = title != null
-        ? DefaultTextStyle(
-            style: titleTextStyle ??
-                CupertinoTheme.of(context).textTheme.navTitleTextStyle,
-            child: title!,
+        ? SizedBox(
+            width: titleSpacing,
+            child: DefaultTextStyle(
+              overflow: TextOverflow.ellipsis,
+              style: titleTextStyle ??
+                  CupertinoTheme.of(context).textTheme.navTitleTextStyle,
+              child: title!,
+            ),
           )
         : null;
 
     // The icon size will be scaled by a factor of the accessibility text scale,
     // to follow the behavior of `UISearchTextField`.
     final double scaledIconSize = MediaQuery.textScalerOf(context)
-        .scale(actionsIconTheme?.size ?? iconTheme.size ?? 21);
+        .scale(actionsIconTheme?.size ?? iconTheme.size ?? 18.5);
+
+    final getEffectiveCenterTitle = actions != null && actions!.length >= 4;
 
     return CupertinoNavigationBar(
       border: border,
       leading: leading,
-      trailing: actions != null
+      trailing: actions != null && actions!.isNotEmpty
           ? IconTheme.merge(
               data: (actionsIconTheme ?? iconTheme).copyWith(
                 size: scaledIconSize,
@@ -159,15 +166,29 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
                     CupertinoDynamicColor.maybeResolve(
                         iconTheme.color, context),
               ),
-              child: Row(mainAxisSize: MainAxisSize.min, children: actions!),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: actions!.map(
+                  (child) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      child: child,
+                    );
+                  },
+                ).toList(),
+              ),
             )
           : null,
-      middle: SizedBox(width: titleSpacing, child: styledTitle),
+      middle: getEffectiveCenterTitle
+          ? Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: styledTitle,
+            )
+          : styledTitle,
       backgroundColor: (backgroundColor ?? defaultBackgroundColor)
           .withOpacity(toolbarOpacity),
-      automaticallyImplyMiddle: true,
-      transitionBetweenRoutes: true,
-      padding: const EdgeInsetsDirectional.all(4.0),
+      padding: EdgeInsetsDirectional.zero,
       automaticallyImplyLeading: automaticallyImplyLeading,
     );
   }

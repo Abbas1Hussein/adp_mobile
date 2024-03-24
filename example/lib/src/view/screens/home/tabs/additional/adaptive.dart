@@ -18,8 +18,8 @@ class AdaptiveValuePreview extends StatelessWidget {
               context: context,
               builder: (context) {
                 return CupertinoAlertDialog(
-                  title: const Text('DummyText.generateQuestion'),
-                  content: const Text('DummyText.generateAnswer'),
+                  title:  Text(DummyText.generateQuestion),
+                  content:  Text(DummyText.generateAnswer),
                   actions: [
                     CupertinoDialogAction(
                       onPressed: () => Navigator.pop(context),

@@ -255,7 +255,8 @@ class _CustomPopupMenuItemState<T>
   }
 }
 
-extension CustomCupertinoPopupMenuItemEx<T> on AdaptivePulldownMenuItemEntry<T> {
+extension CustomCupertinoPopupMenuItemEx<T>
+    on AdaptivePulldownMenuItemEntry<T> {
   PopupMenuEntry<T> buildCustomCupertinoMenuItemEntry({
     Color? highlightColor,
     ValueChanged<AdaptivePulldownMenuItem<T>>? onSelected,
@@ -269,10 +270,10 @@ extension CustomCupertinoPopupMenuItemEx<T> on AdaptivePulldownMenuItemEntry<T> 
         selectionType: selectionType,
         highlightColor: highlightColor,
         onTap: () {
+          Navigator.maybePop(context);
+
           onSelected?.call(item);
           item.onTap?.call();
-
-          Navigator.maybePop(context);
         },
       );
     }
