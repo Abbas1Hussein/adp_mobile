@@ -75,12 +75,3 @@ abstract final class AdpColors {
     );
   }
 }
-
-// Color handelBackgroundColor(Color? color, BuildContext context) {
-//   return adaptiveValue<Color>(
-//     macos: () => MacosDynamicColor.resolve(
-//         color ?? MacosTheme.of(context).canvasColor, context),
-//     windows: () =>
-//     color ?? FluentTheme.of(context).resources.solidBackgroundFillColorBase,
-//   );
-// }

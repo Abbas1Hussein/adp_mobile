@@ -63,7 +63,7 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
 
   ButtonStyle androidDefaultStyle() {
     return ButtonStyle(
-      shape: MaterialStateProperty.all(shape),
+      shape: shape != null ? MaterialStateProperty.all(shape) : null,
       backgroundColor: MaterialStateProperty.resolveWith(
         (states) {
           return forStates(

@@ -218,7 +218,7 @@ class IOSButtonState extends State<IOSButton>
             ),
           ),
         ),
-      ).applyDisabledEffect(!enabled),
+      ).applyDisabledEffect(!enabled, 0.65),
     );
   }
 

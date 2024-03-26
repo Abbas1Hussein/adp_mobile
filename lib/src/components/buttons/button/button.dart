@@ -6,13 +6,14 @@ import '../../../core/extension/brightness.dart';
 import 'base_button.dart';
 import 'iOS.dart';
 
-/// Buttons are the graphical control element that provides a user to trigger an event such as taking actions, making choices, searching things, and many more.
-/// They can be placed anywhere in our UI like dialogs, forms, cards, toolbars, etc.
+/// Buttons are essential UI elements that allow users to interact with your app by triggering actions, making choices, searching information,
+/// and more. They can be placed anywhere within your user interface, including dialogs, forms, cards, toolbars, etc.
 ///
-/// This widget provides three variants:
-/// - [AdaptiveButtonType.base]: A standard adaptive button.
-/// - [AdaptiveButtonType.filled]: A filled adaptive colored button.
-/// - [AdaptiveButtonType.outlined]: An outlined adaptive button with a border.
+/// This `AdaptiveButton` widget provides three versatile styles to match your app's design:
+///
+/// * [Base], A standard adaptive button with a platform-specific appearance.
+/// * [Filled], A filled adaptive button with a colored background, suitable for primary actions.
+/// * [Outlined], An outlined adaptive button with a border, often used for secondary actions or those requiring less emphasis.
 class AdaptiveButton extends AdaptiveBaseButton {
   /// Creates an instance of [AdaptiveButton] with the base type.
   const AdaptiveButton({
@@ -27,7 +28,7 @@ class AdaptiveButton extends AdaptiveBaseButton {
     super.mouseCursor,
     required super.child,
     required super.onPressed,
-  }) : _type = AdaptiveButtonType.base;
+  }) : _type = _AdaptiveButtonTypes.base;
 
   /// Creates an instance of [AdaptiveButton] with the filled type.
   const AdaptiveButton.filled({
@@ -42,7 +43,7 @@ class AdaptiveButton extends AdaptiveBaseButton {
     super.mouseCursor,
     required super.child,
     required super.onPressed,
-  }) : _type = AdaptiveButtonType.filled;
+  }) : _type = _AdaptiveButtonTypes.filled;
 
   /// Creates an instance of [AdaptiveButton] with the outlined type.
   const AdaptiveButton.outlined({
@@ -57,29 +58,29 @@ class AdaptiveButton extends AdaptiveBaseButton {
     super.mouseCursor,
     required super.child,
     required super.onPressed,
-  }) : _type = AdaptiveButtonType.outlined;
+  }) : _type = _AdaptiveButtonTypes.outlined;
 
   /// The type of the adaptive button, determining its visual style.
-  final AdaptiveButtonType _type;
+  final _AdaptiveButtonTypes _type;
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     switch (_type) {
-      case AdaptiveButtonType.base:
+      case _AdaptiveButtonTypes.base:
         return ElevatedButton(
           style: androidDefaultStyle(),
           onLongPress: onLongPress,
           onPressed: onPressed,
           child: child,
         );
-      case AdaptiveButtonType.filled:
+      case _AdaptiveButtonTypes.filled:
         return FilledButton(
           style: androidDefaultStyle(),
           onLongPress: onLongPress,
           onPressed: onPressed,
           child: child,
         );
-      case AdaptiveButtonType.outlined:
+      case _AdaptiveButtonTypes.outlined:
         return OutlinedButton(
           style: androidDefaultStyle(),
           onLongPress: onLongPress,
@@ -93,9 +94,8 @@ class AdaptiveButton extends AdaptiveBaseButton {
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     final theme = CupertinoTheme.of(context);
     switch (_type) {
-      case AdaptiveButtonType.base:
+      case _AdaptiveButtonTypes.base:
         return IOSButton(
-          pressedOpacity: 0.95,
           shape: shape,
           onPressed: onPressed,
           hoverColor: hoverColor,
@@ -106,9 +106,9 @@ class AdaptiveButton extends AdaptiveBaseButton {
           backgroundColor: backgroundColor,
           child: child,
         );
-      case AdaptiveButtonType.filled:
+      case _AdaptiveButtonTypes.filled:
         return IOSButton(
-          pressedOpacity: 0.85,
+          pressedOpacity: 0.45,
           shape: shape,
           onPressed: onPressed,
           onLongPress: onLongPress,
@@ -127,20 +127,17 @@ class AdaptiveButton extends AdaptiveBaseButton {
             child: child,
           ),
         );
-      case AdaptiveButtonType.outlined:
+      case _AdaptiveButtonTypes.outlined:
         return IOSButton(
-          pressedOpacity: 0.75,
+          pressedOpacity: 0.45,
           shape: shape ??
               RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(
-                    width: 1,
-                    color: CupertinoTheme.brightnessOf(context).resolve(
-                      lightColor: CupertinoColors.black,
-                      darkColor: CupertinoColors.extraLightBackgroundGray,
-                    ),
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                  )),
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  color: theme.primaryColor,
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                ),
+              ),
           onPressed: onPressed,
           onLongPress: onLongPress,
           mouseCursor: mouseCursor,
@@ -150,8 +147,8 @@ class AdaptiveButton extends AdaptiveBaseButton {
           hoverColor: hoverColor,
           child: DefaultTextStyle(
             style: theme.textTheme.textStyle.copyWith(
-              color: shape?.side.color,
               fontWeight: FontWeight.w500,
+              color: shape?.side.color ?? theme.primaryColor,
             ),
             child: child,
           ),
@@ -161,13 +158,13 @@ class AdaptiveButton extends AdaptiveBaseButton {
 }
 
 /// different types of [AdaptiveButton] variants.
-enum AdaptiveButtonType {
-  /// The base type represents a standard adaptive button.
+enum _AdaptiveButtonTypes {
+  /// Standard adaptive button style.
   base,
 
-  /// The filled type represents a filled adaptive button with colored styling.
+  /// Filled adaptive button with colored background.
   filled,
 
-  /// The outlined type represents an outlined adaptive button with a border.
+  /// Outlined adaptive button with border.
   outlined,
 }

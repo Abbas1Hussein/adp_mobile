@@ -37,27 +37,31 @@ class AdaptiveTypography {
 
   /// Internal method to retrieve the adaptive typography based on the current platform.
   static AdaptiveTypography _data(BuildContext context) {
+    final platformTheme = adaptiveValue<(CupertinoThemeData?, ThemeData?)?>(
+      ios: () => (CupertinoTheme.of(context), null),
+      android: () => (null, Theme.of(context)),
+    );
     return AdaptiveTypography(
       body: adaptiveValue<TextStyle?>(
-        ios: () => CupertinoTheme.of(context).textTheme.textStyle,
-        android: () => Theme.of(context).textTheme.bodyMedium,
+        ios: () => platformTheme?.$1?.textTheme.textStyle,
+        android: () => platformTheme?.$2?.textTheme.bodyMedium,
       ),
       headline: adaptiveValue<TextStyle?>(
-        ios: () => CupertinoTheme.of(context).textTheme.navLargeTitleTextStyle,
+        ios: () => platformTheme?.$1?.textTheme.navLargeTitleTextStyle,
         android: () =>
-            Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 24),
+            platformTheme?.$2?.textTheme.displaySmall?.copyWith(fontSize: 24),
       ),
       caption: adaptiveValue<TextStyle?>(
-        ios: () => CupertinoTheme.of(context).textTheme.tabLabelTextStyle,
-        android: () => Theme.of(context).textTheme.bodySmall,
+        ios: () => platformTheme?.$1?.textTheme.tabLabelTextStyle,
+        android: () => platformTheme?.$2?.textTheme.bodySmall,
       ),
       label: adaptiveValue<TextStyle?>(
-        ios: () => CupertinoTheme.of(context).textTheme.navActionTextStyle,
-        android: () => Theme.of(context).textTheme.labelMedium,
+        ios: () => platformTheme?.$1?.textTheme.navActionTextStyle,
+        android: () => platformTheme?.$2?.textTheme.labelMedium,
       ),
       subheading: adaptiveValue<TextStyle?>(
-        ios: () => CupertinoTheme.of(context).textTheme.navTitleTextStyle,
-        android: () => Theme.of(context).textTheme.headlineMedium,
+        ios: () => platformTheme?.$1?.textTheme.navTitleTextStyle,
+        android: () => platformTheme?.$2?.textTheme.headlineMedium,
       ),
     );
   }

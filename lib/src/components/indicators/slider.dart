@@ -216,18 +216,20 @@ class AdaptiveSlider extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return Slider(
-      max: max,
-      min: min,
-      value: value,
-      divisions: divisions,
-      onChanged: onChanged,
-      onChangeEnd: onChangeEnd,
-      onChangeStart: onChangeStart,
-      thumbColor: thumbColor,
-      activeColor: activeColor,
-      inactiveColor: inactiveColor,
-      label: value.toStringAsFixed(0),
+    return IntrinsicHeight(
+      child: Slider(
+        max: max,
+        min: min,
+        value: value,
+        divisions: divisions,
+        onChanged: onChanged,
+        onChangeEnd: onChangeEnd,
+        onChangeStart: onChangeStart,
+        thumbColor: thumbColor,
+        activeColor: activeColor,
+        inactiveColor: inactiveColor,
+        label: value.toStringAsFixed(0),
+      ),
     );
   }
 

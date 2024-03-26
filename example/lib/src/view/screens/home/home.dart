@@ -52,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 launchUrlString('https://pub.dev/packages/adp_mobile'),
             icon: const AdaptiveIcon(AdpIcons.link),
           ),
-          const Divider(),
           AdaptivePulldownMenuButton<String>(
             items: [
               AdaptivePulldownMenuItem(

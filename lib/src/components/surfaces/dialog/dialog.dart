@@ -181,7 +181,9 @@ class AdaptiveDialog
         ? actions!.map(
             (e) {
               return Padding(
-                  padding: actionsPadding ?? EdgeInsets.zero, child: e);
+                padding: actionsPadding ?? EdgeInsets.zero,
+                child: e,
+              );
             },
           ).toList()
         : const [];
@@ -192,7 +194,8 @@ class AdaptiveDialog
       scrollController: property?.scrollController,
       actionScrollController: property?.actionScrollController,
       insetAnimationCurve: property?.insetAnimationCurve ?? Curves.decelerate,
-      insetAnimationDuration: property?.insetAnimationDuration ?? const Duration(milliseconds: 100),
+      insetAnimationDuration:
+          property?.insetAnimationDuration ?? const Duration(milliseconds: 100),
     );
   }
 }

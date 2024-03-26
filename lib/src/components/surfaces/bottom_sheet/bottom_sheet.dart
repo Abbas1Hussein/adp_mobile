@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
+import 'platforms/platforms.dart';
 
 /// A modal dialog that’s attached to a particular window and prevents further
 /// interaction with the window until the sheet is dismissed,
@@ -10,21 +11,25 @@ import '../../../core/common/construct/component.dart';
 /// See also:
 ///
 /// * [showAdpBottomSheet] A function to display an adaptive platform-specific bottom sheet.
-class AdaptiveBottomSheet extends CoreAdaptiveComponent {
+class AdaptiveBottomSheet extends CoreAdaptiveComponent<
+    BottomSheetAndroidProperty, BottomSheetIOSProperty> {
   /// Creates an adaptive bottom sheet.
   ///
   /// The [content] parameter is required and represents the main content of the bottom sheet.
   const AdaptiveBottomSheet({
     super.key,
     super.builders,
+    super.properties,
     this.title,
     this.titleTextStyle,
     this.titlePadding,
     this.contentTextStyle,
     this.contentPadding,
+    this.contentScrollController,
     this.actions,
     this.actionsPadding,
     this.actionsTextStyle,
+    this.actionScrollController,
     required this.content,
   });
 
@@ -56,6 +61,13 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// padding is used.
   final EdgeInsetsGeometry? contentPadding;
 
+  /// A scroll controller that can be used to control the scrolling of the
+  /// [content] in the action sheet.
+  ///
+  /// This attribute is typically not needed, as alert messages should be
+  /// short.
+  final ScrollController? contentScrollController;
+
   /// The set of actions that are displayed for the user to select.
   ///
   /// Typically this is a list of [AdaptiveBottomSheetAction] widgets.
@@ -75,85 +87,44 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent {
   /// If there are no [actions], then no padding will be included.
   final EdgeInsetsGeometry? actionsPadding;
 
+  /// A scroll controller that can be used to control the scrolling of the
+  /// [actions] in the action sheet.
+  ///
+  /// This attribute is typically not needed.
+  final ScrollController? actionScrollController;
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return IntrinsicHeight(
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (title != null)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DefaultTextStyle.merge(
-                  style:
-                      titleTextStyle ?? Theme.of(context).textTheme.titleSmall,
-                  child: title!,
-                ),
-              ),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DefaultTextStyle.merge(
-                  style:
-                      contentTextStyle ?? Theme.of(context).textTheme.bodySmall,
-                  child: SingleChildScrollView(child: content),
-                ),
-              ),
-            ),
-            if (actions != null && actions!.isNotEmpty)
-              if (actions!.length <= 2)
-                Row(
-                  children: actions!.map(
-                    (child) {
-                      return Expanded(
-                        child: Padding(
-                          padding: actionsPadding ?? const EdgeInsets.all(4.0),
-                          child: DefaultTextStyle.merge(
-                            style: actionsTextStyle,
-                            child: child,
-                          ),
-                        ),
-                      );
-                    },
-                  ).toList(),
-                )
-              else
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: actions!.map(
-                    (child) {
-                      return Padding(
-                        padding: actionsPadding ?? const EdgeInsets.all(4.0),
-                        child: DefaultTextStyle.merge(
-                          style: actionsTextStyle,
-                          child: child,
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ),
-          ],
-        ),
-      ),
+  Widget android(BuildContext context, [BottomSheetAndroidProperty? property]) {
+    return BottomSheetAndroid(
+      title: title,
+      titlePadding: titlePadding,
+      titleTextStyle: titleTextStyle,
+      contentPadding: contentPadding,
+      contentTextStyle: contentTextStyle,
+      contentScrollController: contentScrollController,
+      content: content,
+      actions: actions,
+      actionsPadding: actionsPadding,
+      actionsTextStyle: actionsTextStyle,
+      actionScrollController: actionScrollController,
     );
   }
 
   @override
-  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    return CupertinoActionSheet(
-      title: title != null
-          ? DefaultTextStyle.merge(style: titleTextStyle, child: title!)
-          : null,
-      message: DefaultTextStyle.merge(style: contentTextStyle, child: content),
-      actions: actions?.map( (child) => Padding(
-              padding: actionsPadding ?? EdgeInsets.zero,
-              child: DefaultTextStyle.merge(
-                style: actionsTextStyle,
-                child: child,
-              ),
-            ), ).toList(),
+  Widget iOS(BuildContext context, [BottomSheetIOSProperty? property]) {
+    return BottomSheetIOS(
+      property: property,
+      title: title,
+      titlePadding: titlePadding,
+      titleTextStyle: titleTextStyle,
+      contentPadding: contentPadding,
+      contentTextStyle: contentTextStyle,
+      content: content,
+      contentScrollController: contentScrollController,
+      actionScrollController: actionScrollController,
+      actions: actions,
+      actionsPadding: actionsPadding,
+      actionsTextStyle: actionsTextStyle,
     );
   }
 }
@@ -164,22 +135,40 @@ class AdaptiveBottomSheetAction extends CoreAdaptiveComponent {
     this.textStyle,
     required this.onPressed,
     required this.child,
-  });
+  }) : canceled = false;
+
+  /// This will displayed on Android only.
+  ///
+  /// Always will skipped on iOS (will use native cancel iOS).
+  const AdaptiveBottomSheetAction.skipCancel({
+    super.key,
+    this.textStyle,
+    required this.onPressed,
+    required this.child,
+  }) : canceled = true;
+  final bool canceled;
 
   /// The widget below this widget in the tree.
   ///
   /// Typically a [Text] widget.
   final Widget child;
 
+  /// [TextStyle] to apply to any text that appears in this button.
+  final TextStyle? textStyle;
+
   /// The callback that is called when the button is tapped or otherwise
   /// activated.
   final VoidCallback onPressed;
 
-  /// [TextStyle] to apply to any text that appears in this button.
-  final TextStyle? textStyle;
-
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
+  Widget android(BuildContext context,
+      [CoreAndroidProperty? property, bool useTextButton = false]) {
+    if (Theme.of(context).useMaterial3 && useTextButton) {
+      return TextButton(
+        onPressed: onPressed,
+        child: DefaultTextStyle.merge(style: textStyle, child: child),
+      );
+    }
     return OutlinedButton(
       onPressed: onPressed,
       child: DefaultTextStyle.merge(style: textStyle, child: child),

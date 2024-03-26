@@ -109,6 +109,7 @@ class AdaptiveNavigationBar
   @override
   (BottomNavigationBar, Widget) toAndroid(BuildContext context) {
     final property = properties?.android;
+
     final navigationRail = NavigationRail(
       key: key,
       leading: property?.leading,
@@ -138,7 +139,8 @@ class AdaptiveNavigationBar
       type: property?.type,
       currentIndex: currentIndex,
       selectedItemColor: selectedItemColor,
-      unselectedItemColor: unselectedItemColor,
+      unselectedItemColor:
+          unselectedItemColor ?? Theme.of(context).unselectedWidgetColor,
       selectedIconTheme: selectedIconTheme,
       unselectedIconTheme: unselectedIconTheme,
       backgroundColor: backgroundColor,
