@@ -1,13 +1,9 @@
-import 'dart:ffi';
-
 import 'package:adp_mobile/adp_mobile.dart';
-import 'package:adp_mobile_preview/adp_mobile_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'controllers/platforms_controller.dart';
 import 'controllers/theme_controller.dart';
-import 'view/screens/home/home.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -33,23 +29,20 @@ class _AppState extends State<App> {
         return AdpApp(
           themeMode: value,
           debugShowCheckedModeBanner: false,
-          // properties: Properties.android(AppAndroidProperty(
-          //   darkTheme: ThemeData.dark(useMaterial3: false)
-          // )),
           home: HomeScreen2(controller: controller),
         );
 
-        return AdaptiveMobilePreview(
-          type: adaptiveValue(
-            ios: () => DevicesType.iOS.iPhone12Mini,
-            android: () => DevicesType.android.samsungGalaxyNote20,
-          ),
-          child: AdpApp(
-            themeMode: value,
-            debugShowCheckedModeBanner: false,
-            home: HomeScreen2(controller: controller),
-          ),
-        );
+        // return AdaptiveMobilePreview(
+        //   type: adaptiveValue(
+        //     ios: () => DevicesType.iOS.iPhone12Mini,
+        //     android: () => DevicesType.android.samsungGalaxyNote20,
+        //   ),
+        //   child: AdpApp(
+        //     themeMode: value,
+        //     debugShowCheckedModeBanner: false,
+        //     home: HomeScreen2(controller: controller),
+        //   ),
+        // );
       },
     );
   }
@@ -71,77 +64,73 @@ class HomeScreen2 extends StatefulWidget {
 }
 
 class _HomeScreen2State extends State<HomeScreen2> {
+  int _currentValue = 0;
   final controller = PlatformController();
 
-  int _currentValue = 0;
+  final items = const [
+    AdaptiveNavigationBarItem(label: 'home', icon: AdaptiveIcon(AdpIcons.home)),
+    AdaptiveNavigationBarItem(label: 'save', icon: AdaptiveIcon(AdpIcons.save)),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return AdaptiveScaffoldPage(
-      appBar: _buildAdaptiveAppBarPage(context),
-      content: Center(
-        child: AdaptiveTextButton(
-          onPressed: () {
-            showAdpBottomSheet(
-              context: context,
-              builder: (context) {
-                return AdaptiveBottomSheet(
-                  title: const Text('User ABBAS HUSSEIN?'),
-                  content: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Are you sure you want to delete this user? This action cannot be undone.',
-                      ),
-                      Image.network('https://i.imgur.com/2KHNJfH.png'),
-                    ],
-                  ),
-                  actions: [
-                    AdaptiveBottomSheetAction(
-                      child: const Text('Delete'),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    AdaptiveBottomSheetAction.skipCancel(
-                      child: const Text('Cancel'),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-          child: const Text('show bottom sheet'),
-        ),
-      ),
-    );
-    return AdaptiveNavigationView(
-      appBar: _buildAdaptiveAppBarPage(context),
-      navigationBar: AdaptiveNavigationBar(
-        currentIndex: _currentValue,
-        onChanged: (value) => setState(() => _currentValue = value),
-        items: const [
-          AdaptiveNavigationBarItem(
+    return AdaptiveScaffold(
+      appBar: AdaptiveAppBar(title: const Text('Home'), actions: _actions),
+      drawer: NavigationDrawer(
+        selectedIndex: _currentValue,
+        onDestinationSelected: (value) {
+          setState(() {
+            _currentValue = value;
+          });
+        },
+        children: const [
+          SizedBox(height: 12.0),
+          NavigationDrawerDestination(
+            label: Text('home'),
             icon: AdaptiveIcon(AdpIcons.home),
-            label: 'home',
           ),
-          AdaptiveNavigationBarItem(
-            icon: AdaptiveIcon(AdpIcons.save),
-            label: 'save',
+          SizedBox(height: 4.0),
+          NavigationDrawerDestination(
+            label: Text('camera'),
+            icon: AdaptiveIcon(AdpIcons.camera),
+          ),
+          SizedBox(height: 4.0),
+          NavigationDrawerDestination(
+            label: Text('archive'),
+            icon: AdaptiveIcon(AdpIcons.archive),
           ),
         ],
       ),
-      children: const [
-        SizedBox.shrink(),
-        SizedBox.shrink(),
-      ],
+      body: const Center(),
+      bottomNavigationBar: AdaptiveBottomNavigationBar(
+        currentIndex: _currentValue,
+        onChanged: (value) {
+          setState(() {
+            _currentValue = value;
+          });
+        },
+        items: [
+          AdaptiveBottomNavigationBarItem(
+            icon: AdaptiveIcon(AdpIcons.home),
+            label: 'home',
+          ),
+          AdaptiveBottomNavigationBarItem(
+            icon: AdaptiveIcon(AdpIcons.camera),
+            label: 'camera',
+          ),
+          AdaptiveBottomNavigationBarItem(
+            icon: AdaptiveIcon(AdpIcons.archive),
+            label: 'archive',
+          )
+        ],
+      ),
     );
   }
 
-  AdaptiveNavigationAppbar _buildAdaptiveAppBarPage(BuildContext context) {
-    return AdaptiveNavigationAppbar(
-      title: const Text('AppBar'),
-      actions: [
-        AdaptivePulldownMenuButton<String>(
+  List<Widget> get _actions {
+    return [
+      Center(
+        child: AdaptivePulldownMenuButton<String>(
           items: [
             AdaptivePulldownMenuItem(
               onTap: widget.controller.lightMode,
@@ -160,7 +149,9 @@ class _HomeScreen2State extends State<HomeScreen2> {
             context.brightness.isDark ? Icons.dark_mode : Icons.light_mode,
           ),
         ),
-        AdaptivePulldownMenuButton<String>(
+      ),
+      Center(
+        child: AdaptivePulldownMenuButton<String>(
           items: [
             AdaptivePulldownMenuItem(
               onTap: _showSystemsDialog,
@@ -182,8 +173,8 @@ class _HomeScreen2State extends State<HomeScreen2> {
           ],
           icon: const AdaptiveIcon(AdpIcons.deviceMobile),
         ),
-      ],
-    );
+      ),
+    ];
   }
 
   void _showSystemsDialog() async {

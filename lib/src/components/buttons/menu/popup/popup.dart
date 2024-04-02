@@ -52,7 +52,6 @@ class AdaptivePopupMenuButton<T> extends CoreAdaptiveComponent {
   /// if it is non-null. If [disabledPlaceholder] is null, then [placeholder] will be displayed
   /// if it is non-null.
   ///
-  ///
   /// The [popupColor] argument specifies the background color of the
   /// popup when it is open.
   const AdaptivePopupMenuButton({
@@ -96,7 +95,7 @@ class AdaptivePopupMenuButton<T> extends CoreAdaptiveComponent {
 
   /// Called when the user selects an item.
   ///
-  /// If the [onChanged] callback is null or the list of [AdaptivePopupMenuItem.items]
+  /// If the [onChanged] callback is null or the list of [AdaptivePopupMenuItem.tabs]
   /// is null then the popup button will be disabled, i.e. its up/down caret will
   /// be displayed in grey and it will not respond to input. A disabled button
   /// will display the [AdaptivePopupMenuItem.disabledPlaceholder] widget if it is non-null.

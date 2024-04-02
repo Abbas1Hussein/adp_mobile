@@ -10,7 +10,7 @@ import 'platforms/platforms.dart';
 /// styling and behavior:
 /// - On IOS, specific form field used.
 /// - On Android, [TextFormField] is used.
-final class AdaptiveTextFormField
+class AdaptiveTextFormField
     extends BaseTextField<FormFieldAndroidProperty, FormFieldIOSProperty> {
   /// Creates a [FormField] that contains a [AdaptiveTextField].
   ///

@@ -6,9 +6,6 @@ import '../button/iOS.dart';
 
 const _kAdpIconConstraints = BoxConstraints(minHeight: 20, minWidth: 30);
 
-/// A custom icon button widget that adapts its appearance based on the platform.
-///
-/// Use this widget to create icon buttons with platform-specific:
 class AdaptiveIconButton extends CoreAdaptiveComponent {
   /// Creates an instance of [AdaptiveIconButton].
   ///

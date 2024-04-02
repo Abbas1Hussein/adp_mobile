@@ -1,12 +1,9 @@
 import 'package:flutter/widgets.dart';
 
-typedef BuilderSearchItem = Widget Function(
-  bool isHighlight,
-  VoidCallback onTap,
-);
+typedef BuilderSearchItem = Widget Function(bool isHighlight, VoidCallback onTap);
 
-class AdaptiveSearchItem<T> {
-  const AdaptiveSearchItem({
+class AdaptiveAutoCompleteItem<T> {
+  const AdaptiveAutoCompleteItem({
     this.value,
     this.builder,
     required this.searchKey,
@@ -25,7 +22,7 @@ class AdaptiveSearchItem<T> {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is AdaptiveSearchItem &&
+        other is AdaptiveAutoCompleteItem &&
             runtimeType == other.runtimeType &&
             searchKey == other.searchKey &&
             builder == other.builder &&

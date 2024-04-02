@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/common/construct/property.dart';
 import '../../button_picker/ios.dart';
+import '../../button_picker/typedef.dart';
 import '../../dialog_picker/ios.dart';
 import '../../button_picker/button_constraints.dart';
 
@@ -92,15 +93,16 @@ class DatePickerIOS extends StatefulWidget {
     super.key,
     this.onCancel,
     this.property,
+    this.initialDate,
     this.onDateTimeChanged,
-    required this.initialDate,
+    this.datePickerButtonBuilder,
   });
 
-  final DatePickerIOSProperty? property;
-  final VoidCallback? onCancel;
-  final ValueChanged<DateTime>? onDateTimeChanged;
-
   final DateTime? initialDate;
+  final VoidCallback? onCancel;
+  final DatePickerIOSProperty? property;
+  final ValueChanged<DateTime>? onDateTimeChanged;
+  final DatePickerButtonBuilder? datePickerButtonBuilder;
 
   @override
   State<DatePickerIOS> createState() => _DatePickerIOSState();
@@ -133,6 +135,15 @@ class _DatePickerIOSState extends State<DatePickerIOS> {
         child: _buildCupertinoDatePicker(),
       );
     }
+
+    if (widget.datePickerButtonBuilder != null){
+      return widget.datePickerButtonBuilder!(
+        context,
+        selectedDate,
+        _showCupertinoDatePickerDialog,
+      );
+    }
+
     return CupertinoDatePickerButton(
       pickerMode: widget.property?.mode ?? CupertinoDatePickerMode.date,
       alwaysUse24HourFormat: widget.property?.use24hFormat ?? false,

@@ -1,139 +1,216 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../core/core.dart';
-import '../../icon/icon.dart';
-import '../base_text_field.dart';
-import 'platform/empty_widget.dart';
-import 'platform/model.dart';
-import 'platform/platform.dart';
-import 'search_item.dart';
+import 'base_properties.dart';
+import 'platforms/platforms.dart';
 
-/// A custom text search field widget that adapts its appearance based on the platform.
-///
-/// Use this widget to create text search field  with platform-specific
-/// styling and behavior.
-final class AdaptiveTextSearchField<T> extends BaseTextField {
-  /// An AdaptiveTextSearchField provides a list of suggestions for a user to select from
-  /// as they type.
-  ///
-  /// See also:
-  ///
-  ///  * [AdaptiveTextField], which provides a versatile text input field.
-  ///  * [AdaptiveTextFormField], a form field that wraps around AdaptiveTextField, enhancing it for form validation.
-  ///  * [Overlay], which is used to show the suggestion popup
+class AdaptiveTextSearchField extends CoreAdaptiveComponent<
+    SearchFieldAndroidProperty,
+    SearchFieldIOSProperty> implements BaseSearchFieldProperties {
   const AdaptiveTextSearchField({
     super.key,
     super.builders,
-    super.style,
-    super.enabled,
-    super.controller,
-    super.autofocus,
-    super.focusNode,
-    super.placeholder,
-    super.placeholderStyle,
-    super.prefix,
-    super.onChanged,
-    super.onTap,
-    AdaptiveIcon? super.suffix,
-    this.fieldViewBuilder,
-    this.optionsBuilder,
-    this.optionsMaxHeight = 200,
-    this.optionInitialValue,
-    this.optionsViewBuilder,
-    this.displayStringForOption,
-    this.emptyBuilder,
-    this.onSelected,
-    this.suffixMode,
+    super.properties,
+    this.style,
+    this.padding,
+    this.placeholder,
+    this.placeholderStyle,
+    this.onTap,
+    this.onChanged,
     this.onSuffixTap,
+    this.onSubmitted,
+    this.controller,
+    this.prefixIcon,
+    this.prefixInsets,
+    this.itemColor,
+    this.itemSize,
+    this.focusNode,
+    this.suffixIcon,
+    this.suffixInsets,
+    this.suffixMode = OverlayVisibilityMode.editing,
     this.decoration,
-    this.optionsDecoration,
-    required this.options,
   });
 
-  /// A list of suggestions for the SearchFieldAutoComplete.
+  /// Callback that will be invoked when the user taps on the text field.
   ///
-  /// Each suggestion should have a unique searchKey.
-  final List<AdaptiveSearchItem<T>> options;
+  /// This can be useful for initiating actions without necessarily editing the text.
+  @override
+  final VoidCallback? onTap;
 
-  /// Callback function called when the user selects a value from the search results.
-  final ValueChanged<AdaptiveSearchItem<T>>? onSelected;
-
-  /// {@macro flutter.widgets.RawAutocomplete.displayStringForOption}
-  final AutocompleteOptionToString<AdaptiveSearchItem<T>>?
-      displayStringForOption;
-
-  /// {@macro flutter.widgets.RawAutocomplete.fieldViewBuilder}
+  /// Callback that will be invoked whenever the text in the text field changes.
   ///
-  /// If not provided, will build a standard Material-style text field by
-  /// default.
-  final AutocompleteFieldViewBuilder? fieldViewBuilder;
+  /// This allows you to react to the user's input in real-time and potentially update the
+  /// UI or perform other actions based on the new value.
+  @override
+  final ValueChanged<String>? onChanged;
 
-  /// {@macro flutter.widgets.RawAutocomplete.optionsBuilder}
-  final AutocompleteOptionsBuilder<AdaptiveSearchItem<T>>? optionsBuilder;
-
-  /// {@macro flutter.widgets.RawAutocomplete.optionsViewBuilder}
+  /// Callback that will be invoked when the user submits the text in the field.
   ///
-  /// If not provided, will build a standard Material-style list of results by
-  /// default.
-  final AutocompleteOptionsViewBuilder<AdaptiveSearchItem<T>>?
-      optionsViewBuilder;
+  /// This typically happens when the user presses the "Enter" key or a platform-specific "Done" button.
+  @override
+  final ValueChanged<String>? onSubmitted;
 
-  /// The maximum height used for the default Material options list widget.
+  /// A widget that will be displayed at the beginning of the text field.
+  /// This is commonly used for icons such as search or user profiles.
   ///
-  /// When [optionsViewBuilder] is `null`, this property sets the maximum height
-  /// that the options widget can occupy.
+  /// Defaults to displaying a platform-specific 'search' icon data.
+  @override
+  final Widget? prefixIcon;
+
+  /// Additional insets specifically for the prefix icon,
+  /// allowing for fine-tuned positioning within the text field.
+  @override
+  final EdgeInsetsGeometry? prefixInsets;
+
+  /// The padding between the search bar's boundary and its contents.
+  @override
+  final EdgeInsetsGeometry? padding;
+
+  /// An icon that will be displayed at the end of the text field.
+  /// This is often used for icons like clear, or visibility toggles.
   ///
-  /// The default value is set to 200.
-  final double optionsMaxHeight;
+  /// Defaults to displaying a platform-specific 'clear' icon data.
+  @override
+  final Icon? suffixIcon;
 
-  /// {@macro flutter.widgets.RawAutocomplete.initialValue}
-  final TextEditingValue? optionInitialValue;
+  /// Similar to prefixInsets, but for the suffix icon, adjusting its positioning within the text field.
+  @override
+  final EdgeInsetsGeometry? suffixInsets;
 
+  /// Callback that will be invoked when the user taps on the suffix icon.
+  ///
+  /// This allows you to define custom actions specific to interacting with the suffix icon.
+  /// Default to erase the user entered text.
+  @override
   final VoidCallback? onSuffixTap;
-  final OverlayVisibilityMode? suffixMode;
 
+  /// Controls the visibility of the suffix icon. You can choose from options like:
+  ///
+  ///  * [OverlayVisibilityMode.always], The suffix icon will always be displayed.
+  ///  * [OverlayVisibilityMode.editing], The suffix icon will only be displayed when the text field is being edited.
+  ///  * [OverlayVisibilityMode.notEditing], The suffix icon will only be displayed when the text field is not being edited.
+  ///  * [OverlayVisibilityMode.never], The suffix icon will not be displayed.
+  @override
+  final OverlayVisibilityMode suffixMode;
+
+  /// The text style for the text entered in the field.
+  ///
+  /// This affects the font, size, color, and decoration of the text.
+  @override
+  final TextStyle? style;
+
+  /// Placeholder text that is displayed when the text field is empty.
+  ///
+  /// This provides guidance for the user on what kind of input is expected.
+  /// Default to platform Localizations search.
+  @override
+  final String? placeholder;
+
+  /// The text style for the placeholder text.
+  ///
+  /// This allows you to visually differentiate the placeholder text from the actual user input.
+  @override
+  final TextStyle? placeholderStyle;
+
+  /// The color of the prefix and suffix icons (if used).
+  ///
+  /// This ensures a cohesive look for the entire text field component.
+  @override
+  final Color? itemColor;
+
+  /// The size of the prefix and suffix icons (if used).
+  ///
+  /// This maintains consistency in visual proportions for a better user experience.
+  @override
+  final double? itemSize;
+
+  /// A focus node that manages the focus state of the text field.
+  ///
+  /// This allows you to programmatically control when and how the field receives focus.
+  @override
+  final FocusNode? focusNode;
+
+  /// The decoration applied to the text field, such as borders, backgrounds, and shadows.
+  @override
   final BoxDecoration? decoration;
-  final OptionsDecoration? optionsDecoration;
 
-  final EmptyBuilder? emptyBuilder;
+  /// A TextEditingController that provides a handle for retrieving and modifying the text field's value.
+  ///
+  /// It also allows for managing the selection of text within the field.
+  @override
+  final TextEditingController? controller;
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    return MaterialAutocomplete<T>(
-      options: options,
-      suffixMode: suffixMode,
-      onSelected: onSelected,
+  Widget android(BuildContext context, [SearchFieldAndroidProperty? property]) {
+    return TextSearchFieldAndroid(
+      property: property,
+      focusNode: focusNode,
+      controller: controller,
+
+      // styles
+      style: style,
+      padding: padding,
       decoration: decoration,
+
+      // void-backs
+      onTap: onTap,
+      onChanged: onChanged,
+      onSubmitted: onSubmitted,
+
+      // icons (suffix && prefix)
+      itemSize: itemSize,
+      itemColor: itemColor,
+
+      // prefix
+      prefixIcon: prefixIcon,
+      prefixInsets: prefixInsets,
+
+      // placeholder
+      placeholder: placeholder,
+      placeholderStyle: placeholderStyle,
+
+      // suffix
+      suffixIcon: suffixIcon,
+      suffixMode: suffixMode,
       onSuffixTap: onSuffixTap,
-      emptyBuilder: emptyBuilder,
-      optionsBuilder: optionsBuilder,
-      initialValue: optionInitialValue,
-      fieldProperties: fieldProperties,
-      fieldViewBuilder: fieldViewBuilder,
-      optionsMaxHeight: optionsMaxHeight,
-      optionsDecoration: optionsDecoration,
-      optionsViewBuilder: optionsViewBuilder,
-      displayStringForOption: displayStringForOption,
+      suffixInsets: suffixInsets,
     );
   }
 
   @override
-  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    return CupertinoAutocomplete<T>(
-      options: options,
-      suffixMode: suffixMode,
-      onSelected: onSelected,
+  Widget iOS(BuildContext context, [SearchFieldIOSProperty? property]) {
+    return TextSearchFieldIOS(
+      property: property,
+      focusNode: focusNode,
+      controller: controller,
+
+      // styles
+      style: style,
+      padding: padding,
       decoration: decoration,
+
+      // void-backs
+      onTap: onTap,
+      onChanged: onChanged,
+      onSubmitted: onSubmitted,
+
+      // icons (suffix && prefix)
+      itemSize: itemSize,
+      itemColor: itemColor,
+
+      // prefix
+      prefixIcon: prefixIcon,
+      prefixInsets: prefixInsets,
+
+      // placeholder
+      placeholder: placeholder,
+      placeholderStyle: placeholderStyle,
+
+      // suffix
+      suffixIcon: suffixIcon,
+      suffixMode: suffixMode,
       onSuffixTap: onSuffixTap,
-      emptyBuilder: emptyBuilder,
-      optionsBuilder: optionsBuilder,
-      initialValue: optionInitialValue,
-      fieldProperties: fieldProperties,
-      fieldViewBuilder: fieldViewBuilder,
-      optionsMaxHeight: optionsMaxHeight,
-      optionsDecoration: optionsDecoration,
-      optionsViewBuilder: optionsViewBuilder,
-      displayStringForOption: displayStringForOption,
+      suffixInsets: suffixInsets,
     );
   }
 }

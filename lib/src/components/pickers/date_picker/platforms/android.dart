@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/common/construct/property.dart';
 import '../../button_picker/android.dart';
+import '../../button_picker/typedef.dart';
 
 class MaterialDatePickerButton extends AndroidPickerButton {
   const MaterialDatePickerButton({
@@ -37,12 +38,15 @@ class DatePickerAndroid extends StatefulWidget {
     this.property,
     this.initialDate,
     this.onDateTimeChanged,
+    this.datePickerButtonBuilder,
   });
 
   final DateTime? initialDate;
   final VoidCallback? onCancel;
   final DatePickerAndroidProperty? property;
   final ValueChanged<DateTime>? onDateTimeChanged;
+
+  final DatePickerButtonBuilder? datePickerButtonBuilder;
 
   @override
   State<DatePickerAndroid> createState() => _DatePickerAndroidState();
@@ -66,6 +70,13 @@ class _DatePickerAndroidState extends State<DatePickerAndroid> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.datePickerButtonBuilder != null) {
+      return widget.datePickerButtonBuilder!(
+        context,
+        selectedDate,
+        _showDatePickerDialog,
+      );
+    }
     return MaterialDatePickerButton(
       initialDate: selectedDate,
       localizations: localizations,
@@ -92,10 +103,13 @@ class _DatePickerAndroidState extends State<DatePickerAndroid> {
         fieldLabelText: widget.property?.fieldLabelText,
         helpText: widget.property?.helpText,
         switchToInputEntryModeIcon: widget.property?.switchToInputEntryModeIcon,
-        switchToCalendarEntryModeIcon: widget.property?.switchToCalendarEntryModeIcon,
+        switchToCalendarEntryModeIcon:
+            widget.property?.switchToCalendarEntryModeIcon,
         keyboardType: widget.property?.keyboardType,
-        initialEntryMode: widget.property?.initialEntryMode ?? DatePickerEntryMode.calendar,
-        initialCalendarMode: widget.property?.initialCalendarMode ?? DatePickerMode.year,
+        initialEntryMode:
+            widget.property?.initialEntryMode ?? DatePickerEntryMode.calendar,
+        initialCalendarMode:
+            widget.property?.initialCalendarMode ?? DatePickerMode.year,
         currentDate: widget.property?.currentDate,
         restorationId: widget.property?.restorationId,
         selectableDayPredicate: widget.property?.selectableDayPredicate,

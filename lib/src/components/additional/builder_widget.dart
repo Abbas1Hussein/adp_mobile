@@ -1,20 +1,24 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' hide Builder;
+import 'package:flutter/material.dart' hide Builder;
 
 import '../../core/common/construct/component.dart';
 import '../../core/common/construct/component_mixin.dart';
 
 /// The type of builder function for the Android platform.
-typedef AndroidBuilder = Widget Function(
-  Widget platformChild,
-  ThemeData theme,
-);
+typedef _AndroidBuilder = Widget Function(
+    Widget platformChild, ThemeData theme);
 
 /// The type of builder function for the iOS platform.
-typedef IOSBuilder = Widget Function(
-  Widget platformChild,
-  CupertinoThemeData theme,
-);
+typedef _IOSBuilder = Widget Function(
+    Widget platformChild, CupertinoThemeData theme);
+
+/// The type of builder function for the Android and iOS platform without property argument.
+typedef PlatformBuilder = CoreAdaptiveBuilder<_AndroidBuilder, _IOSBuilder>;
+
+/// The type of builder function for the Android and iOS platform with property argument.
+typedef PlatformBuilderExtended = CoreAdaptiveBuilder<
+    Widget Function(Widget _, ThemeData __, CoreAndroidProperty? ___),
+    Widget Function(Widget _, CupertinoThemeData __, CoreIOSProperty? ___)>;
 
 /// A widget that renders its child consistently on both Android and iOS platforms, via builders.
 ///
@@ -51,30 +55,30 @@ class AdaptiveBuilderWidget extends CoreAdaptiveComponent {
   ///  * [builders], A [CoreAdaptiveBuilder] containing platform-specific
   ///     builders for Android and iOS. If provided, these builders will be
   ///     used to potentially customize the widget's appearance on each platform.
-  AdaptiveBuilderWidget({
-    super.key,
-    CoreAdaptiveBuilder<AndroidBuilder, IOSBuilder>? builders,
-    required this.child,
-  }) : super(
-          builders: builders != null
-              ? AdaptiveBuilder(
-                  // Android builder function:
-                  android: (platformChild, theme, _) =>
-                      builders.android?.call(platformChild, theme) ??
-                      platformChild,
-                  // iOS builder function:
-                  ios: (platformChild, theme, _) =>
-                      builders.ios?.call(platformChild, theme) ?? platformChild,
-                )
-              : null,
-        );
+  AdaptiveBuilderWidget(
+      { super.key, PlatformBuilder? builders, required this.child })
+      : super(builders: builders != null ? adaptiveBuilder(builders) : null);
 
   /// The child widget to be displayed on both platforms.
   final Widget child;
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) => child;
+  Widget android(BuildContext context, [CoreAndroidProperty? property]) =>
+      child;
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) => child;
+
+  /// The adaptiveBuilder method is converts a PlatformBuilder into a PlatformBuilderExtended,
+  /// which is a builder that works for both Android and iOS platforms.
+  static PlatformBuilderExtended adaptiveBuilder(PlatformBuilder builders) {
+    return AdaptiveBuilder(
+      ios: (platformChild, theme, _) {
+        return builders.ios?.call(platformChild, theme) ?? platformChild;
+      },
+      android: (platformChild, theme, _) {
+        return builders.android?.call(platformChild, theme) ?? platformChild;
+      },
+    );
+  }
 }

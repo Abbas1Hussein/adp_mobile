@@ -11,8 +11,7 @@ import 'platforms/platforms.dart';
 /// styling and behavior:
 /// - On IOS, [CupertinoTextField] is utilized.
 /// - On Android, [TextField] is used.
-final class AdaptiveTextField
-    extends BaseTextField<FieldAndroidProperty, FieldIOSProperty> {
+class AdaptiveTextField extends BaseTextField<FieldAndroidProperty, FieldIOSProperty> {
   /// Creates a adaptive text field.
   ///
   /// To provide a prefilled text entry, pass in a [TextEditingController] with

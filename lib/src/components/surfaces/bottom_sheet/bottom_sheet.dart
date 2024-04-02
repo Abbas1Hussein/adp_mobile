@@ -97,15 +97,15 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent<
   Widget android(BuildContext context, [BottomSheetAndroidProperty? property]) {
     return BottomSheetAndroid(
       title: title,
+      content: content,
+      actions: actions,
       titlePadding: titlePadding,
       titleTextStyle: titleTextStyle,
       contentPadding: contentPadding,
-      contentTextStyle: contentTextStyle,
-      contentScrollController: contentScrollController,
-      content: content,
-      actions: actions,
       actionsPadding: actionsPadding,
       actionsTextStyle: actionsTextStyle,
+      contentTextStyle: contentTextStyle,
+      contentScrollController: contentScrollController,
       actionScrollController: actionScrollController,
     );
   }
@@ -113,18 +113,18 @@ class AdaptiveBottomSheet extends CoreAdaptiveComponent<
   @override
   Widget iOS(BuildContext context, [BottomSheetIOSProperty? property]) {
     return BottomSheetIOS(
-      property: property,
       title: title,
+      content: content,
+      actions: actions,
+      property: property,
       titlePadding: titlePadding,
       titleTextStyle: titleTextStyle,
       contentPadding: contentPadding,
-      contentTextStyle: contentTextStyle,
-      content: content,
-      contentScrollController: contentScrollController,
-      actionScrollController: actionScrollController,
-      actions: actions,
       actionsPadding: actionsPadding,
       actionsTextStyle: actionsTextStyle,
+      contentTextStyle: contentTextStyle,
+      contentScrollController: contentScrollController,
+      actionScrollController: actionScrollController,
     );
   }
 }

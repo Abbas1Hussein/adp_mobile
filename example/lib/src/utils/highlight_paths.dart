@@ -6,6 +6,7 @@ abstract final class HighlightPaths {
   static const String navigationView =
       '$_basePath/navigation/navigation_view.dart';
   static const String tabView = '$_basePath/navigation/tab_view.dart';
+  static const String tabViewPreferred = '$_basePath/navigation/tab_bar_preferred.dart';
 
   static const String basicButtonsTab = '$_basePath/buttons/basic_buttons.dart';
   static const String menusButtonsTab = '$_basePath/buttons/menus.dart';
@@ -18,7 +19,7 @@ abstract final class HighlightPaths {
 
   static const String textField = '$_basePath/fields/text_field.dart';
   static const String textFormField = '$_basePath/fields/text_form_field.dart';
-  static const String textSearchField = '$_basePath/fields/text_search_field.dart';
+  static const String textSearchField = '$_basePath/fields/autocomplete_field.dart';
 
   static const String icon = '$_basePath/icons/icon.dart';
   static const String iconAll = '$_basePath/icons/icon_all.dart';

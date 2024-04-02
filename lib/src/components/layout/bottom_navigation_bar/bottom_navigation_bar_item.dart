@@ -1,13 +1,22 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class AdaptiveBottomNavigationBarItem extends BottomNavigationBarItem {
-  AdaptiveBottomNavigationBarItem({
+  const AdaptiveBottomNavigationBarItem({
     super.activeIcon,
     super.backgroundColor,
     super.tooltip,
     required super.icon,
     required String super.label,
   });
+
+  NavigationDestination toNavigationDestination() {
+    return NavigationDestination(
+      icon: icon,
+      tooltip: tooltip,
+      selectedIcon: activeIcon,
+      label: label ?? '* - *',
+    );
+  }
 }
 
 extension IconThemeEx on BottomNavigationBarItem {

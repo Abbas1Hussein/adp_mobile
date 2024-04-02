@@ -59,7 +59,7 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
   /// navigation items. The appearance and behavior of the navigation bar can be customized based on the
   /// underlying platform.
   ///
-  /// The [navigationBar.items] should have the same length as the number of [children].
+  /// The [navigationBar.tabs] should have the same length as the number of [children].
   final AdaptiveNavigationBar navigationBar;
 
   /// The list of widgets representing the body of each navigation item.
@@ -111,82 +111,93 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     BuildContext context, [
     NavigationViewAndroidProperty? property,
   ]) {
-    final isNavAutoDetected = ((property?.mode ?? AndroidNavigationMode.auto) ==
-        AndroidNavigationMode.auto);
+    final navigationMode = navigationBar.properties?.android?.navigationMode ??
+        AndroidNavigationMode.auto;
 
-    final isLandscape = isNavAutoDetected
-        ? MediaQuery.orientationOf(context) == Orientation.landscape
-        : false;
+    final isNavigationAutoDetected = navigationMode == AndroidNavigationMode.auto;
+
+    final isLandscape = isNavigationAutoDetected && MediaQuery.orientationOf(context) == Orientation.landscape;
 
     final body = Padding(
-        padding: contentPadding, child: children[navigationBar.currentIndex]);
+      padding: contentPadding,
+      child: children[navigationBar.currentIndex],
+    );
 
-    final bar = navigationBar.toAndroid(context);
+    final buildNavigationWidget = navigationBar.toAndroid(context);
 
     final buildNavigationRail = isLandscape
         ? Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ScrollConfiguration(
-                behavior: ScrollConfiguration.of(context).copyWith(
-                  scrollbars: false,
-                ),
+                behavior:
+                    ScrollConfiguration.of(context).copyWith(scrollbars: false),
                 child: SingleChildScrollView(
                   child: SizedBox(
                     height: MediaQuery.sizeOf(context).height,
-                    child: bar.$2,
+                    child: buildNavigationWidget.$3,
                   ),
                 ),
               ),
-              const VerticalDivider(thickness: 0.3),
+              if (Theme.of(context).useMaterial3)
+                const VerticalDivider(thickness: 0.3),
               Expanded(child: body),
             ],
           )
         : null;
 
+    final useMaterial3 = navigationBar.properties?.android?.useMaterial3 ??
+        Theme.of(context).useMaterial3;
+
     return Scaffold(
-      appBar: appBar?.toAndroid(context),
-      drawer: property?.drawer,
-      drawerDragStartBehavior:
-          property?.drawerDragStartBehavior ?? DragStartBehavior.start,
-      drawerEdgeDragWidth: property?.drawerEdgeDragWidth,
-      drawerEnableOpenDragGesture:
-          property?.drawerEnableOpenDragGesture ?? true,
-      drawerScrimColor: property?.drawerScrimColor,
-      endDrawer: property?.endDrawer,
-      endDrawerEnableOpenDragGesture:
-          property?.endDrawerEnableOpenDragGesture ?? true,
-      extendBody: property?.extendBody ?? false,
-      onDrawerChanged: property?.onDrawerChanged,
-      onEndDrawerChanged: property?.onEndDrawerChanged,
-      extendBodyBehindAppBar: property?.extendBodyBehindAppBar ?? false,
-      floatingActionButton: property?.floatingActionButton,
-      floatingActionButtonAnimator: property?.floatingActionButtonAnimator,
-      floatingActionButtonLocation: property?.floatingActionButtonLocation,
-      persistentFooterAlignment:
-          property?.persistentFooterAlignment ?? AlignmentDirectional.centerEnd,
-      persistentFooterButtons: property?.persistentFooterButtons,
-      restorationId: restorationId,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-      primary: property?.primary ?? true,
-      backgroundColor: backgroundColor,
-      bottomSheet: property?.bottomSheet,
-      body: isLandscape ? buildNavigationRail : body,
-      bottomNavigationBar: isLandscape ? null : bar.$1,
-    );
+        appBar: appBar?.toAndroid(context),
+        drawer: property?.drawer,
+        drawerDragStartBehavior:
+            property?.drawerDragStartBehavior ?? DragStartBehavior.start,
+        drawerEdgeDragWidth: property?.drawerEdgeDragWidth,
+        drawerEnableOpenDragGesture:
+            property?.drawerEnableOpenDragGesture ?? true,
+        drawerScrimColor: property?.drawerScrimColor,
+        endDrawer: property?.endDrawer,
+        endDrawerEnableOpenDragGesture:
+            property?.endDrawerEnableOpenDragGesture ?? true,
+        extendBody: property?.extendBody ?? false,
+        onDrawerChanged: property?.onDrawerChanged,
+        onEndDrawerChanged: property?.onEndDrawerChanged,
+        extendBodyBehindAppBar: property?.extendBodyBehindAppBar ?? false,
+        floatingActionButton: property?.floatingActionButton,
+        floatingActionButtonAnimator: property?.floatingActionButtonAnimator,
+        floatingActionButtonLocation: property?.floatingActionButtonLocation,
+        persistentFooterAlignment: property?.persistentFooterAlignment ??
+            AlignmentDirectional.centerEnd,
+        persistentFooterButtons: property?.persistentFooterButtons,
+        restorationId: restorationId,
+        resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+        primary: property?.primary ?? true,
+        backgroundColor: backgroundColor,
+        bottomSheet: property?.bottomSheet,
+        body: isLandscape ? buildNavigationRail : body,
+        bottomNavigationBar: isLandscape
+            ? null
+            : useMaterial3
+                ? buildNavigationWidget.$2 // NavigationBar,
+                : buildNavigationWidget.$1 // BottomNavigationBar,
+        );
   }
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     return CupertinoTabScaffold(
-      backgroundColor: backgroundColor,
-      restorationId: restorationId,
-      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       tabBar: navigationBar.toIOS(context),
+      restorationId: restorationId,
+      backgroundColor: backgroundColor,
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
+          navigationBar: appBar?.toIOS(context),
           // backgroundColor: backgroundColor,
           // resizeToAvoidBottomInset: resizeToAvoidBottomInset,
-          navigationBar: appBar?.toIOS(context),
           child: SafeArea(
             child: Padding(padding: contentPadding, child: children[index]),
           ),

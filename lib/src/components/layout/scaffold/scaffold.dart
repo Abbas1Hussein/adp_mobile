@@ -62,19 +62,6 @@ import '../layout.dart';
 ///  * <https://material.io/design/layout/responsive-layout-grid.html>
 class AdaptiveScaffold extends StatelessWidget {
   /// Creates an adaptive scaffold.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// const AdaptiveScaffold(
-  ///   appBar: AdaptiveAppBar(
-  ///     title: Text('Adaptive App'),
-  ///     leading: AdaptiveIcon(AdpIcons.home),
-  ///   ),
-  ///   drawer: const AdaptiveDrawer(),
-  ///   endDrawer: const AdaptiveDrawer(),
-  ///   body: Center(child: AdaptiveDatePicker()),
-  /// );
-  /// ```
   const AdaptiveScaffold({
     super.key,
     this.appBar,
@@ -197,7 +184,7 @@ class AdaptiveScaffold extends StatelessWidget {
   ///
   /// To close the drawer, use either [ScaffoldState.closeDrawer], [Navigator.pop]
   /// or press the escape key on the keyboard.
-  final AdaptiveDrawer? drawer;
+  final Widget? drawer;
 
   /// Optional callback that is called when the [Scaffold.drawer] is opened or closed.
   final DrawerCallback? onDrawerChanged;
@@ -208,7 +195,7 @@ class AdaptiveScaffold extends StatelessWidget {
   ///
   /// To close the drawer, use either [ScaffoldState.closeEndDrawer], [Navigator.pop]
   /// or press the escape key on the keyboard.
-  final AdaptiveDrawer? endDrawer;
+  final Widget? endDrawer;
 
   /// Optional callback that is called when the [Scaffold.endDrawer] is opened or closed.
   final DrawerCallback? onEndDrawerChanged;
@@ -228,7 +215,9 @@ class AdaptiveScaffold extends StatelessWidget {
   ///
   /// The [bottomNavigationBar] is rendered below the [persistentFooterButtons]
   /// and the [body].
-  final AdaptiveBottomNavigationBar? bottomNavigationBar;
+  ///
+  /// Typically a [AdaptiveBottomNavigationBar].
+  final Widget? bottomNavigationBar;
 
   /// Whether this scaffold is being displayed at the top of the screen.
   ///
@@ -306,13 +295,13 @@ class AdaptiveScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: appBar,
-      backgroundColor: scaffoldBackgroundColor,
       primary: primary,
       extendBody: extendBody,
       restorationId: restorationId,
       onDrawerChanged: onDrawerChanged,
       drawerScrimColor: drawerScrimColor,
       onEndDrawerChanged: onEndDrawerChanged,
+      backgroundColor: scaffoldBackgroundColor,
       bottomNavigationBar: bottomNavigationBar,
       extendBodyBehindAppBar: extendBodyBehindAppBar,
       persistentFooterButtons: persistentFooterButtons,

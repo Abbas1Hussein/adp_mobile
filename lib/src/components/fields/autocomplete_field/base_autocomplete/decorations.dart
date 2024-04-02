@@ -26,8 +26,8 @@ class OptionsDecoration {
   final OptionDecoration? optionDecoration;
 }
 
-const kDefaultOptionPadding =  EdgeInsets.all(16.0);
-const kDefaultOptionMargin =  EdgeInsets.symmetric(vertical: 1.0);
+const kDefaultOptionPadding = EdgeInsets.all(16.0);
+const kDefaultOptionMargin = EdgeInsets.symmetric(vertical: 1.0);
 
 /// A class to customize the appearance of individual autocomplete options.
 class OptionDecoration {
@@ -39,6 +39,7 @@ class OptionDecoration {
     this.pressColor,
     this.highlightColor,
   });
+
   /// The press color of the autocomplete option when pressed.
   final Color? pressColor;
 

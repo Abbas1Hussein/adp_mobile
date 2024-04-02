@@ -151,13 +151,21 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
     // The icon size will be scaled by a factor of the accessibility text scale,
     // to follow the behavior of `UISearchTextField`.
     final double scaledIconSize = MediaQuery.textScalerOf(context)
-        .scale(actionsIconTheme?.size ?? iconTheme.size ?? 18.5);
+        .scale(actionsIconTheme?.size ?? iconTheme.size ?? 21.5);
 
     final getEffectiveCenterTitle = actions != null && actions!.length >= 4;
 
     return CupertinoNavigationBar(
       border: border,
-      leading: leading,
+      leading: leading != null
+          ? Padding(
+              padding: const EdgeInsetsDirectional.only(start: 8.0),
+              child: IconTheme.merge(
+                data: iconTheme.copyWith(size: scaledIconSize),
+                child: leading!,
+              ),
+            )
+          : null,
       trailing: actions != null && actions!.isNotEmpty
           ? IconTheme.merge(
               data: (actionsIconTheme ?? iconTheme).copyWith(

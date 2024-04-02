@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/common/construct/model.dart';
 import '../../../core/common/construct/properties.dart';
 import '../../layout/bottom_navigation_bar/bottom_navigation_bar_item.dart';
-import '../../layout/bottom_navigation_bar/platforms/ios.dart';
+import '../../layout/bottom_navigation_bar/platforms/platforms.dart';
 import '../navigation.dart';
 
 /// A custom navigation bar view widget that adapts its appearance based on the platform.
@@ -13,10 +13,10 @@ import '../navigation.dart';
 ///
 ///  * [AdaptiveNavigationView] rendering this component.
 ///
-/// On iOS, the [BottomNavigationBar] and [NavigationRail] used.
-/// On Android, the [CupertinoTabBar] used.
-class AdaptiveNavigationBar
-    extends CoreModel<(BottomNavigationBar, Widget), CupertinoTabBar> {
+/// On Android, the (BottomNavigationBar), (NavigationBar), (NavigationRail), used.
+/// On iOS, the [CupertinoTabBar] used.
+class AdaptiveNavigationBar extends CoreModel<
+    (BottomNavigationBar, NavigationBar, NavigationRail), CupertinoTabBar> {
   /// Creates a adp nav bar
   ///
   /// [items] must have at least 2 items
@@ -68,9 +68,9 @@ class AdaptiveNavigationBar
   /// Properties for configuring the appearance and behavior of the navigation sidebar.
   ///
   /// The `properties` parameter allows you to customize the visual and functional aspects
-  /// of the navigation sidebar separately for Windows and macOS platforms.
-  /// You can provide specific properties for each platform using `NavigationSidebarWindowsProperty`
-  /// and `NavigationSidebarMacosProperty` respectively.
+  /// of the navigation sidebar separately for Android and IOS platforms.
+  /// You can provide specific properties for each platform using `NavigationBarAndroidProperty`
+  /// and `NavigationBarIOSProperty` respectively.
   final CoreProperties<NavigationBarAndroidProperty, NavigationBarIOSProperty>?
       properties;
 
@@ -107,56 +107,80 @@ class AdaptiveNavigationBar
   final IconThemeData? unselectedIconTheme;
 
   @override
-  (BottomNavigationBar, Widget) toAndroid(BuildContext context) {
+  (BottomNavigationBar, NavigationBar, NavigationRail) toAndroid(BuildContext context) {
     final property = properties?.android;
 
+    final railProperty = property?.navigationRailProperty;
     final navigationRail = NavigationRail(
       key: key,
-      leading: property?.leading,
-      trailing: property?.trailing,
-      minWidth: property?.minWidth,
-      elevation: property?.elevation,
-      useIndicator: property?.useIndicator,
-      extended: property?.extended ?? false,
-      groupAlignment: property?.groupAlignment,
-      indicatorShape: property?.indicatorShape,
-      minExtendedWidth: property?.minExtendedWidth,
-      selectedLabelTextStyle: property?.selectedLabelStyle,
-      unselectedLabelTextStyle: property?.unselectedLabelStyle,
-      labelType: property?.labelType ?? NavigationRailLabelType.all,
+      selectedIndex: currentIndex,
+      onDestinationSelected: onChanged,
+      leading: railProperty?.leading,
+      trailing: railProperty?.trailing,
+      minWidth: railProperty?.minWidth,
+      backgroundColor: backgroundColor,
+      indicatorColor: selectedItemColor,
+      elevation: railProperty?.elevation,
+      selectedIconTheme: selectedIconTheme,
+      unselectedIconTheme: unselectedIconTheme,
+      useIndicator: railProperty?.useIndicator,
+      extended: railProperty?.extended ?? false,
+      indicatorShape: railProperty?.indicatorShape,
+      groupAlignment: railProperty?.groupAlignment,
+      minExtendedWidth: railProperty?.minExtendedWidth,
+      selectedLabelTextStyle: railProperty?.selectedLabelTextStyle,
+      unselectedLabelTextStyle: railProperty?.unselectedLabelTextStyle,
+      labelType:
+          property?.labelBehavior?.railLabelType ?? NavigationRailLabelType.all,
+      destinations: items.map((e) => e.toNavigationRailDestination()).toList(),
+    );
+
+    final navigationBar = NavigationBar(
+      key: key,
       selectedIndex: currentIndex,
       onDestinationSelected: onChanged,
       backgroundColor: backgroundColor,
       indicatorColor: selectedItemColor,
-      selectedIconTheme: selectedIconTheme,
-      unselectedIconTheme: unselectedIconTheme,
-      destinations: items.map((e) => e.toNavigationRailDestination()).toList(),
+      labelBehavior: property?.labelBehavior,
+      height: property?.bar3property?.height,
+      elevation: property?.bar3property?.elevation,
+      shadowColor: property?.bar3property?.shadowColor,
+      overlayColor: property?.bar3property?.overlayColor,
+      surfaceTintColor: property?.bar3property?.surfaceTintColor,
+      animationDuration: property?.bar3property?.animationDuration,
+      indicatorShape: property?.bar3property?.indicatorShape,
+      destinations: items.map((e) => e.toNavigationDestination()).toList(),
     );
 
+    final showLabelVisibility = (property?.labelBehavior ??
+            NavigationDestinationLabelBehavior.alwaysShow)
+        .showLabelVisibility;
     final bottomNavigationBar = BottomNavigationBar(
+      key: key,
       items: items,
       onTap: onChanged,
-      type: property?.type,
       currentIndex: currentIndex,
-      selectedItemColor: selectedItemColor,
-      unselectedItemColor:
-          unselectedItemColor ?? Theme.of(context).unselectedWidgetColor,
+      backgroundColor: backgroundColor,
       selectedIconTheme: selectedIconTheme,
       unselectedIconTheme: unselectedIconTheme,
-      backgroundColor: backgroundColor,
-      elevation: property?.elevation,
-      mouseCursor: property?.mouseCursor,
-      enableFeedback: property?.enableFeedback,
-      landscapeLayout: property?.landscapeLayout,
-      selectedFontSize: property?.selectedFontSize ?? 14.0,
-      unselectedFontSize: property?.unselectedFontSize ?? 12.0,
-      showSelectedLabels: property?.showSelectedLabels,
-      showUnselectedLabels: property?.showUnselectedLabels,
-      selectedLabelStyle: property?.selectedLabelStyle,
-      unselectedLabelStyle: property?.unselectedLabelStyle,
-      useLegacyColorScheme: property?.useLegacyColorScheme ?? true,
+      selectedItemColor: selectedItemColor,
+      unselectedItemColor: unselectedItemColor,
+      showSelectedLabels: showLabelVisibility.$1,
+      showUnselectedLabels: showLabelVisibility.$2,
+      type: property?.bar2property?.type,
+      elevation: property?.bar2property?.elevation,
+      mouseCursor: property?.bar2property?.mouseCursor,
+      enableFeedback: property?.bar2property?.enableFeedback,
+      landscapeLayout: property?.bar2property?.landscapeLayout,
+      selectedFontSize: property?.bar2property?.selectedFontSize ?? 14.0,
+      unselectedFontSize: property?.bar2property?.unselectedFontSize ?? 12.0,
+      selectedLabelStyle: property?.bar2property?.selectedLabelStyle,
+      unselectedLabelStyle: property?.bar2property?.unselectedLabelStyle,
+      useLegacyColorScheme:
+          property?.bar2property?.useLegacyColorScheme ?? true,
     );
-    return (bottomNavigationBar, navigationRail);
+
+    return (bottomNavigationBar, navigationBar, navigationRail);
   }
 
   @override
@@ -175,7 +199,6 @@ class AdaptiveNavigationBar
       backgroundColor: backgroundColor,
       items: items.map((item) {
         final isSelected = currentIndex == items.indexOf(item);
-
         return item.fromIconTheme(
           isSelected ? selectedIconTheme : unselectedIconTheme,
         );

@@ -6,8 +6,8 @@ import 'package:flutter/services.dart';
 
 import 'base_text_field.dart';
 
-abstract class _BaseFieldProperties {
-  const _BaseFieldProperties({
+abstract class BaseFieldProperties {
+  const BaseFieldProperties({
     this.focusNode,
     this.contextMenuBuilder,
     this.selectionHeightStyle,
@@ -285,7 +285,7 @@ abstract class _BaseFieldProperties {
   final bool? showCursor;
 }
 
-class FieldProperties extends _BaseFieldProperties  {
+class FieldProperties extends BaseFieldProperties  {
   const FieldProperties({
     super.padding,
     super.placeholder,
@@ -415,7 +415,7 @@ class FieldProperties extends _BaseFieldProperties  {
   }
 }
 
-class FormFieldProperties extends _BaseFieldProperties {
+class FormFieldProperties extends BaseFieldProperties {
   const FormFieldProperties({
     super.focusNode,
     super.contextMenuBuilder,
@@ -617,5 +617,3 @@ class FormFieldProperties extends _BaseFieldProperties {
   /// of the underlying platform's text field implementation is used.
   final Color? errorHighlightColor;
 }
-
-

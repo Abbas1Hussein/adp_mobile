@@ -375,7 +375,7 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
     );
 
     final titleStyled = title != null
-        ? DefaultTextStyle(
+        ? DefaultTextStyle.merge(
             style: toolbarTextStyle?.copyWith(color: foregroundColor) ??
                 theme.textTheme.titleMedium!.copyWith(color: foregroundColor),
             child: title!,
@@ -487,7 +487,7 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
     ).resolve(context);
 
     final titleStyled = title != null
-        ? DefaultTextStyle(
+        ? DefaultTextStyle.merge(
             style: toolbarTextStyle?.copyWith(color: foregroundColor) ??
                 theme.textTheme.navTitleTextStyle.copyWith(
                   color: foregroundColor,
@@ -540,13 +540,12 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
       }
     }
     if (leading != null) {
-      handelLeading = DefaultTextStyle(
+      handelLeading = DefaultTextStyle.merge(
         style: toolbarTextStyle?.copyWith(color: foregroundColor) ??
             theme.textTheme.textStyle,
         child: leading!,
       );
     }
-
     return AppBar(
       key: key,
       bottom: bottom,

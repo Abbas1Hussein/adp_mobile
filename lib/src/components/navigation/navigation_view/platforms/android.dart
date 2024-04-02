@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -35,9 +33,7 @@ class NavigationViewAndroidProperty extends CoreAndroidProperty {
     this.drawerEdgeDragWidth,
     this.drawerEnableOpenDragGesture,
     this.endDrawerEnableOpenDragGesture,
-    this.mode = AndroidNavigationMode.auto,
   });
-
 
   /// If true, and [bottomNavigationBar] or [persistentFooterButtons]
   /// is specified, then the [body] extends to the bottom of the Scaffold,
@@ -230,40 +226,76 @@ class NavigationViewAndroidProperty extends CoreAndroidProperty {
   ///
   /// By default, the drag gesture is enabled on mobile.
   final bool? endDrawerEnableOpenDragGesture;
+}
+
+class NavigationBarAndroidProperty extends CoreAndroidProperty {
+  const NavigationBarAndroidProperty({
+    this.labelBehavior,
+    this.useMaterial3,
+    this.navigationMode = AndroidNavigationMode.auto,
+    this.bar3property,
+    this.navigationRailProperty,
+    this.bar2property,
+  });
+
+  /// Determines whether to use the Material 3 design for the navigation bar.
+  ///
+  /// If `true`, the [NavigationBar] Widget will be used to configure a Material 3 style navigation bar.
+  /// If `false`, the [BottomNavigationBar] Widget will be used to configure a traditional bottom navigation bar.
+  ///
+  /// By default to `Theme.of(context).useMaterial3`.
+  final bool? useMaterial3;
+
+  /// The property configuration for a Material 3 style navigation bar.
+  ///
+  /// This property is only used if [useMaterial3] is set to `true`. It allows customization of the navigation bar's appearance and behavior.
+  /// See [NavigationBarProperty] for details on available properties.
+  final BottomNavigationBar3Property? bar3property;
+
+  /// The property configuration for a traditional bottom navigation bar.
+  ///
+  /// This property is only used if [useMaterial3] is set to `false` . It allows customization of the appearance and behavior of the bottom navigation bar in a pre-Material 3 style.
+  /// See [BottomNavigationBar2Property] for details on available properties.
+  final BottomNavigationBar2Property? bar2property;
 
   /// The navigation mode to determine the layout configuration.
   ///
   /// If [AndroidNavigationMode.auto], the navigation mode is determined automatically based on the device orientation.
-  /// If [AndroidNavigationMode.onlyBottom], only the bottom navigation bar is displayed.
+  /// If [AndroidNavigationMode.onlyBottom], only the `bottom navigation bar` or `navigation bar` is displayed.
   ///
   /// By default to [AndroidNavigationMode.auto].
-  final AndroidNavigationMode mode;
+  final AndroidNavigationMode navigationMode;
+
+  /// The property configuration for a NavigationRail widget.
+  ///
+  /// This property is only used if [AndroidNavigationMode.auto]. It allows customization of the navigation rail's appearance and behavior.
+  /// See [NavigationRailProperty] for details on available properties.
+  final NavigationRailProperty? navigationRailProperty;
+
+  /// Defines how the [destination]'s labels will be laid out and when they'll
+  /// be displayed.
+  ///
+  /// Can be used to show all labels, show only the selected label, or hide all
+  /// labels.
+  ///
+  /// Default is [NavigationDestinationLabelBehavior.alwaysShow].
+  final NavigationDestinationLabelBehavior? labelBehavior;
 }
 
-class NavigationBarAndroidProperty  extends BottomNavigationBarAndroidProperty {
-  const NavigationBarAndroidProperty({
-    super.elevation,
-    super.type,
-    super.selectedLabelStyle,
-    super.unselectedLabelStyle,
-    super.selectedFontSize,
-    super.unselectedFontSize,
-    super.showUnselectedLabels,
-    super.showSelectedLabels,
-    super.mouseCursor,
-    super.enableFeedback,
-    super.landscapeLayout,
-    super.useLegacyColorScheme,
-    this.trailing,
+class NavigationRailProperty {
+  const NavigationRailProperty({
     this.leading,
+    this.trailing,
     this.extended = false,
-    this.groupAlignment,
-    this.indicatorColor,
-    this.indicatorShape,
-    this.labelType,
-    this.minExtendedWidth,
     this.minWidth,
+    this.minExtendedWidth,
+    this.groupAlignment,
+    this.indicatorShape,
     this.useIndicator,
+    this.indicatorColor,
+    this.elevation,
+    this.selectedLabelTextStyle,
+    this.unselectedLabelTextStyle,
   });
 
   /// Indicates that the [NavigationRail] should be in the extended state.
@@ -279,6 +311,15 @@ class NavigationBarAndroidProperty  extends BottomNavigationBarAndroidProperty {
   ///
   /// The default value is false.
   final bool extended;
+
+  /// The rail's elevation or z-coordinate.
+  ///
+  /// If [Directionality] is [intl.TextDirection.LTR], the inner side is the
+  /// right side, and if [Directionality] is [intl.TextDirection.RTL], it is
+  /// the left side.
+  ///
+  /// The default value is 0.
+  final double? elevation;
 
   /// The leading widget in the rail that is placed above the destinations.
   ///
@@ -316,24 +357,9 @@ class NavigationBarAndroidProperty  extends BottomNavigationBarAndroidProperty {
   /// The default is -1.0.
   ///
   /// See also:
-  ///   * [Alignment.y]
   ///
+  ///   * [Alignment.y].
   final double? groupAlignment;
-
-  /// Defines the layout and behavior of the labels for the default, unextended
-  /// [NavigationRail].
-  ///
-  /// When a navigation rail is [extended], the labels are always shown.
-  ///
-  /// The default value is [NavigationRailThemeData.labelType]. If
-  /// [NavigationRailThemeData.labelType] is null, then the default value is
-  /// [NavigationRailLabelType.none].
-  ///
-  /// See also:
-  ///
-  ///   * [NavigationRailLabelType] for information on the meaning of different
-  ///   types.
-  final NavigationRailLabelType? labelType;
 
   /// The smallest possible width for the rail regardless of the destination's
   /// icon or label size.
@@ -379,6 +405,49 @@ class NavigationBarAndroidProperty  extends BottomNavigationBarAndroidProperty {
   /// that is null, defaults to [StadiumBorder].
   final ShapeBorder? indicatorShape;
 
+  /// The [TextStyle] of a destination's label when it is unselected.
+  ///
+  /// When one of the [destinations] is selected the [selectedLabelTextStyle]
+  /// will be used instead.
+  ///
+  /// The default value is based on the [Theme]'s [TextTheme.bodyLarge]. The
+  /// default color is based on the [Theme]'s [ColorScheme.onSurface].
+  ///
+  /// Properties from this text style, or
+  /// [NavigationRailThemeData.unselectedLabelTextStyle] if this is null, are
+  /// merged into the defaults.
+  final TextStyle? unselectedLabelTextStyle;
+
+  /// The [TextStyle] of a destination's label when it is selected.
+  ///
+  /// When a [NavigationRailDestination] is not selected,
+  /// [unselectedLabelTextStyle] will be used.
+  ///
+  /// The default value is based on the [TextTheme.bodyLarge] of
+  /// [ThemeData.textTheme]. The default color is based on the [Theme]'s
+  /// [ColorScheme.primary].
+  ///
+  /// Properties from this text style,
+  /// or [NavigationRailThemeData.selectedLabelTextStyle] if this is null, are
+  /// merged into the defaults.
+  final TextStyle? selectedLabelTextStyle;
 }
 
-
+extension NavigationDestinationLabelBehaviorX on NavigationDestinationLabelBehavior {
+  /// Returns a [NavigationRailLabelType] representing the appropriate
+  /// label behavior for a [NavigationRail] widget.
+  ///
+  /// - If [alwaysHide], returns [NavigationRailLabelType.none] to hide all labels.
+  /// - If [alwaysShow], returns [NavigationRailLabelType.all] to show both selected and unselected labels.
+  /// - If [onlyShowSelected], returns [NavigationRailLabelType.selected] to show only the selected label.
+  NavigationRailLabelType get railLabelType {
+    switch (this) {
+      case NavigationDestinationLabelBehavior.alwaysHide:
+        return NavigationRailLabelType.none;
+      case NavigationDestinationLabelBehavior.alwaysShow:
+        return NavigationRailLabelType.all;
+      case NavigationDestinationLabelBehavior.onlyShowSelected:
+        return NavigationRailLabelType.selected;
+    }
+  }
+}

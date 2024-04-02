@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import './tab.dart';
-import 'platforms/platforms.dart';
+import '../tab_bar/tab_bar.dart';
 
 const kContentPadding = EdgeInsets.all(8.0);
 
@@ -15,82 +16,38 @@ const kContentPadding = EdgeInsets.all(8.0);
 /// See also:
 ///
 ///   * [AdaptiveNavigationView], control provides top-level navigation for your app.
-///
-/// Use this widget to create tab view with platform-specific
-/// styling and behavior:
-/// - On iOS, [CupertinoSlidingSegmentedControl] is utilized.
-/// - On Android, [TabBar] is used.
-class AdaptiveTabView
-    extends CoreAdaptiveComponent<TabViewAndroidProperty, TabViewIOSProperty> {
+class AdaptiveTabView extends CoreAdaptiveComponent {
   /// Creates a adaptive tab view
   ///
-  /// A tab view contains a row of navigational items, [tabs], that move the
+  /// A tab view contains a row of navigational items, [tabBar.tabs], that move the
   /// user through the provided views ([children]). The user selects the desired
   /// page by clicking the appropriate tab.
   ///
-  /// The [properties] parameter allows you to customize the visual and functional aspects
-  /// of the tab view separately for Windows and macOS platforms.
-  /// You can provide specific [properties] for each platform using `TabViewWindowsProperty`
-  /// and `TabViewMacosProperty` respectively.
-  ///
-  /// - [tabs] must have at least 2 items and must be equal to the length of [children].
-  /// - [currentIndex] must be in the range of 0 to [items.length]
+  /// - [tabBar.tabs] must have at least 2 items and must be equal to the length of [children].
   const AdaptiveTabView({
     super.key,
-    super.builders,
-    super.properties,
-    this.onChanged,
+    this.physics,
     this.primaryColor,
     this.secondaryColor,
-    this.selectedTabColor,
-    this.unselectedTabColor,
-    this.selectedIconTheme,
-    this.unselectedIconTheme,
-    this.selectedLabelStyle,
-    this.unselectedLabelStyle,
-    this.contentPadding = kContentPadding,
     this.contentMargin,
-    this.currentIndex = 0,
-    required this.tabs,
+    this.contentPadding = kContentPadding,
+    this.dragStartBehavior = DragStartBehavior.down,
+    this.clipBehavior = Clip.hardEdge,
+    this.viewportFraction = 1.0,
+    required this.tabBar,
     required this.children,
-  })  : assert(tabs.length >= 2),
-        assert(
-          tabs.length == children.length,
-          '\nTabs and children lists must have the same length.\n'
-          'The length of tabs (${tabs.length}) must be equal to the length of children (${children.length}).',
-        ),
-        assert(currentIndex >= 0 && currentIndex < tabs.length);
+  });
 
-  /// The current selected index. This must be in the range of 0 to [tabs.length].
-  final int currentIndex;
-
-  /// Called when the current selected index should be changed.
+  /// The tab bar associated with the tab view.
   ///
-  /// The tab view passes the new value to the callback but does not actually
-  /// change state until the parent widget rebuilds the tab view with the new
-  /// value.
-  ///
-  /// The callback provided to [onChanged] should update the state of the parent
-  /// [StatefulWidget] using the [State.setState] method, so that the parent
-  /// gets rebuilt; for example:
-  ///
-  /// ```dart
-  /// onChanged: (newValue) {
-  ///   setState(() {
-  ///     currentIndex = newValue;
-  ///   });
-  /// },
-  /// ```
-  final ValueChanged<int>? onChanged;
-
-  /// List of [AdaptiveTab] representing the tabs in the view.
-  ///
-  /// Must have at least two items and be of the same length as [children].
-  final List<AdaptiveTab> tabs;
+  /// The `tabBar` parameter represents the tab bar widget containing tabs for navigation
+  /// within the tab view. It provides functionality to switch between different sections
+  /// of the application.
+  final AdaptiveTabBar tabBar;
 
   /// List of widgets representing the body of each tab view.
   ///
-  /// Each widget corresponds to a tab in the [tabs]. The list should have the same length
+  /// Each widget corresponds to a tab in the [tabBar.tabs]. The list should have the same length
   /// as the number of tabs.
   final List<Widget> children;
 
@@ -120,84 +77,93 @@ class AdaptiveTabView
   /// tab view. If `null`, the default secondary background color of the underlying platform is used.
   final Color? secondaryColor;
 
-  /// The color of the tab when selected.
+  /// {@macro flutter.material.Material.clipBehavior}
   ///
-  /// The `selectedTabColor` parameter defines the background color of the tab's
-  /// when it is selected. This color is applied to indicate the currently active.
-  final Color? selectedTabColor;
+  /// Defaults to [Clip.hardEdge].
+  final Clip clipBehavior;
 
-  /// The color of the tab when unselected.
+  /// How the page view should respond to user input.
   ///
-  /// The `unselectedTabColor` parameter allows you to specify the color of the tab's
-  /// when it is not selected. It is the background color of the item representing an tab's in the [AdaptiveTabView].
-  final Color? unselectedTabColor;
-
-  /// The text style for the selected label.
+  /// For example, determines how the page view continues to animate after the
+  /// user stops dragging the page view.
   ///
-  /// The `selectedLabelStyle` parameter defines the text style of the label or text associated with
-  /// the currently selected tabs. It allows you to customize the appearance of the text
-  /// when the tab is in a selected state.
-  final TextStyle? selectedLabelStyle;
-
-  /// The text style for the unselected label.
+  /// The physics are modified to snap to page boundaries using
+  /// [PageScrollPhysics] prior to being used.
   ///
-  /// The `unselectedLabelStyle` parameter specifies the text style for the label or text associated
-  /// with unselected tabs. This style is applied to the text when the item is not in focus.
-  final TextStyle? unselectedLabelStyle;
+  /// Defaults to matching platform conventions.
+  final ScrollPhysics? physics;
 
-  /// The theme for the selected icon.
+  /// {@macro flutter.widgets.pageview.viewportFraction}
+  final double viewportFraction;
+
+  /// {@macro flutter.widgets.scrollable.dragStartBehavior}
+  final DragStartBehavior dragStartBehavior;
+
+  /// Wraps the children widgets with padding and colored boxes.
   ///
-  /// The `selectedIconTheme` parameter allows you to customize the visual appearance of icons associated
-  /// with the currently selected tabs. You can adjust properties such as the icon's color,
-  /// size, and opacity when the tab is selected.
-  final IconThemeData? selectedIconTheme;
-
-  /// The theme for the unselected icon.
-  ///
-  /// Similar to `selectedIconTheme`, the `unselectedIconTheme` parameter lets you customize the visual
-  /// appearance of icons for unselected tabs. You can control the color, size, and opacity
-  /// when they are not in focus.
-  final IconThemeData? unselectedIconTheme;
-
-  @override
-  Widget android(BuildContext context, [TabViewAndroidProperty? property]) {
-    return TabViewAndroid(
-      tabs: tabs,
-      property: property,
-      onChanged: onChanged,
-      currentIndex: currentIndex,
-      primaryColor: primaryColor,
-      secondaryColor: secondaryColor,
-      contentMargin: contentMargin,
-      contentPadding: contentPadding,
-      selectedTabColor: selectedTabColor,
-      unselectedTabColor: unselectedTabColor,
-      selectedLabelStyle: selectedLabelStyle,
-      unselectedLabelStyle: unselectedLabelStyle,
-      selectedIconTheme: selectedIconTheme,
-      unselectedIconTheme: unselectedIconTheme,
-      children: children,
-    );
+  /// The `_childrenWrapper` method wraps each child widget with padding and a colored box
+  /// based on the specified content margin and secondary color. This ensures consistent
+  /// spacing and visual presentation of the children within the tab view.
+  List<Widget> get _childrenWrapper {
+    return children.map(
+      (child) {
+        return Padding(
+          padding: contentMargin ?? EdgeInsets.zero,
+          child: ColoredBox(
+            color: secondaryColor ?? Colors.transparent,
+            child: Padding(padding: contentPadding, child: child),
+          ),
+        );
+      },
+    ).toList();
   }
 
   @override
-  Widget iOS(BuildContext context, [TabViewIOSProperty? property]) {
-    return TabViewIOS(
-      tabs: tabs,
-      property: property,
-      onChanged: onChanged,
-      currentIndex: currentIndex,
-      primaryColor: primaryColor,
-      secondaryColor: secondaryColor,
-      contentMargin: contentMargin,
-      contentPadding: contentPadding,
-      selectedTabColor: selectedTabColor,
-      unselectedTabColor: unselectedTabColor,
-      selectedLabelStyle: selectedLabelStyle,
-      unselectedLabelStyle: unselectedLabelStyle,
-      selectedIconTheme: selectedIconTheme,
-      unselectedIconTheme: unselectedIconTheme,
-      children: children,
+  Widget build(BuildContext context) {
+    validate();
+    return super.build(context);
+  }
+
+  @override
+  Widget android(BuildContext context, [CoreAndroidProperty? property]) {
+    return Material(color: primaryColor, child: _buildTabView());
+  }
+
+  @override
+  Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
+    return CupertinoPageScaffold(backgroundColor: primaryColor, child: _buildTabView());
+  }
+
+  Widget _buildTabView() {
+    return SafeArea(
+      child: Column(
+        children: [
+          tabBar,
+          Expanded(
+            child: TabBarView(
+              physics: physics,
+              clipBehavior: clipBehavior,
+              controller: tabBar.controller,
+              viewportFraction: viewportFraction,
+              dragStartBehavior: dragStartBehavior,
+              children: _childrenWrapper,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Validates the tab view configuration.
+  ///
+  /// The `validate` method ensures that the tab view configuration is valid
+  /// before rendering. It verifies:
+  /// - The length of the `tabs` list must be equal to the length of the `children` list.
+  void validate() {
+    assert(
+      tabBar.tabs.length == children.length,
+      '\nTabs and children lists must have the same length.\n'
+      'The length of tabs (${tabBar.tabs.length}) must be equal to the length of children (${children.length}).',
     );
   }
 }

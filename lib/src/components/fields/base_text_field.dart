@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import '../../core/common/construct/component.dart';
 import 'fields_properties.dart';
 
-abstract class BaseTextField<A extends CoreAndroidProperty,
-    I extends CoreIOSProperty> extends CoreAdaptiveComponent<A, I> {
+abstract class BaseTextField<A extends CoreAndroidProperty, I extends CoreIOSProperty> extends CoreAdaptiveComponent<A, I>
+    implements BaseFieldProperties {
   const BaseTextField({
     super.key,
     super.builders,
@@ -103,32 +103,37 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
           'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline AdaptiveTextField.',
         );
 
-
-
   /// {@macro flutter.material.Material.clipBehavior}
   ///
   /// Defaults to [Clip.hardEdge].
+  @override
   final Clip clipBehavior;
 
   /// {@macro flutter.widgets.editableText.textDirection}
+  @override
   final TextDirection? textDirection;
 
   /// {@macro flutter.widgets.editableText.scribbleEnabled}
+  @override
   final bool scribbleEnabled;
 
   /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
+  @override
   final bool enableIMEPersonalizedLearning;
 
   /// {@macro flutter.widgets.editableText.cursorOpacityAnimates}
+  @override
   final bool? cursorOpacityAnimates;
 
   /// {@macro flutter.widgets.editableText.contentInsertionConfiguration}
+  @override
   final ContentInsertionConfiguration? contentInsertionConfiguration;
 
   /// {@macro flutter.widgets.EditableText.spellCheckConfiguration}
   ///
   /// If [SpellCheckConfiguration.misspelledTextStyle] is not specified in this
   /// configuration, then [materialMisspelledTextStyle] is used by default.
+  @override
   final SpellCheckConfiguration? spellCheckConfiguration;
 
   /// {@macro flutter.widgets.magnifier.TextMagnifierConfiguration.intro}
@@ -146,19 +151,23 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
   ///
   /// ** See code in examples/api/lib/widgets/text_magnifier/text_magnifier.0.dart **
   /// {@end-tool}
+  @override
   final TextMagnifierConfiguration? magnifierConfiguration;
 
-
   /// Defines the keyboard focus for this widget.
+  @override
   final FocusNode? focusNode;
 
   /// Context menu builder for editable text.
+  @override
   final EditableTextContextMenuBuilder? contextMenuBuilder;
 
   /// Controls how tall the selection highlight boxes are computed to be.
+  @override
   final ui.BoxHeightStyle? selectionHeightStyle;
 
   /// Controls how wide the selection highlight boxes are computed to be.
+  @override
   final ui.BoxWidthStyle? selectionWidthStyle;
 
   /// A lighter colored placeholder hint that appears on the first line of the
@@ -168,6 +177,7 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
   ///
   /// The text style of the placeholder text matches that of the text field's
   /// main text entry except a lighter font weight and a grey font color.
+  @override
   final String? placeholder;
 
   /// The style to use for the placeholder text.
@@ -179,148 +189,195 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
   /// Defaults to the [style] property with w300 font weight and grey color.
   ///
   /// If specifically set to null, placeholder's style will be the same as [style].
+  @override
   final TextStyle? placeholderStyle;
 
   /// An optional [Widget] to display before the text.
+  @override
   final Widget? prefix;
 
   /// An optional widget to display after the input field.
+  @override
   final Widget? suffix;
 
   /// Padding around the text entry area between the [prefix] and [suffix].
+  @override
   final EdgeInsets? padding;
 
   /// The type of keyboard to display for text input.
+  @override
   final TextInputType? keyboardType;
 
   /// Indicates whether the text field is read-only.
+  @override
   final bool? readOnly;
 
   /// The maximum number of characters the text field can contain.
+  @override
   final int? maxLength;
 
   /// The maximum number of lines for a multi-line text field.
   ///
   /// Defaults to 1px.
+  @override
   final int? maxLines;
 
   /// A controller for manipulating the text field's content.
+  @override
   final TextEditingController? controller;
 
   /// {@macro flutter.widgets.undoHistory.controller}
+  @override
   final UndoHistoryController? undoController;
 
   /// Callback for each distinct tap except for every second tap of a double tap.
+  @override
   final GestureTapCallback? onTap;
 
   /// Callback for taps outside the text field.
+  @override
   final TapRegionCallback? onTapOutside;
 
   /// Callback function for text changes.
+  @override
   final ValueChanged<String>? onChanged;
 
   /// Callback function for submitting the text.
+  @override
   final ValueChanged<String>? onSubmitted;
 
   /// Callback for editing completion.
+  @override
   final VoidCallback? onEditingComplete;
 
   /// Indicates whether the text should be obscured.
+  @override
   final bool? obscureText;
 
   /// Indicates whether autocorrect is enabled.
+  @override
   final bool? autocorrect;
 
   /// Smart dashes type for text input.
+  @override
   final SmartDashesType? smartDashesType;
 
   /// Smart quotes type for text input.
+  @override
   final SmartQuotesType? smartQuotesType;
 
   /// Enable suggestions for text input.
+  @override
   final bool? enableSuggestions;
 
   /// Minimum number of lines for a multi-line text field.
+  @override
   final int? minLines;
 
   /// Determines whether the field should fill the height of its parent.
   ///
   /// If true, minLines and maxLines will ignore,
+  @override
   final bool? expands;
 
   /// Determines how the maxLength limit should be enforced.
+  @override
   final MaxLengthEnforcement? maxLengthEnforcement;
 
   /// Text capitalization style.
+  @override
   final TextCapitalization? textCapitalization;
 
   /// Style to use for the text being edited.
+  @override
   final TextStyle? style;
 
   /// Strut style for the text.
+  @override
   final StrutStyle? strutStyle;
 
   /// Text alignment within the text field.
+  @override
   final TextAlign? textAlign;
 
   /// Vertical text alignment within the text field.
+  @override
   final TextAlignVertical? textAlignVertical;
 
   /// Autofocus on the text field.
+  @override
   final bool autofocus;
 
   /// Character to use for obscuring the text.
+  @override
   final String? obscuringCharacter;
 
   /// Input formatters for the text field.
+  @override
   final List<TextInputFormatter>? inputFormatters;
 
   /// Enable or disable the text field.
+  @override
   final bool enabled;
 
   /// Width of the cursor.
+  @override
   final double? cursorWidth;
 
   /// Height of the cursor.
+  @override
   final double? cursorHeight;
 
   /// Radius of the cursor.
+  @override
   final Radius? cursorRadius;
 
   /// Color of the cursor.
+  @override
   final Color? cursorColor;
 
   /// Text selection controls.
+  @override
   final TextSelectionControls? selectionControls;
 
   /// Scroll physics for the text field.
+  @override
   final ScrollPhysics? scrollPhysics;
 
   /// Scroll controller for the text field.
+  @override
   final ScrollController? scrollController;
 
   /// Autofill hints for the text field.
+  @override
   final Iterable<String>? autofillHints;
 
   /// Scroll padding for the text field.
+  @override
   final EdgeInsets? scrollPadding;
 
   /// Enable or disable interactive selection.
+  @override
   final bool? enableInteractiveSelection;
 
   /// Restoration ID for saving and restoring the state of the text field.
+  @override
   final String? restorationId;
 
   /// Appearance of the keyboard.
+  @override
   final Brightness? keyboardAppearance;
 
   /// Drag start behavior for the text field.
+  @override
   final DragStartBehavior? dragStartBehavior;
 
   /// Action button type for the keyboard.
+  @override
   final TextInputAction? textInputAction;
 
   /// Show or hide the cursor.
+  @override
   final bool? showCursor;
 
   /// An optional value to initialize the form field to, or null otherwise.
@@ -385,22 +442,10 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
   /// If [errorHighlightColor] is null, the default error highlighting behavior
   /// of the underlying platform's text field implementation is used.
   final Color? errorHighlightColor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: super.build(context),
-    );
-  }
 }
 
 extension AdaptiveTextFieldEx on BaseTextField {
-  FieldProperties get fieldProperties {
-    return FieldProperties.fromBaseTextField(this);
-  }
+  FieldProperties get fieldProperties => FieldProperties.fromBaseTextField(this);
 
-  FormFieldProperties get formFieldProperties {
-    return FormFieldProperties.fromBaseTextField(this);
-  }
+  FormFieldProperties get formFieldProperties => FormFieldProperties.fromBaseTextField(this);
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/common/construct/property.dart';
 import '../../button_picker/android.dart';
+import '../../button_picker/typedef.dart';
 
 class MaterialTimePickerButton extends AndroidPickerButton {
   const MaterialTimePickerButton({
@@ -35,13 +36,15 @@ class TimePickerAndroid extends StatefulWidget {
     this.onCancel,
     this.initialTime,
     this.onTimeChanged,
+    this.timePickerButtonBuilder,
   });
 
   final TimeOfDay? initialTime;
   final VoidCallback? onCancel;
-
   final TimePickerAndroidProperty? property;
   final ValueChanged<TimeOfDay>? onTimeChanged;
+
+  final TimePickerButtonBuilder? timePickerButtonBuilder;
 
   @override
   State<TimePickerAndroid> createState() => _TimePickerAndroidState();
@@ -65,6 +68,14 @@ class _TimePickerAndroidState extends State<TimePickerAndroid> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.timePickerButtonBuilder != null) {
+      return widget.timePickerButtonBuilder!(
+        context,
+        selectedTime,
+        _showTimePickerDialog,
+      );
+    }
+
     return MaterialTimePickerButton(
       initialDate: selectedTime.toDateTime(),
       localizations: localizations,

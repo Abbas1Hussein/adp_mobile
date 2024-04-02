@@ -1,23 +1,28 @@
+import 'package:adp_mobile/src/core/core.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../core/common/construct/component.dart';
 import 'icons.dart';
 
 /// An adaptive icon widget that provides platform-specific styling and behavior.
-class AdaptiveIcon extends CoreAdaptiveComponent {
+class AdaptiveIcon extends Icon {
   /// Creates an adp icon.
   ///
   /// The [size] and [color] default to the value given by the current platform Theme.
   const AdaptiveIcon(
     AdpIcons this.adaptiveIcons, {
     super.key,
-    super.builders,
-    this.size,
-    this.color,
-    this.semanticLabel,
-    this.textDirection,
+    super.size,
+    super.color,
+    super.shadows,
+    super.weight,
+    super.fill,
+    super.grade,
+    super.opticalSize,
+    super.semanticLabel,
+    super.textDirection,
   })  : cupertino = null,
-        material = null;
+        material = null,
+        super(null);
 
   /// Creates a new adaptive icon with specific icons for each platform.
   ///
@@ -25,35 +30,37 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   /// - On IOS: [cupertino]  icon is used.
   const AdaptiveIcon.from({
     super.key,
-    super.builders,
-    this.size,
-    this.color,
-    this.semanticLabel,
-    this.textDirection,
+    super.size,
+    super.color,
+    super.shadows,
+    super.weight,
+    super.fill,
+    super.grade,
+    super.opticalSize,
+    super.semanticLabel,
+    super.textDirection,
     required IconData this.material,
     required IconData this.cupertino,
-  }) : adaptiveIcons = null;
+  })  : adaptiveIcons = null,
+        super(null);
 
   /// Creates a new adaptive icon with one icons for all platforms.
   const AdaptiveIcon.all(
     IconData iconData, {
     super.key,
-    super.builders,
-    this.size,
-    this.color,
-    this.semanticLabel,
-    this.textDirection,
+    super.size,
+    super.color,
+    super.shadows,
+    super.weight,
+    super.fill,
+    super.grade,
+    super.opticalSize,
+    super.semanticLabel,
+    super.textDirection,
   })  : material = iconData,
         cupertino = iconData,
-        adaptiveIcons = null;
-
-  /// The color to use when drawing the icon.
-  final Color? color;
-
-  /// The size of the icon in logical pixels. icons occupy a square with width and height equal to size.
-  ///
-  /// Defaults to the current platform theme size.
-  final double? size;
+        adaptiveIcons = null,
+        super(null);
 
   /// The icon to display, used for different platforms.
   /// The available icons are described in [CupertinoIcons] snd [MaterialIcons].
@@ -71,40 +78,22 @@ class AdaptiveIcon extends CoreAdaptiveComponent {
   /// used on [AdaptiveIcon.from].
   final IconData? cupertino;
 
-  /// A semantic label providing accessibility information
-  /// for the icon.
-  final String? semanticLabel;
-
-  /// The text direction to use for rendering the icon.
-  final TextDirection? textDirection;
-
   @override
-  Icon android(BuildContext context, [CoreAndroidProperty? property]) {
-    final icon = material ?? adaptiveIcons?.material;
+  Widget build(BuildContext context) {
+    final icon = adaptiveValue<IconData?>(
+      ios: () => cupertino ?? adaptiveIcons?.cupertino,
+      android: () => material ?? adaptiveIcons?.material,
+    );
+
     return Icon(
       icon,
-      key: key,
+      fill: fill,
       size: size,
       color: color,
-      semanticLabel: semanticLabel,
-      textDirection: textDirection,
-    );
-  }
-
-  @override
-  Icon iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final icon = cupertino ?? adaptiveIcons?.cupertino;
-    final iconStyle = const CupertinoIconThemeData().resolve(context);
-    return Icon(
-      icon,
-      key: key,
-      fill: iconStyle.fill,
-      grade: iconStyle.grade,
-      weight: iconStyle.weight,
-      shadows: iconStyle.shadows,
-      size: size ?? iconStyle.size,
-      color: color ?? iconStyle.color,
-      opticalSize: iconStyle.opticalSize,
+      grade: grade,
+      weight: weight,
+      shadows: shadows,
+      opticalSize: opticalSize,
       semanticLabel: semanticLabel,
       textDirection: textDirection,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/core.dart';
+import 'platforms/platforms.dart';
 
 class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
   const AdpApp({
@@ -298,6 +299,9 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
 
   @override
   Widget android(BuildContext context, [AppAndroidProperty? property]) {
+    final lightTheme = property?.theme ?? ThemeData.light(useMaterial3: true);
+    final darkTheme = property?.darkTheme ?? ThemeData.dark(useMaterial3: true);
+
     if (usesRouter) {
       return MaterialApp.router(
         title: title,
@@ -313,8 +317,8 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
         backButtonDispatcher: backButtonDispatcher,
         routeInformationParser: routeInformationParser,
         routeInformationProvider: routeInformationProvider,
-        theme: property?.theme ?? ThemeData.light(useMaterial3: true),
-        darkTheme: property?.darkTheme ?? ThemeData.dark(useMaterial3: true),
+        theme: lightTheme,
+        darkTheme: darkTheme,
         shortcuts: shortcuts,
         showSemanticsDebugger: showSemanticsDebugger,
         showPerformanceOverlay: showPerformanceOverlay,
@@ -342,8 +346,8 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
       onUnknownRoute: onUnknownRoute,
       onGenerateRoute: onGenerateRoute,
       onGenerateTitle: onGenerateTitle,
-      theme: property?.theme ?? ThemeData.light(useMaterial3: true),
-      darkTheme: property?.darkTheme ?? ThemeData.dark(useMaterial3: true),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       shortcuts: shortcuts,
       navigatorObservers: navigatorObservers,
       restorationScopeId: restorationScopeId,
@@ -365,7 +369,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
   Widget iOS(BuildContext context, [AppIOSProperty? property]) {
     final lightTheme = property?.theme ??
         const CupertinoThemeData(brightness: Brightness.light);
-    final darkTheme = property?.theme ??
+    final darkTheme = property?.darkTheme ??
         const CupertinoThemeData(brightness: Brightness.dark);
 
     final theme = themeMode == ThemeMode.light ? lightTheme : darkTheme;
@@ -377,7 +381,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
         locale: locale,
         actions: actions,
         shortcuts: shortcuts,
-        builder: builder,
+        builder: _iOSBuilder,
         routerConfig: routerConfig,
         routerDelegate: routerDelegate,
         theme: theme,
@@ -406,7 +410,7 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
       locale: locale,
       actions: actions,
       shortcuts: shortcuts,
-      builder: builder,
+      builder: _iOSBuilder,
       initialRoute: initialRoute,
       navigatorKey: navigatorKey,
       onUnknownRoute: onUnknownRoute,
@@ -428,41 +432,13 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
       supportedLocales: supportedLocales,
     );
   }
-}
 
-class AppAndroidProperty extends CoreAndroidProperty {
-  const AppAndroidProperty({this.theme, this.darkTheme});
-
-  /// Default visual properties, like colors fonts and shapes, for this app's
-  /// fluent widgets.
-  ///
-  /// A second [darkTheme] [FluentThemeData] value, which is used to provide a dark
-  /// version of the user interface can also be specified. [themeMode] will
-  /// control which theme will be used if a [darkTheme] is provided.
-  ///
-  /// The default value of this property is the value of `FluentThemeData(brightness: Brightness.light)`.
-  final ThemeData? theme;
-
-  /// The [FluentThemeData] to use when a 'dark mode' is requested by the system.
-  ///
-  /// Some host platforms allow the users to select a system-wide 'dark mode',
-  /// or the application may want to offer the user the ability to choose a
-  /// dark theme just for this application. This is theme that will be used for
-  /// such cases. [themeMode] will control which theme will be used.
-  ///
-  /// This theme should have a [FluentThemeData.brightness] set to [Brightness.dark].
-  ///
-  /// Uses [theme] instead when null. Defaults to the value of
-  /// [FluentThemeData(brightness: Brightness.light)] when both [darkTheme] and [theme] are null.
-  final ThemeData? darkTheme;
-}
-
-class AppIOSProperty extends CoreIOSProperty {
-  const AppIOSProperty({this.theme, this.darkTheme});
-
-  /// The style used if [themeMode] is [ThemeMode.dark]
-  final CupertinoThemeData? darkTheme;
-
-  /// The style used if [themeMode] is [ThemeMode.light]
-  final CupertinoThemeData? theme;
+  Widget _iOSBuilder(context, Widget? child) {
+    return IOSMaterialThemeBuilder(
+      properties: properties,
+      themeMode: themeMode,
+      builder: builder,
+      child: child,
+    );
+  }
 }

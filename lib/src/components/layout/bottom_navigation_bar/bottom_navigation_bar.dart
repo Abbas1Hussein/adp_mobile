@@ -1,3 +1,4 @@
+import 'package:adp_mobile/src/components/navigation/navigation_view/platforms/android.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,14 +12,14 @@ class AdaptiveBottomNavigationBar extends CoreAdaptiveComponent<
     super.key,
     super.builders,
     super.properties,
+    this.iconSize,
     this.currentIndex = 0,
     this.backgroundColor,
-    this.onChanged,
     this.selectedIconTheme,
     this.unselectedIconTheme,
     this.selectedItemColor,
     this.unselectedItemColor,
-    this.iconSize,
+    this.onChanged,
     required this.items,
   });
 
@@ -78,40 +79,58 @@ class AdaptiveBottomNavigationBar extends CoreAdaptiveComponent<
   final IconThemeData? unselectedIconTheme;
 
   @override
-  BottomNavigationBar android(
+  Widget android(
     BuildContext context, [
     BottomNavigationBarAndroidProperty? property,
   ]) {
+    if (property?.useMaterial3 ?? Theme.of(context).useMaterial3) {
+      return NavigationBar(
+        key: key,
+        selectedIndex: currentIndex,
+        onDestinationSelected: onChanged,
+        backgroundColor: backgroundColor,
+        indicatorColor: selectedItemColor,
+        labelBehavior: property?.labelBehavior,
+        height: property?.bar3property?.height,
+        elevation: property?.bar3property?.elevation,
+        shadowColor: property?.bar3property?.shadowColor,
+        overlayColor: property?.bar3property?.overlayColor,
+        indicatorShape: property?.bar3property?.indicatorShape,
+        surfaceTintColor: property?.bar3property?.surfaceTintColor,
+        animationDuration: property?.bar3property?.animationDuration,
+        destinations: items.map((e) => e.toNavigationDestination()).toList(),
+      );
+    }
+    final showLabelVisibility = (property?.labelBehavior ?? NavigationDestinationLabelBehavior.alwaysShow).showLabelVisibility;
     return BottomNavigationBar(
       key: key,
-      // Specific Properties
-      type: property?.type,
-      elevation: property?.elevation,
-      mouseCursor: property?.mouseCursor,
-      enableFeedback: property?.enableFeedback,
-      landscapeLayout: property?.landscapeLayout,
-      selectedFontSize: property?.selectedFontSize ?? 14.0,
-      unselectedFontSize: property?.unselectedFontSize ?? 12.0,
-      showSelectedLabels: property?.showSelectedLabels,
-      showUnselectedLabels: property?.showUnselectedLabels,
-      unselectedLabelStyle: property?.unselectedLabelStyle,
-      selectedLabelStyle: property?.selectedLabelStyle,
-      useLegacyColorScheme: property?.useLegacyColorScheme ?? true,
-      // Adaptive Properties
+      type: property?.bar2property?.type,
+      elevation: property?.bar2property?.elevation,
+      mouseCursor: property?.bar2property?.mouseCursor,
+      enableFeedback: property?.bar2property?.enableFeedback,
+      landscapeLayout: property?.bar2property?.landscapeLayout,
+      selectedFontSize: property?.bar2property?.selectedFontSize ?? 14.0,
+      unselectedFontSize: property?.bar2property?.unselectedFontSize ?? 12.0,
+      selectedLabelStyle: property?.bar2property?.selectedLabelStyle,
+      unselectedLabelStyle: property?.bar2property?.unselectedLabelStyle,
+      useLegacyColorScheme:
+          property?.bar2property?.useLegacyColorScheme ?? true,
+      iconSize: iconSize ?? 24.0,
       currentIndex: currentIndex,
       backgroundColor: backgroundColor,
       selectedItemColor: selectedItemColor,
-      unselectedItemColor: unselectedItemColor,
       selectedIconTheme: selectedIconTheme,
+      unselectedItemColor: unselectedItemColor,
       unselectedIconTheme: unselectedIconTheme,
-      iconSize: iconSize ?? 24.0,
+      showSelectedLabels: showLabelVisibility.$1,
+      showUnselectedLabels: showLabelVisibility.$2,
       onTap: onChanged,
       items: items,
     );
   }
 
   @override
-  CupertinoTabBar iOS(
+  Widget iOS(
     BuildContext context, [
     BottomNavigationBarIOSProperty? property,
   ]) {

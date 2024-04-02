@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/common/construct/component.dart';
 import '../../../../core/extension/time.dart';
 import '../../button_picker/ios.dart';
+import '../../button_picker/typedef.dart';
 import '../../dialog_picker/ios.dart';
 import '../../button_picker/button_constraints.dart';
 import '../../date_picker/platforms/ios.dart';
@@ -95,17 +96,19 @@ class CupertinoTimePickerButton extends IOSPickerButton {
 class TimePickerIOS extends StatefulWidget {
   const TimePickerIOS({
     super.key,
-    this.onCancel,
     this.property,
+    this.onCancel,
+    this.initialTime,
     this.onTimeChanged,
-    required this.initialTime,
+    this.timePickerButtonBuilder,
   });
 
-  final TimePickerIOSProperty? property;
+  final TimeOfDay? initialTime;
   final VoidCallback? onCancel;
+  final TimePickerIOSProperty? property;
   final ValueChanged<TimeOfDay>? onTimeChanged;
 
-  final TimeOfDay? initialTime;
+  final TimePickerButtonBuilder? timePickerButtonBuilder;
 
   @override
   State<TimePickerIOS> createState() => _TimePickerIOSState();
@@ -137,18 +140,27 @@ class _TimePickerIOSState extends State<TimePickerIOS> {
         CupertinoDatePickerModeStyle.cupertinoButton) {
       return ConstrainedBox(
         constraints: kPickerButtonConstraints,
-        child: _buildCupertinoDatePicker(),
+        child: _buildCupertinoTimePicker(),
       );
     }
+
+    if (widget.timePickerButtonBuilder != null) {
+      return widget.timePickerButtonBuilder!(
+        context,
+        selectedDate.convertDurationToTimeOfDay(),
+        _showCupertinoTimePickerDialog,
+      );
+    }
+
     return CupertinoTimePickerButton(
       mode: widget.property?.mode ?? CupertinoTimerPickerMode.hms,
       initialDate: selectedDate.convertDurationToDateTime(),
       localizations: localizations,
-      onPressed: _showCupertinoDatePickerDialog,
+      onPressed: _showCupertinoTimePickerDialog,
     );
   }
 
-  Widget _buildCupertinoDatePicker() {
+  Widget _buildCupertinoTimePicker() {
     return CupertinoTimerPicker(
       initialTimerDuration: selectedDate,
       onTimerDurationChanged: _onTimerChanged,
@@ -161,14 +173,14 @@ class _TimePickerIOSState extends State<TimePickerIOS> {
     );
   }
 
-  Future<void> _showCupertinoDatePickerDialog() async {
+  Future<void> _showCupertinoTimePickerDialog() async {
     final showTitle = widget.property?.showTitle ?? true;
     final isDismissible = widget.property?.isDismissible ?? true;
 
     final result = await IOSDialogPicker(
       context,
       localizations,
-      picker: _buildCupertinoDatePicker(),
+      picker: _buildCupertinoTimePicker(),
     ).showIOSTimePicker(showTitle, isDismissible);
 
     if (result != null && result) {

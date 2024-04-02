@@ -7,5 +7,6 @@ export 'icon/icon.dart';
 export 'icon/icons.dart';
 export 'fields/fields.dart';
 export 'app/app.dart';
+export 'app/platforms/platforms.dart' show AppIOSProperty, AppAndroidProperty;
 export 'pickers/pickers.dart';
 export 'navigation/navigation.dart';

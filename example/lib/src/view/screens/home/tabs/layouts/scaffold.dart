@@ -1,21 +1,38 @@
 import 'package:adp_mobile/adp_mobile.dart';
-import 'package:flutter/material.dart' as m;
+import 'package:flutter/material.dart';
 
-class Scaffold extends StatelessWidget {
-  const Scaffold({super.key});
+class ScaffoldPreview extends StatefulWidget {
+  const ScaffoldPreview({super.key});
+
+  @override
+  State<ScaffoldPreview> createState() => _ScaffoldPreviewState();
+}
+
+class _ScaffoldPreviewState extends State<ScaffoldPreview> {
+  int _currentValue = 0;
 
   @override
   Widget build(BuildContext context) {
     return AdaptiveScaffold(
-      appBar: AdaptiveAppBar(title: const Text('appbar')),
-      drawer: AdaptiveDrawer(
+      appBar: AdaptiveAppBar(
+        title: const Text('Abbas Hussein'),
+        actions: const [
+          AdaptiveIcon(AdpIcons.camera),
+          SizedBox(width: 4.0),
+          AdaptiveIcon(AdpIcons.ellipsesVert),
+        ],
+      ),
+      endDrawer: Drawer(
         child: ListView(
           children: List.generate(
             labels.length,
-            (index) {
+                (index) {
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: AdaptiveListTile(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   leading: AdaptiveIcon(icons[index]),
                   title: labels[index],
                 ),
@@ -24,16 +41,34 @@ class Scaffold extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: m.FloatingActionButton(
-        onPressed: () {},
-        child: const AdaptiveIcon(AdpIcons.add),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Builder(
+        builder: (context) {
+          return FloatingActionButton(
+            onPressed: Scaffold.of(context).openEndDrawer,
+            child: const AdaptiveIcon(AdpIcons.add),
+          );
+        }
       ),
-      body: Center(
-        child: AdaptiveButton(
-          child: const Text("back"),
-          onPressed: () => Navigator.pop(context),
-        ),
+      bottomNavigationBar: AdaptiveBottomNavigationBar(
+        currentIndex: _currentValue,
+        onChanged: (value) {
+          setState(() {
+            _currentValue = value;
+          });
+        },
+        items: [
+          AdaptiveBottomNavigationBarItem(
+            icon: AdaptiveIcon(icons[0]),
+            label: 'home',
+          ),
+          AdaptiveBottomNavigationBarItem(
+            icon: AdaptiveIcon(icons[1]),
+            label: 'series',
+          )
+        ],
       ),
+      body: const SizedBox.shrink(),
     );
   }
 

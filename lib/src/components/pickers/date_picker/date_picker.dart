@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '../../../core/common/construct/component.dart';
+import '../button_picker/typedef.dart';
 import 'platforms/platforms.dart';
 
 /// A Date picker is a graphical user interface element that used to select a date from a graphical calendar interface.
@@ -24,9 +25,9 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
   /// state changes directly.
   ///
   /// The [properties] parameter allows you to customize the visual and functional aspects
-  /// of the tab view separately for Windows and macOS platforms.
-  /// You can provide specific [properties] for each platform using `DatePickerAndroidProperty`
-  /// and `DatePickerIOSProperty` respectively.
+  /// of the tab view separately for Android and IOS platforms.
+  /// You can provide specific [properties] for each platform using `TimePickerAndroidProperty`
+  /// and `TimePickerIOSProperty` respectively.
   ///
   /// See also:
   ///
@@ -39,6 +40,7 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
     this.onCancel,
     this.onSelected,
     this.initialDate,
+    this.buttonBuilder,
   });
 
   /// The initial date displayed when the date picker is first shown.
@@ -47,13 +49,22 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
   final DateTime? initialDate;
 
   /// A callback function to be called when the user cancels the date picker.
+  ///
   /// It can be null if no action is needed on cancellation.
   final VoidCallback? onCancel;
 
   /// A callback function called when the user selects a date in the picker.
+  ///
   /// It provides the selected [DateTime] as an argument.
   final ValueChanged<DateTime>? onSelected;
 
+  /// An optional function that allows customization of the date picker button.
+  ///
+  /// This builder function provides flexibility in defining the button's appearance and behavior.
+  /// You can customize aspects like the button text, icon, styling, and triggering logic for the date picker dialog.
+  ///
+  /// If not provided, a default button will be used based on the target platform.
+  final DatePickerButtonBuilder? buttonBuilder;
 
   @override
   Widget android(BuildContext context, [DatePickerAndroidProperty? property]) {
@@ -62,6 +73,7 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
       onCancel: onCancel,
       initialDate: initialDate,
       onDateTimeChanged: onSelected,
+      datePickerButtonBuilder: buttonBuilder,
     );
   }
 
@@ -72,6 +84,7 @@ class AdaptiveDatePicker extends CoreAdaptiveComponent<
       onCancel: onCancel,
       initialDate: initialDate,
       onDateTimeChanged: onSelected,
+      datePickerButtonBuilder: buttonBuilder,
     );
   }
 }

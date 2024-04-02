@@ -6,7 +6,7 @@ class AdaptiveNavigationBarItem extends BottomNavigationBarItem {
     super.activeIcon,
     super.backgroundColor,
     required super.icon,
-    required super.label,
+    required String super.label,
   });
 
   NavigationRailDestination toNavigationRailDestination() {
@@ -15,6 +15,15 @@ class AdaptiveNavigationBarItem extends BottomNavigationBarItem {
       selectedIcon: activeIcon,
       label: Text(label ?? '* - *'),
       indicatorColor: backgroundColor,
+    );
+  }
+
+  NavigationDestination toNavigationDestination() {
+    return NavigationDestination(
+      icon: icon,
+      tooltip: tooltip,
+      selectedIcon: activeIcon,
+      label: label ?? '* - *',
     );
   }
 }

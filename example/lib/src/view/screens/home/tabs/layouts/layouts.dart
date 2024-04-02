@@ -21,7 +21,7 @@ class Layouts extends StatelessWidget {
               '\nAdaptiveAppbar: Used to display information and actions relevant to the current page. Features the menu icon, back button, and more.'
               '\nAdaptiveDrawer: A sliding panel that appears horizontally from the edge of a Scaffold, revealing navigation links in the application.',
         ),
-        DisplayNavButton(child: Scaffold()),
+        DisplayNavButton(child: ScaffoldPreview()),
         CustomTitle(
           path: HighlightPaths.scaffoldPage,
           title: 'Scaffold Page',

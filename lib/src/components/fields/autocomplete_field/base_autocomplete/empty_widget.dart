@@ -8,16 +8,16 @@ final emptyKey = UniqueKey().toString();
 /// Callback widget to show when the search returns no results.
 ///
 /// If Widget is null, default will be used.
-typedef EmptyBuilder = Widget? Function(String);
+typedef EmptyBuilder = Widget? Function(String value);
 
 class EmptyModel {
-  const EmptyModel({required this.searchKey, required this.enteredText});
+  const EmptyModel({ required this.searchKey, required this.enteredText });
+
   final String searchKey;
   final String enteredText;
 
   factory EmptyModel.from(String searchKey) {
     final key = searchKey.split('|');
-
     return EmptyModel(searchKey: key.first, enteredText: key.last);
   }
 
