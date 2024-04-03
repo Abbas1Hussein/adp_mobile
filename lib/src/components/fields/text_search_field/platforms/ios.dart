@@ -17,6 +17,7 @@ class TextSearchFieldIOS extends StatelessWidget
     this.onSuffixTap,
     this.onSubmitted,
     this.controller,
+    this.constraints,
     this.prefixIcon,
     this.prefixInsets,
     this.itemColor,
@@ -67,43 +68,51 @@ class TextSearchFieldIOS extends StatelessWidget
 
   @override
   final FocusNode? focusNode;
+
+  @override
+  final BoxConstraints? constraints;
+
   @override
   final TextEditingController? controller;
+
 
   final SearchFieldIOSProperty? property;
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoSearchTextField(
-      style: style,
-      decoration: decoration?.copyWith(
-        color: decoration?.color ?? CupertinoColors.tertiarySystemFill,
-        borderRadius: decoration?.borderRadius ??
-            const BorderRadius.all(Radius.circular(9.0)),
+    return ConstrainedBox(
+      constraints: constraints ?? const BoxConstraints(minWidth: 360.0, maxWidth: 800.0),
+      child: CupertinoSearchTextField(
+        style: style,
+        decoration: decoration?.copyWith(
+          color: decoration?.color ?? CupertinoColors.tertiarySystemFill,
+          borderRadius: decoration?.borderRadius ??
+              const BorderRadius.all(Radius.circular(9.0)),
+        ),
+        controller: controller,
+        focusNode: focusNode,
+        padding:
+            padding ?? const EdgeInsetsDirectional.fromSTEB(5.5, 8, 5.5, 8),
+        prefixIcon: prefixIcon ?? const Icon(CupertinoIcons.search),
+        prefixInsets:
+            prefixInsets ?? const EdgeInsetsDirectional.fromSTEB(6, 0, 0, 3),
+        suffixIcon: suffixIcon ?? const Icon(CupertinoIcons.xmark_circle_fill),
+        suffixInsets:
+            suffixInsets ?? const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 2),
+        suffixMode: suffixMode ?? OverlayVisibilityMode.editing,
+        onSuffixTap: onSuffixTap,
+        itemSize: itemSize ?? 20.0,
+        itemColor: itemColor ?? CupertinoColors.secondaryLabel,
+        smartQuotesType: property?.smartQuotesType,
+        smartDashesType: property?.smartDashesType,
+        enableIMEPersonalizedLearning:
+            property?.enableIMEPersonalizedLearning ?? true,
+        onTap: onTap,
+        onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        placeholder: placeholder,
+        placeholderStyle: placeholderStyle,
       ),
-      controller: controller,
-      focusNode: focusNode,
-      padding: padding ?? const EdgeInsetsDirectional.fromSTEB(5.5, 8, 5.5, 8),
-      prefixIcon: prefixIcon ?? const Icon(CupertinoIcons.search),
-      prefixInsets:
-          prefixInsets ?? const EdgeInsetsDirectional.fromSTEB(6, 0, 0, 3),
-      suffixIcon: suffixIcon ?? const Icon(CupertinoIcons.xmark_circle_fill),
-      suffixInsets:
-          suffixInsets ?? const EdgeInsetsDirectional.fromSTEB(0, 0, 5, 2),
-      suffixMode: suffixMode ?? OverlayVisibilityMode.editing,
-      onSuffixTap: onSuffixTap,
-      itemSize: itemSize ?? 20.0,
-      itemColor: itemColor ?? CupertinoColors.secondaryLabel,
-      // smartQuotesType: ,
-      smartQuotesType: property?.smartQuotesType,
-      smartDashesType: property?.smartDashesType,
-      enableIMEPersonalizedLearning:
-          property?.enableIMEPersonalizedLearning ?? true,
-      onTap: onTap,
-      onChanged: onChanged,
-      onSubmitted: onSubmitted,
-      placeholder: placeholder,
-      placeholderStyle: placeholderStyle,
     );
   }
 }

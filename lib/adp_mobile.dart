@@ -10,7 +10,9 @@ export 'package:flutter/cupertino.dart'
         CupertinoTimerPickerMode,
         OverlayVisibilityMode;
 export 'package:flutter/material.dart'
-    show Drawer,
+    show
+        Icons,
+        Drawer,
         Card,
         Tooltip,
         Colors,

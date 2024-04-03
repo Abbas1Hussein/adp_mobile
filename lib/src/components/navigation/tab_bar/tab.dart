@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
 
-class AdaptiveTab extends CoreAdaptiveComponent  {
+class AdaptiveTab extends CoreAdaptiveComponent {
   const AdaptiveTab({
     super.key,
     this.icon,
@@ -91,11 +91,13 @@ class AdaptiveTab extends CoreAdaptiveComponent  {
               child: direction == Axis.vertical
                   ? DefaultTextStyle.merge(
                       overflow: TextOverflow.ellipsis,
-                      child: iconTheme?.margeWith(labelStyle, 8.0, Axis.vertical) ??
+                      child: iconTheme?.margeWith(
+                              labelStyle, 8.0, Axis.vertical) ??
                           labelStyle,
                     )
                   : FittedBox(
-                      child: labelStyle.margeWith(iconTheme, 8.0, Axis.horizontal),
+                      child:
+                          labelStyle.margeWith(iconTheme, 8.0, Axis.horizontal),
                     ),
             ),
           ),

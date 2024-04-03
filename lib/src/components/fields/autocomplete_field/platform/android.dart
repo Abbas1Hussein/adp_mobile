@@ -32,6 +32,7 @@ class MaterialAutocomplete<T> extends BaseAutocomplete<T> {
     return TextSearchFieldAndroid(
       focusNode: focusNode,
       controller: textEditingController,
+      constraints: autocompleteField?.constraints,
       style: autocompleteField?.style,
       onTap: autocompleteField?.onTap,
       padding: autocompleteField?.padding,

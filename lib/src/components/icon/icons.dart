@@ -1288,10 +1288,7 @@ enum AdpIcons {
   final IconData material;
   final IconData cupertino;
 
-  const AdpIcons({
-    required this.material,
-    required this.cupertino,
-  });
+  const AdpIcons({ required this.material, required this.cupertino });
 }
 
 extension AdaptiveIconsEx on AdpIcons {

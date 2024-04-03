@@ -2,20 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class IOSDialogPicker {
-  const IOSDialogPicker(
-    this.context,
-    this.localizations, {
-    required this.picker,
-  });
+  const IOSDialogPicker(this.context, this.localizations,
+      { required this.picker });
 
   final Widget picker;
   final BuildContext context;
   final MaterialLocalizations localizations;
 
-  Future<bool?> showIOSDatePicker(
-    bool showTitle,
-    bool isDismissible,
-  ) {
+  Future<bool?> showIOSDatePicker(bool showTitle, bool isDismissible) {
     final size = MediaQuery.sizeOf(context);
     return showCupertinoDialog(
       context: context,
@@ -29,10 +23,7 @@ class IOSDialogPicker {
               )
             : const SizedBox.shrink(),
         content: SizedBox(
-          height: size.height * 0.3,
-          width: size.width,
-          child: picker,
-        ),
+            height: size.height * 0.3, width: size.width, child: picker),
         actions: [
           _buildOkPickerButton(),
           _buildCancelPickerButton(),
@@ -41,10 +32,7 @@ class IOSDialogPicker {
     );
   }
 
-  Future<bool?> showIOSTimePicker(
-    bool showTitle,
-    bool isDismissible,
-  ) {
+  Future<bool?> showIOSTimePicker(bool showTitle, bool isDismissible) {
     final size = MediaQuery.sizeOf(context);
     return showCupertinoDialog(
       context: context,
@@ -58,10 +46,7 @@ class IOSDialogPicker {
               )
             : const SizedBox.shrink(),
         content: SizedBox(
-          width: size.width,
-          height: size.height * 0.2,
-          child: picker,
-        ),
+            height: size.height * 0.2, width: size.width, child: picker),
         actions: [
           _buildOkPickerButton(),
           _buildCancelPickerButton(),

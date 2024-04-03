@@ -7,7 +7,10 @@ import 'base_autocomplete/empty_widget.dart';
 import 'base_autocomplete/field_properties.dart';
 import 'platform/platform.dart';
 
-/// A custom text search field widget that adapts its appearance based on the platform.
+/// A custom autocomplete field widget that adapts its appearance based on the platform.
+///
+/// On iOS, [CupertinoAutocomplete] will be used.
+/// On Android, [MaterialAutocomplete] will be used.
 ///
 /// Use this widget to create text search field  with platform-specific
 /// styling and behavior.
@@ -17,9 +20,10 @@ class AdaptiveAutocompleteField<T> extends CoreAdaptiveComponent {
   ///
   /// See also:
   ///
+  ///  * [Overlay], which is used to show the suggestion popup
   ///  * [AdaptiveTextField], which provides a versatile text input field.
   ///  * [AdaptiveTextFormField], a form field that wraps around AdaptiveTextField, enhancing it for form validation.
-  ///  * [Overlay], which is used to show the suggestion popup
+  ///  * [AdaptiveTextSearchField], which creates a similar adaptive search field without autocomplete functionality.
   const AdaptiveAutocompleteField({
     super.key,
     super.builders,

@@ -601,7 +601,7 @@ class _PreferredAppBarSize extends Size {
 ///   * [iconDrawerTheme]: Specifies the theme for the drawer icon.
 ///   * [iconEndDrawerTheme]: Specifies the theme for the end drawer icon.
 class AppBarIconTheme {
-  const AppBarIconTheme({this.icon, this.color, this.size});
+  const AppBarIconTheme({ this.icon, this.color, this.size });
 
   /// The color of the app bar icon.
   final Color? color;

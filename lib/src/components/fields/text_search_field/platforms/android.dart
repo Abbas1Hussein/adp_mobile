@@ -17,6 +17,7 @@ class TextSearchFieldAndroid extends StatefulWidget implements BaseSearchFieldPr
     this.onSuffixTap,
     this.onSubmitted,
     this.controller,
+    this.constraints,
     this.prefixIcon,
     this.prefixInsets,
     this.itemColor,
@@ -67,8 +68,13 @@ class TextSearchFieldAndroid extends StatefulWidget implements BaseSearchFieldPr
 
   @override
   final FocusNode? focusNode;
+
+  @override
+  final BoxConstraints? constraints;
+
   @override
   final TextEditingController? controller;
+
 
   final SearchFieldAndroidProperty? property;
 
@@ -151,6 +157,7 @@ class _TextSearchFieldAndroidState extends State<TextSearchFieldAndroid> {
       decoration: widget.decoration ?? const BoxDecoration(),
       child: SearchBar(
         controller: controller,
+        constraints: widget.constraints,
         shape: MaterialStatePropertyAll(effectiveBorder),
         padding: MaterialStatePropertyAll(widget.padding),
         textStyle: MaterialStatePropertyAll(widget.style),

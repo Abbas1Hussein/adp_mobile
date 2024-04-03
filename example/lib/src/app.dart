@@ -64,7 +64,6 @@ class HomeScreen2 extends StatefulWidget {
 }
 
 class _HomeScreen2State extends State<HomeScreen2> {
-  int _currentValue = 0;
   final controller = PlatformController();
 
   final items = const [
@@ -74,55 +73,18 @@ class _HomeScreen2State extends State<HomeScreen2> {
 
   @override
   Widget build(BuildContext context) {
-    return AdaptiveScaffold(
-      appBar: AdaptiveAppBar(title: const Text('Home'), actions: _actions),
-      drawer: NavigationDrawer(
-        selectedIndex: _currentValue,
-        onDestinationSelected: (value) {
-          setState(() {
-            _currentValue = value;
-          });
-        },
-        children: const [
-          SizedBox(height: 12.0),
-          NavigationDrawerDestination(
-            label: Text('home'),
-            icon: AdaptiveIcon(AdpIcons.home),
-          ),
-          SizedBox(height: 4.0),
-          NavigationDrawerDestination(
-            label: Text('camera'),
-            icon: AdaptiveIcon(AdpIcons.camera),
-          ),
-          SizedBox(height: 4.0),
-          NavigationDrawerDestination(
-            label: Text('archive'),
-            icon: AdaptiveIcon(AdpIcons.archive),
-          ),
-        ],
-      ),
-      body: const Center(),
-      bottomNavigationBar: AdaptiveBottomNavigationBar(
-        currentIndex: _currentValue,
-        onChanged: (value) {
-          setState(() {
-            _currentValue = value;
-          });
-        },
-        items: [
-          AdaptiveBottomNavigationBarItem(
-            icon: AdaptiveIcon(AdpIcons.home),
-            label: 'home',
-          ),
-          AdaptiveBottomNavigationBarItem(
-            icon: AdaptiveIcon(AdpIcons.camera),
-            label: 'camera',
-          ),
-          AdaptiveBottomNavigationBarItem(
-            icon: AdaptiveIcon(AdpIcons.archive),
-            label: 'archive',
-          )
-        ],
+    return AdaptiveScaffoldPage(
+      appBar: AdaptiveAppBarPage(actions: _actions),
+      content: const Center(
+        child: AdaptiveAutocompleteField(
+          options: [
+            AdaptiveAutoCompleteItem(searchKey: 'searchKey 1'),
+            AdaptiveAutoCompleteItem(searchKey: 'searchKey 2'),
+            AdaptiveAutoCompleteItem(searchKey: 'searchKey 3'),
+            AdaptiveAutoCompleteItem(searchKey: 'searchKey 4'),
+            AdaptiveAutoCompleteItem(searchKey: 'searchKey 40'),
+          ],
+        ),
       ),
     );
   }

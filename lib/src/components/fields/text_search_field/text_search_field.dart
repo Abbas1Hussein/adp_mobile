@@ -4,9 +4,24 @@ import '../../../core/core.dart';
 import 'base_properties.dart';
 import 'platforms/platforms.dart';
 
+/// Creates an adaptive text search field widget based on whether the target
+/// platform is iOS or Android.
+///
+/// On iOS [CupertinoSearchTextField] will be used.
+/// On android a Material design [SearchBar] will be used.
+///
+/// See also:
+///
+/// * [AdaptiveAutocompleteField], which wraps this widget and provides autocomplete functionality.
 class AdaptiveTextSearchField extends CoreAdaptiveComponent<
     SearchFieldAndroidProperty,
     SearchFieldIOSProperty> implements BaseSearchFieldProperties {
+  /// Creates an adaptive text search field.
+  ///
+  /// The [properties] parameter allows you to customize the visual and functional aspects
+  /// of the navigation view separately for Android and iOS platforms.
+  /// You can provide specific [properties] for each platform using `SearchFieldAndroidProperty`
+  /// and `SearchFieldIOSProperty` respectively.
   const AdaptiveTextSearchField({
     super.key,
     super.builders,
@@ -20,6 +35,7 @@ class AdaptiveTextSearchField extends CoreAdaptiveComponent<
     this.onSuffixTap,
     this.onSubmitted,
     this.controller,
+    this.constraints,
     this.prefixIcon,
     this.prefixInsets,
     this.itemColor,
@@ -134,6 +150,13 @@ class AdaptiveTextSearchField extends CoreAdaptiveComponent<
   @override
   final BoxDecoration? decoration;
 
+  /// The constraints that apply to the search field's size and layout.
+  ///
+  ///  On iOS: BoxConstraints(minWidth: 360.0, maxWidth: 800.0);
+  ///  On Android: BoxConstraints(minWidth: 360.0, maxWidth: 800.0, minHeight: 56.0);
+  @override
+  final BoxConstraints? constraints;
+
   /// A TextEditingController that provides a handle for retrieving and modifying the text field's value.
   ///
   /// It also allows for managing the selection of text within the field.
@@ -146,6 +169,7 @@ class AdaptiveTextSearchField extends CoreAdaptiveComponent<
       property: property,
       focusNode: focusNode,
       controller: controller,
+      constraints: constraints,
 
       // styles
       style: style,
@@ -183,6 +207,7 @@ class AdaptiveTextSearchField extends CoreAdaptiveComponent<
       property: property,
       focusNode: focusNode,
       controller: controller,
+      constraints: constraints,
 
       // styles
       style: style,

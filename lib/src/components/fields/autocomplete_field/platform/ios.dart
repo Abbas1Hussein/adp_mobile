@@ -33,6 +33,7 @@ class CupertinoAutocomplete<T> extends BaseAutocomplete<T> {
     return TextSearchFieldIOS(
       focusNode: focusNode,
       controller: textEditingController,
+      constraints: autocompleteField?.constraints,
       style: autocompleteField?.style,
       onTap: autocompleteField?.onTap,
       padding: autocompleteField?.padding,

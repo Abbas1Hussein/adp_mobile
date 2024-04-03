@@ -125,7 +125,7 @@ class AdaptiveScaffold extends StatelessWidget {
   final bool extendBodyBehindAppBar;
 
   /// An app bar to display at the top of the scaffold.
-  final AdaptiveAppBar? appBar;
+  final PreferredSizeWidget? appBar;
 
   /// The primary content of the scaffold.
   ///

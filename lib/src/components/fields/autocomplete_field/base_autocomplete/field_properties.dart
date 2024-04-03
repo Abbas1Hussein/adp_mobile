@@ -12,6 +12,7 @@ class AutocompleteFieldProperties extends BaseSearchFieldProperties {
     super.onSubmitted,
     super.decoration,
     super.controller,
+    super.constraints,
     super.prefixIcon,
     super.prefixInsets,
     super.padding,
