@@ -88,7 +88,7 @@ class _CupertinoAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
   @override
   Widget backgroundWrapper(BuildContext context, Widget child) {
     return Padding(
-      padding: decoration?.margin ?? kDefaultOptionMargin,
+      padding: decoration?.margin ?? kDefaultOptionsMargin,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: CupertinoDynamicColor.resolve(
@@ -97,7 +97,7 @@ class _CupertinoAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
           ),
           shape: decoration?.shape ??
               const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
+                borderRadius: BorderRadius.vertical(top: Radius.circular(4.0)),
               ),
         ),
         child: Padding(
@@ -108,13 +108,14 @@ class _CupertinoAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
 
   @override
   Widget emptyBuilder(BuildContext context, String value) {
-    return emptyBuilderWidget?.call(value) ?? Padding(
-          padding: const EdgeInsets.only(top: 4.0, right: 8.0),
+    return emptyBuilderWidget?.call(value) ??
+        Padding(
+          padding: const EdgeInsets.only(top: 2.0, right: 8.0),
           child: CupertinoPopupSurface(
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: kDefaultOptionPadding,
+                padding: kDefaultOptionsPadding,
                 child: Align(
                   alignment: Alignment.center,
                   widthFactor: 1,
@@ -135,19 +136,20 @@ class _CupertinoAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
   }
 
   @override
-  Widget optionBuilder(BuildContext context, int index, bool isHighlight, VoidCallback onTap, String searchKey) {
+  Widget optionBuilder(BuildContext context, int index, bool isHighlight,
+      VoidCallback onTap, String searchKey) {
     final OptionDecoration? option = decoration?.optionDecoration;
 
     return Padding(
-      padding: option?.margin ?? kDefaultOptionMargin,
+      padding: option?.margin ?? const EdgeInsets.symmetric(vertical: 1.0),
       child: ClipRRect(
         borderRadius: option?.borderRadius ??
             (index == 0
-                ? const BorderRadius.vertical(top: Radius.circular(8.0))
+                ? const BorderRadius.vertical(top: Radius.circular(4.0))
                 : BorderRadius.zero),
         child: CupertinoListTile(
           onTap: onTap,
-          padding: option?.padding ?? kDefaultOptionPadding,
+          padding: option?.padding,
           backgroundColorActivated: option?.pressColor,
           backgroundColor: CupertinoDynamicColor.maybeResolve(
             isHighlight

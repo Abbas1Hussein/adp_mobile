@@ -44,98 +44,99 @@ class TextFieldIOS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFieldTapRegion(
-      onTapOutside: fieldProperties?.onTapOutside,
-      child: CupertinoTextField(
-        key: key,
-        onTap: fieldProperties?.onTap,
-        onChanged: fieldProperties?.onChanged,
-        onSubmitted: fieldProperties?.onSubmitted,
-        onEditingComplete: fieldProperties?.onEditingComplete,
-        placeholder: fieldProperties?.placeholder,
-        placeholderStyle: fieldProperties?.placeholderStyle ?? kDefaultPlaceholderStyle,
-        padding: fieldProperties?.padding ?? const EdgeInsets.all(4.0),
-        decoration: property?.decoration ?? kDefaultRoundedBorderDecoration,
-        clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
-        textDirection: fieldProperties?.textDirection,
-        scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
-        spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
-        enableIMEPersonalizedLearning:
-            fieldProperties?.enableIMEPersonalizedLearning ?? true,
-        cursorOpacityAnimates: fieldProperties?.cursorOpacityAnimates ?? true,
-        contentInsertionConfiguration:
-            fieldProperties?.contentInsertionConfiguration,
-        magnifierConfiguration: fieldProperties?.magnifierConfiguration,
-        style: fieldProperties?.style,
-        suffixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
-        prefixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
-        clearButtonMode:
-            property?.clearButtonMode ?? OverlayVisibilityMode.never,
-        prefix: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: fieldProperties?.prefix,
+    return Padding(
+      padding: fieldProperties?.padding ?? const EdgeInsets.all(4.0),
+      child: TextFieldTapRegion(
+        onTapOutside: fieldProperties?.onTapOutside,
+        child: CupertinoTextField(
+          key: key,
+          onTap: fieldProperties?.onTap,
+          onChanged: fieldProperties?.onChanged,
+          onSubmitted: fieldProperties?.onSubmitted,
+          onEditingComplete: fieldProperties?.onEditingComplete,
+          placeholder: fieldProperties?.placeholder,
+          placeholderStyle:
+              fieldProperties?.placeholderStyle ?? kDefaultPlaceholderStyle,
+          decoration: property?.decoration ?? kDefaultRoundedBorderDecoration,
+          clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
+          textDirection: fieldProperties?.textDirection,
+          scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
+          spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
+          enableIMEPersonalizedLearning:
+              fieldProperties?.enableIMEPersonalizedLearning ?? true,
+          cursorOpacityAnimates: fieldProperties?.cursorOpacityAnimates ?? true,
+          contentInsertionConfiguration:
+              fieldProperties?.contentInsertionConfiguration,
+          magnifierConfiguration: fieldProperties?.magnifierConfiguration,
+          style: fieldProperties?.style,
+          suffixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
+          prefixMode: property?.suffixMode ?? OverlayVisibilityMode.always,
+          clearButtonMode:
+              property?.clearButtonMode ?? OverlayVisibilityMode.never,
+          prefix: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: fieldProperties?.prefix,
+          ),
+          suffix: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: fieldProperties?.suffix,
+          ),
+          enabled: fieldProperties?.enabled ?? true,
+          maxLines: fieldProperties?.maxLines ?? 1,
+          minLines: fieldProperties?.minLines,
+          focusNode: fieldProperties?.focusNode,
+          maxLength: fieldProperties?.maxLength,
+          strutStyle: fieldProperties?.strutStyle,
+          showCursor: fieldProperties?.showCursor,
+          controller: fieldProperties?.controller,
+          undoController: fieldProperties?.undoController,
+          cursorColor: fieldProperties?.cursorColor,
+          expands: fieldProperties?.expands ?? false,
+          cursorHeight: fieldProperties?.cursorHeight,
+          keyboardType: fieldProperties?.keyboardType,
+          readOnly: fieldProperties?.readOnly ?? false,
+          restorationId: fieldProperties?.restorationId,
+          scrollPhysics: fieldProperties?.scrollPhysics,
+          autofillHints: fieldProperties?.autofillHints,
+          autofocus: fieldProperties?.autofocus ?? false,
+          cursorWidth: fieldProperties?.cursorWidth ?? 2.0,
+          smartDashesType: fieldProperties?.smartDashesType,
+          smartQuotesType: fieldProperties?.smartQuotesType,
+          autocorrect: fieldProperties?.autocorrect ?? true,
+          textInputAction: fieldProperties?.textInputAction,
+          inputFormatters: fieldProperties?.inputFormatters,
+          obscureText: fieldProperties?.obscureText ?? false,
+          scrollController: fieldProperties?.scrollController,
+          selectionControls: fieldProperties?.selectionControls,
+          textAlignVertical: fieldProperties?.textAlignVertical,
+          obscuringCharacter: fieldProperties?.obscuringCharacter ?? '•',
+          keyboardAppearance: fieldProperties?.keyboardAppearance,
+          contextMenuBuilder:
+              fieldProperties?.contextMenuBuilder ?? kDefaultContextMenuBuilder,
+          textAlign: fieldProperties?.textAlign ?? TextAlign.start,
+          maxLengthEnforcement: fieldProperties?.maxLengthEnforcement,
+          enableSuggestions: fieldProperties?.enableSuggestions ?? true,
+          cursorRadius:
+              fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
+          scrollPadding:
+              fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
+          enableInteractiveSelection:
+              fieldProperties?.enableInteractiveSelection ?? true,
+          selectionWidthStyle:
+              fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
+          dragStartBehavior:
+              fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
+          selectionHeightStyle:
+              fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
+          textCapitalization:
+              fieldProperties?.textCapitalization ?? TextCapitalization.none,
         ),
-        suffix: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: fieldProperties?.suffix,
-        ),
-        enabled: fieldProperties?.enabled ?? true,
-        maxLines: fieldProperties?.maxLines ?? 1,
-        minLines: fieldProperties?.minLines,
-        focusNode: fieldProperties?.focusNode,
-        maxLength: fieldProperties?.maxLength,
-        strutStyle: fieldProperties?.strutStyle,
-        showCursor: fieldProperties?.showCursor,
-        controller: fieldProperties?.controller,
-        undoController: fieldProperties?.undoController,
-        cursorColor: fieldProperties?.cursorColor,
-        expands: fieldProperties?.expands ?? false,
-        cursorHeight: fieldProperties?.cursorHeight,
-        keyboardType: fieldProperties?.keyboardType,
-        readOnly: fieldProperties?.readOnly ?? false,
-        restorationId: fieldProperties?.restorationId,
-        scrollPhysics: fieldProperties?.scrollPhysics,
-        autofillHints: fieldProperties?.autofillHints,
-        autofocus: fieldProperties?.autofocus ?? false,
-        cursorWidth: fieldProperties?.cursorWidth ?? 2.0,
-        smartDashesType: fieldProperties?.smartDashesType,
-        smartQuotesType: fieldProperties?.smartQuotesType,
-        autocorrect: fieldProperties?.autocorrect ?? true,
-        textInputAction: fieldProperties?.textInputAction,
-        inputFormatters: fieldProperties?.inputFormatters,
-        obscureText: fieldProperties?.obscureText ?? false,
-        scrollController: fieldProperties?.scrollController,
-        selectionControls: fieldProperties?.selectionControls,
-        textAlignVertical: fieldProperties?.textAlignVertical,
-        obscuringCharacter: fieldProperties?.obscuringCharacter ?? '•',
-        keyboardAppearance: fieldProperties?.keyboardAppearance,
-        contextMenuBuilder:
-            fieldProperties?.contextMenuBuilder ?? kDefaultContextMenuBuilder,
-        textAlign: fieldProperties?.textAlign ?? TextAlign.start,
-        maxLengthEnforcement: fieldProperties?.maxLengthEnforcement,
-        enableSuggestions: fieldProperties?.enableSuggestions ?? true,
-        cursorRadius:
-            fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
-        scrollPadding:
-            fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
-        enableInteractiveSelection:
-            fieldProperties?.enableInteractiveSelection ?? true,
-        selectionWidthStyle:
-            fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
-        dragStartBehavior:
-            fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
-        selectionHeightStyle:
-            fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
-        textCapitalization:
-            fieldProperties?.textCapitalization ?? TextCapitalization.none,
       ),
     );
   }
 
   static Widget kDefaultContextMenuBuilder(
-    BuildContext context,
-    EditableTextState editableTextState,
-  ) {
+      BuildContext context, EditableTextState editableTextState) {
     return CupertinoAdaptiveTextSelectionToolbar.editableText(
       editableTextState: editableTextState,
     );

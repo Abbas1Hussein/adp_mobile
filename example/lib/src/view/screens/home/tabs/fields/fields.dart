@@ -31,8 +31,7 @@ class Fields extends StatelessWidget {
         CustomTitle(
           path: HighlightPaths.textSearchField,
           title: 'Text Search Field',
-          message:
-              'AdaptiveTextSearchField: A text input field specifically designed for search functionality. It provides suggestions and options to refine search queries, making it ideal for search bars or filtering functionality.',
+          message: 'AdaptiveTextSearchField: A text input field specifically designed for search functionality. It provides suggestions and options to refine search queries, making it ideal for search bars or filtering functionality.',
         ),
         DisplayNavButton(child: TextSearchFieldPreview()),
       ],

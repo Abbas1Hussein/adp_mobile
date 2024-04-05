@@ -6,13 +6,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/common/construct/property.dart';
 import '../../fields_properties.dart';
 
-
 class TextFieldAndroid extends StatelessWidget {
-  const TextFieldAndroid({
-    super.key,
-    this.property,
-    this.fieldProperties,
-  });
+  const TextFieldAndroid({super.key, this.property, this.fieldProperties});
 
   final FieldAndroidProperty? property;
   final FieldProperties? fieldProperties;
@@ -31,11 +26,13 @@ class TextFieldAndroid extends StatelessWidget {
           onEditingComplete: fieldProperties?.onEditingComplete,
           clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
           textDirection: fieldProperties?.textDirection,
-          scribbleEnabled: fieldProperties?.scribbleEnabled?? true,
+          scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
           spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
-          enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
+          enableIMEPersonalizedLearning:
+              fieldProperties?.enableIMEPersonalizedLearning ?? true,
           cursorOpacityAnimates: fieldProperties?.cursorOpacityAnimates ?? true,
-          contentInsertionConfiguration: fieldProperties?.contentInsertionConfiguration,
+          contentInsertionConfiguration:
+              fieldProperties?.contentInsertionConfiguration,
           magnifierConfiguration: fieldProperties?.magnifierConfiguration,
           style: fieldProperties?.style,
           enabled: fieldProperties?.enabled,
@@ -61,7 +58,7 @@ class TextFieldAndroid extends StatelessWidget {
           strutStyle: fieldProperties?.strutStyle,
           showCursor: fieldProperties?.showCursor,
           controller: fieldProperties?.controller,
-          undoController:  fieldProperties?.undoController,
+          undoController: fieldProperties?.undoController,
           cursorColor: fieldProperties?.cursorColor,
           expands: fieldProperties?.expands ?? false,
           cursorHeight: fieldProperties?.cursorHeight,
@@ -108,9 +105,9 @@ class TextFieldAndroid extends StatelessWidget {
   }
 
   static Widget kDefaultContextMenuBuilder(
-      BuildContext context,
-      EditableTextState editableTextState,
-      ) {
+    BuildContext context,
+    EditableTextState editableTextState,
+  ) {
     return AdaptiveTextSelectionToolbar.editableText(
       editableTextState: editableTextState,
     );

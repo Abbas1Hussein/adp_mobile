@@ -114,9 +114,11 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
     final navigationMode = navigationBar.properties?.android?.navigationMode ??
         AndroidNavigationMode.auto;
 
-    final isNavigationAutoDetected = navigationMode == AndroidNavigationMode.auto;
+    final isNavigationAutoDetected =
+        navigationMode == AndroidNavigationMode.auto;
 
-    final isLandscape = isNavigationAutoDetected && MediaQuery.orientationOf(context) == Orientation.landscape;
+    final isLandscape = isNavigationAutoDetected &&
+        MediaQuery.orientationOf(context) == Orientation.landscape;
 
     final body = Padding(
       padding: contentPadding,
@@ -196,10 +198,11 @@ class AdaptiveNavigationView extends CoreAdaptiveComponent<
       tabBuilder: (BuildContext context, int index) {
         return CupertinoPageScaffold(
           navigationBar: appBar?.toIOS(context),
-          // backgroundColor: backgroundColor,
-          // resizeToAvoidBottomInset: resizeToAvoidBottomInset,
           child: SafeArea(
-            child: Padding(padding: contentPadding, child: children[index]),
+            child: Padding(
+              padding: contentPadding,
+              child: children[index],
+            ),
           ),
         );
       },

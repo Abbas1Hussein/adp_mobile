@@ -7,11 +7,7 @@ import '../../fields_properties.dart';
 import '../../text_field/platforms/android.dart';
 
 class TextFormFieldAndroid extends StatelessWidget {
-  const TextFormFieldAndroid({
-    super.key,
-    this.property,
-    this.fieldProperties,
-  });
+  const TextFormFieldAndroid({super.key, this.property, this.fieldProperties});
 
   final FormFieldAndroidProperty? property;
   final FormFieldProperties? fieldProperties;
@@ -31,15 +27,18 @@ class TextFormFieldAndroid extends StatelessWidget {
           onEditingComplete: fieldProperties?.onEditingComplete,
           clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
           textDirection: fieldProperties?.textDirection,
-          scribbleEnabled: fieldProperties?.scribbleEnabled?? true,
+          scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
           spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
-          enableIMEPersonalizedLearning: fieldProperties?.enableIMEPersonalizedLearning ?? true,
+          enableIMEPersonalizedLearning:
+              fieldProperties?.enableIMEPersonalizedLearning ?? true,
           cursorOpacityAnimates: fieldProperties?.cursorOpacityAnimates ?? true,
-          contentInsertionConfiguration: fieldProperties?.contentInsertionConfiguration,
+          contentInsertionConfiguration:
+              fieldProperties?.contentInsertionConfiguration,
           magnifierConfiguration: fieldProperties?.magnifierConfiguration,
           style: fieldProperties?.style,
           enabled: fieldProperties?.enabled ?? true,
-          contextMenuBuilder: fieldProperties?.contextMenuBuilder ?? TextFieldAndroid.kDefaultContextMenuBuilder,
+          contextMenuBuilder: fieldProperties?.contextMenuBuilder ??
+              TextFieldAndroid.kDefaultContextMenuBuilder,
           initialValue: fieldProperties?.initialValue,
           autovalidateMode: fieldProperties?.autovalidateMode,
           maxLines: fieldProperties?.maxLines ?? 1,
@@ -91,13 +90,20 @@ class TextFormFieldAndroid extends StatelessWidget {
           maxLengthEnforcement: fieldProperties?.maxLengthEnforcement,
           enableSuggestions: fieldProperties?.enableSuggestions ?? true,
           obscuringCharacter: fieldProperties?.obscuringCharacter ?? '•',
-          enableInteractiveSelection: fieldProperties?.enableInteractiveSelection,
-          cursorRadius: fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
-          scrollPadding: fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
-          selectionWidthStyle: fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
-          dragStartBehavior: fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
-          selectionHeightStyle: fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
-          textCapitalization: fieldProperties?.textCapitalization ?? TextCapitalization.none,
+          enableInteractiveSelection:
+              fieldProperties?.enableInteractiveSelection,
+          cursorRadius:
+              fieldProperties?.cursorRadius ?? const Radius.circular(2.0),
+          scrollPadding:
+              fieldProperties?.scrollPadding ?? const EdgeInsets.all(20.0),
+          selectionWidthStyle:
+              fieldProperties?.selectionWidthStyle ?? BoxWidthStyle.tight,
+          dragStartBehavior:
+              fieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
+          selectionHeightStyle:
+              fieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
+          textCapitalization:
+              fieldProperties?.textCapitalization ?? TextCapitalization.none,
         ),
       ),
     );

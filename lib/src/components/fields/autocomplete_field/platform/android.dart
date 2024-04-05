@@ -87,11 +87,14 @@ class _MaterialAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
   @override
   Widget backgroundWrapper(BuildContext context, Widget child) {
     return Padding(
-      padding: decoration?.margin ?? kDefaultOptionMargin,
+      padding: decoration?.margin ?? kDefaultOptionsMargin,
       child: Material(
         elevation: 4.0,
         color: decoration?.color,
-        shape: decoration?.shape,
+        shape: decoration?.shape ??
+            const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
+            ),
         textStyle: decoration?.optionDecoration?.textStyle ??
             Theme.of(context).textTheme.bodyMedium,
         child: Padding(
@@ -104,7 +107,7 @@ class _MaterialAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
   Widget emptyBuilder(BuildContext context, String value) {
     return emptyBuilderWidget?.call(value) ??
         Padding(
-          padding: const EdgeInsets.only(top: 4.0, right: 8.0),
+          padding: const EdgeInsets.only(top: 2.0, right: 8.0),
           child: Material(
             color: Theme.of(context).colorScheme.onError,
             shape: UnderlineInputBorder(
@@ -115,7 +118,7 @@ class _MaterialAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
             child: SizedBox(
               width: double.infinity,
               child: Padding(
-                padding: kDefaultOptionPadding,
+                padding: kDefaultOptionsPadding,
                 child: Text(
                   'No matches found: $value',
                   style: Theme.of(context).textTheme.bodyMedium,
@@ -132,12 +135,16 @@ class _MaterialAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
       VoidCallback onTap, String searchKey) {
     final OptionDecoration? option = decoration?.optionDecoration;
 
+    final borderRadius =
+        option?.borderRadius?.resolve(Directionality.of(context)) ??
+            (BorderRadius.zero);
+
     return Padding(
-      padding: option?.margin ?? kDefaultOptionMargin,
+      padding: option?.margin ?? EdgeInsets.zero,
       child: InkWell(
         onTap: onTap,
+        borderRadius: borderRadius,
         highlightColor: option?.pressColor,
-        borderRadius: option?.borderRadius?.resolve(Directionality.of(context)),
         child: Builder(
           builder: (BuildContext context) {
             if (isHighlight) {
@@ -152,14 +159,10 @@ class _MaterialAutocompleteOptions<T> extends BaseAutocompleteOptions<T> {
                 color: isHighlight
                     ? (option?.highlightColor ?? Theme.of(context).focusColor)
                     : Colors.transparent,
-                shape: RoundedRectangleBorder(
-                  borderRadius: option?.borderRadius
-                          ?.resolve(Directionality.of(context)) ??
-                      BorderRadius.zero,
-                ),
+                shape: RoundedRectangleBorder(borderRadius: borderRadius),
               ),
               child: Padding(
-                padding: option?.padding ?? kDefaultOptionPadding,
+                padding: option?.padding ?? kDefaultOptionsPadding,
                 child: Text(searchKey),
               ),
             );

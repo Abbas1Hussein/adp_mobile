@@ -62,11 +62,8 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
               color: cupertinoTheme.primaryColor,
             ),
             navigationDrawerTheme: NavigationDrawerThemeData(
-              indicatorSize: const Size.fromHeight(kMinInteractiveDimensionCupertino),
               iconTheme: const MaterialStatePropertyAll(CupertinoIconThemeData()),
               labelTextStyle: MaterialStatePropertyAll(cupertinoTheme.textTheme.textStyle),
-              indicatorShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-              indicatorColor: CupertinoDynamicColor.resolve(cupertinoTheme.barBackgroundColor, context),
               backgroundColor: CupertinoDynamicColor.resolve(cupertinoTheme.barBackgroundColor, context),
             ),
             drawerTheme: DrawerThemeData(

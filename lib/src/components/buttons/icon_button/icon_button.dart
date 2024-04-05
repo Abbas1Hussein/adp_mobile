@@ -106,7 +106,7 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
     final buildLabel = label != null ? DefaultTextStyle.merge(
-            style: CupertinoTheme.of(context).textTheme.textStyle,
+            style: CupertinoTheme.of(context).textTheme.navActionTextStyle,
             child: label!,
           ) : null;
 

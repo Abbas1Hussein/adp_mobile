@@ -7,7 +7,8 @@ import 'package:flutter/services.dart';
 import '../../core/common/construct/component.dart';
 import 'fields_properties.dart';
 
-abstract class BaseTextField<A extends CoreAndroidProperty, I extends CoreIOSProperty> extends CoreAdaptiveComponent<A, I>
+abstract class BaseTextField<A extends CoreAndroidProperty,
+        I extends CoreIOSProperty> extends CoreAdaptiveComponent<A, I>
     implements BaseFieldProperties {
   const BaseTextField({
     super.key,
@@ -445,7 +446,11 @@ abstract class BaseTextField<A extends CoreAndroidProperty, I extends CoreIOSPro
 }
 
 extension AdaptiveTextFieldEx on BaseTextField {
-  FieldProperties get fieldProperties => FieldProperties.fromBaseTextField(this);
+  FieldProperties get fieldProperties {
+    return FieldProperties.fromBaseTextField(this);
+  }
 
-  FormFieldProperties get formFieldProperties => FormFieldProperties.fromBaseTextField(this);
+  FormFieldProperties get formFieldProperties {
+    return FormFieldProperties.fromBaseTextField(this);
+  }
 }
