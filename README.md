@@ -148,7 +148,7 @@ AdaptiveButton(
 ```
 
 #### Filled Button
-A field button is similar to a base button but is optimized for use within form fields or input areas.
+A filled button is similar to a base button but is optimized for use within form fields or input areas.
 It may have slightly different visual properties to indicate its association with a form, such as a different background color or border style.
 
 ```dart
@@ -425,6 +425,7 @@ AdaptiveTextField(),
 ### Text Form Field
 The TextFormField widget in Flutter is an enhanced version of the TextField widget,
 specifically designed to be used within a Form widget to enable form validation and submission.
+
 | IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
 | --------------------------------------------- | ---------------------------------------------- |
 | ![IOS Dark Mode](https://i.imgur.com/Fnllw1W.gif) | ![Android Dark Mode](https://i.imgur.com/Q3lKIkf.gif) |
@@ -448,6 +449,9 @@ Form(
 ```
 
 ### Text Search Field
+A search field lets people search a collection of content for specific terms they enter.
+A search field is an editable text field that often displays a Search button, a Clear button,
+and optional placeholder text.
 
 | IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
 | --------------------------------------------- | ---------------------------------------------- |
@@ -677,45 +681,41 @@ AdaptiveScrollbar(
 The Navigation View top-level navigation for your app provides a structured layout for navigation within an application.
 It typically consists of a sidebar for navigation options and an app bar for additional controls or indicators.
 Provides a flexible layout for navigation purposes, allowing users to interact with the app's content seamlessly,
-making it suitable for various application designs and platforms. [full code](https://github.com/Abbas1Hussein/adp_desktop/blob/master/example/lib/app/view/screens/home/tabs/navigation/navigation_view.dart)
-| IOS Dark\Light Mode                         | Android  Dark\Light Mode                       |
+making it suitable for various application designs and platforms.
+
+| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
 | --------------------------------------------- | ---------------------------------------------- |
 | ![IOS Dark Mode](https://i.imgur.com/EcdIJuE.png) | ![Android Dark Mode](https://i.imgur.com/iBVc1Ov.png) |
 | ![IOS Light Mode](https://i.imgur.com/Q8hLC1u.png)| ![Android Light Mode](https://i.imgur.com/xZOhdkF.png) |
 
 ```dart
 AdaptiveNavigationView(
-  appBar: AdaptiveNavigationAppBar(
+  appBar: AdaptiveNavigationAppbar(
     title: const Text('Abbas Hussein'),
     actions: [
-      AdaptiveActionButton(
+      AdaptiveIconButton(
         onPressed: () {},
-        label: 'Add',
         icon: const AdaptiveIcon(AdpIcons.add),
-      ),
-      AdaptiveActionButton(
-        onPressed: () {},
-        label: 'Delete',
-        icon: const AdaptiveIcon(AdpIcons.delete),
       ),
     ],
   ),
-  sidebar: AdaptiveNavigationSidebar(
+  navigationBar: AdaptiveNavigationBar(
     currentIndex: currentIndex,
     onChanged: (value) {
       setState(() => currentIndex = value);
     },
-    items: items,
-  ),
-  children: List.generate(
-    items.length,
-    (index) => Center(
-      child: AdaptiveButton(
-        child: items[index].label,
-        onPressed: () => Navigator.pop(context),
+    items: const [
+      AdaptiveNavigationBarItem(
+        icon: AdaptiveIcon(AdpIcons.home),
+        label: 'home',
       ),
-    ),
+      AdaptiveNavigationBarItem(
+        icon: AdaptiveIcon(AdpIcons.archive),
+        label: 'archive',
+      ),
+    ],
   ),
+  children: const [SizedBox(), SizedBox()],
 ),
 ```
 
@@ -913,7 +913,6 @@ They provide a compact and structured way to display data, often including an ic
 
 ```dart
 AdaptiveListTile(
-  leading: const AdaptiveIcon(AdpIcons.info),
   title: Text(DummyText.generateQuestion),
   subtitle: Text(DummyText.generateAnswer),
   trailing: AdaptiveIconButton(
@@ -922,7 +921,6 @@ AdaptiveListTile(
   ),
 ),
 ```
-
 
 ## Additional
 
@@ -955,8 +953,8 @@ AdaptiveButton(
 Widget that provides platform-specific child.
 ```dart
 AdaptiveWidget(
-  onMacos: (context) => const Text('Abbas Hussein onMacos'),
-  onWindows: (context) => const Text('Abbas Hussein onWindows'),
+  onIOS: (context) => const Text('Abbas Hussein onIOS'),
+  onAndroid: (context) => const Text('Abbas Hussein onAndroid'),
 )
 ```
 
@@ -1014,20 +1012,20 @@ You can use this material widgets and it will be adp for iOS and Android.
 - Tooltip:
    - A tooltip displays informative text when users hover over, focus on, or long-press an element.
 
-- **IconTheme**:
+- IconTheme:
    - IconTheme is used to set the default properties for icons within its subtree, such as size, color, and opacity.
 
-- **Divider**:
+- Divider:
    - A divider is a horizontal line that separates content in a material design application.
 
-- **VerticalDivider**:
+- VerticalDivider:
    - Similar to Divider, but it creates a vertical line instead of a horizontal one.
 
-- **Card**:
+- Card:
    - A card is a sheet of material used to represent some related information, such as an album, geographic location, or contact.
 
-- **showSearch**:
+- showSearch:
    - showSearch is a function that displays a search page and returns the selected search result.
 
-- **MaterialPageRoute**:
+- MaterialPageRoute:
    - MaterialPageRoute is a type of route that displays its primary contents in the middle of the screen, as a Material-style dialog.
