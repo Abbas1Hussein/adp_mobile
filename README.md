@@ -7,9 +7,8 @@
 
 Use this package to create adaptive apps on mobile. With just one codebase, you can preview your app on both Android and IOS platforms, regardless of the device you're used.
 
-The `adp_mobile_preview` [here](https://github.com/Abbas1Hussein/adp_mobile_preview) a simple tool for previewing the `adp_mobile` package on desktop as an emulator.
-This can be useful for developers who want to test their mobile applications on desktop environments,
-without needing to deploy them to actual mobile devices.
+Additionally, you can explore the `adp_mobile_preview` tool [here](https://github.com/Abbas1Hussein/adp_mobile_preview).
+It's a tool for previewing the `adp_mobile` package on desktop as an emulator.
 
 ## Usage
 First, you need to initialize the `DefaultsPlatformManager`. Here's how you can do it:
