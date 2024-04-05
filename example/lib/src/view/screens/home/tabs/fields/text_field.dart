@@ -20,7 +20,6 @@ class _TextFieldPreviewState extends State<TextFieldPreview> {
   Widget build(BuildContext context) {
     return AdaptiveScaffoldPage(
       appBar: const AdaptiveAppBarPage(),
-      contentPadding: const EdgeInsets.all(20.0),
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -28,7 +27,6 @@ class _TextFieldPreviewState extends State<TextFieldPreview> {
             controller: controller,
             placeholder: 'Enter your text',
           ),
-          const SizedBox(height: 20.0),
           AdaptiveButton(
             onPressed: _submitText,
             child: const Text('Submit'),

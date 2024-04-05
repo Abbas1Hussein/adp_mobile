@@ -477,16 +477,16 @@ It enhances the user experience by offering predictive text suggestions, which c
 ```dart
 AdaptiveAutocompleteField(
   options: [
-    AdaptiveAutoCompleteItem(searchKey: 'John Doe'),
-    AdaptiveAutoCompleteItem(searchKey: 'Jane Smith'),
-    AdaptiveAutoCompleteItem(searchKey: 'Michael Johnson'),
-    AdaptiveAutoCompleteItem(searchKey: 'Emily Davis'),
-    AdaptiveAutoCompleteItem(searchKey: 'Daniel Brown'),
-    AdaptiveAutoCompleteItem(searchKey: 'Olivia Wilson'),
-    AdaptiveAutoCompleteItem(searchKey: 'James Taylor'),
-    AdaptiveAutoCompleteItem(searchKey: 'Alexander Anderson'),
-    AdaptiveAutoCompleteItem(searchKey: 'Emma Garcia'),
-    AdaptiveAutoCompleteItem(searchKey: 'Sophia Martinez'),
+    AdaptiveAutocompleteItem(searchKey: 'John Doe'),
+    AdaptiveAutocompleteItem(searchKey: 'Jane Smith'),
+    AdaptiveAutocompleteItem(searchKey: 'Michael Johnson'),
+    AdaptiveAutocompleteItem(searchKey: 'Emily Davis'),
+    AdaptiveAutocompleteItem(searchKey: 'Daniel Brown'),
+    AdaptiveAutocompleteItem(searchKey: 'Olivia Wilson'),
+    AdaptiveAutocompleteItem(searchKey: 'James Taylor'),
+    AdaptiveAutocompleteItem(searchKey: 'Alexander Anderson'),
+    AdaptiveAutocompleteItem(searchKey: 'Emma Garcia'),
+    AdaptiveAutocompleteItem(searchKey: 'Sophia Martinez'),
   ],
 ),
 ```
@@ -1007,7 +1007,7 @@ final brightness = AdaptiveBrightness.of(context);
 ```
 
 ### Material widgets
-You can use this material widgets and it will be adp for iOS and Android.
+You can use these material widgets, which are adaptive for both iOS and Android:
 
 - Tooltip:
    - A tooltip displays informative text when users hover over, focus on, or long-press an element.
@@ -1020,6 +1020,9 @@ You can use this material widgets and it will be adp for iOS and Android.
 
 - VerticalDivider:
    - Similar to Divider, but it creates a vertical line instead of a horizontal one.
+
+- LinearProgressIndicator:
+  - A linear progress indicator displays progress along a horizontal bar to indicate that a lengthy operation is underway.
 
 - Card:
    - A card is a sheet of material used to represent some related information, such as an album, geographic location, or contact.

@@ -59,8 +59,8 @@ class MaterialAutocomplete<T> extends BaseAutocomplete<T> {
   @override
   Widget defaultAutoCompleteOptions(
     BuildContext context,
-    AutocompleteOnSelected<AdaptiveAutoCompleteItem<T>> onSelected,
-    Iterable<AdaptiveAutoCompleteItem<T>> options,
+    AutocompleteOnSelected<AdaptiveAutocompleteItem<T>> onSelected,
+    Iterable<AdaptiveAutocompleteItem<T>> options,
   ) {
     return _MaterialAutocompleteOptions<T>(
       options: options,

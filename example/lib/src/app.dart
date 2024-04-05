@@ -27,7 +27,7 @@ class _AppState extends State<App> {
       builder: (context, value, child) {
         return AdaptiveMobilePreview(
           type: adaptiveValue(
-            ios: () => DevicesType.iOS.iPhone12Mini,
+            ios: () => DevicesType.iOS.iPhone13ProMax,
             android: () => DevicesType.android.samsungGalaxyNote20,
           ),
           child: AdpApp(

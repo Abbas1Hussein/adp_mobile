@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/properties.dart';
-import '../../../core/extension/brightness.dart';
 import 'base_button.dart';
 import 'iOS.dart';
 

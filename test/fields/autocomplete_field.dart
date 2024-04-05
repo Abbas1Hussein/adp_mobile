@@ -1,0 +1,79 @@
+import 'package:adp_mobile/adp_mobile.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import '../wrap_app.dart';
+
+void main() {
+  initializeMobileDefaultsTests();
+
+  late TextEditingController controller;
+  late List<AdaptiveAutocompleteItem<int>> options;
+
+  setUp(
+    () {
+      controller = TextEditingController();
+      options = List.generate(
+        10,
+        (index) => AdaptiveAutocompleteItem(
+            searchKey: '${index + 1}', value: index + 1),
+      );
+    },
+  );
+
+  testWidgets(
+    'AdaptiveAutocompleteField render correctly',
+    (tester) async {
+      await tester.pumpWidget(
+        wrapAppWithScaffold(
+          child: Center(child: AdaptiveAutocompleteField(options: options)),
+        ),
+      );
+
+      await tester.pumpAndSettle();
+
+      adaptiveValue(
+        ios: () {
+          expect(find.byType(MaterialAutocomplete<int>), findsNothing);
+          expect(find.byType(CupertinoAutocomplete<int>), findsOneWidget);
+        },
+        android: () {
+          expect(find.byType(MaterialAutocomplete<int>), findsOneWidget);
+          expect(find.byType(CupertinoAutocomplete<int>), findsNothing);
+        },
+      );
+    },
+  );
+
+  testWidgets(
+    'AdaptiveAutocompleteField Entered text matches',
+    (tester) async {
+      const key = Key('adaptiveAutocompleteField');
+      const input = '- *** - {-(@AbbasHussein@)-} - *** -';
+
+      await tester.runAsync(
+        () async {
+          await tester.pumpWidget(
+            wrapAppWithScaffold(
+              child: AdaptiveAutocompleteField(
+                key: key,
+                autocompleteFieldProperties: AutocompleteFieldProperties(
+                  focusNode: FocusNode(),
+                  controller: controller,
+                ),
+                options: options,
+              ),
+            ),
+          );
+
+          await tester.pumpAndSettle();
+
+          // Trigger options by entering text
+          await tester.enterText(find.byKey(key), input);
+          expect(controller.text, input);
+        },
+      );
+    },
+  );
+
+  tearDown(() => controller.dispose());
+}

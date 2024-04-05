@@ -27,10 +27,10 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
   /// A list of suggestions for the SearchFieldAutoComplete.
   ///
   /// Each suggestion should have a unique searchKey.
-  final List<AdaptiveAutoCompleteItem<T>> options;
+  final List<AdaptiveAutocompleteItem<T>> options;
 
   /// {@macro flutter.widgets.RawAutocomplete.displayStringForOption}
-  final AutocompleteOptionToString<AdaptiveAutoCompleteItem<T>>?
+  final AutocompleteOptionToString<AdaptiveAutocompleteItem<T>>?
       displayStringForOption;
 
   /// {@macro flutter.widgets.RawAutocomplete.fieldViewBuilder}
@@ -40,16 +40,16 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
   final AutocompleteFieldViewBuilder? fieldViewBuilder;
 
   /// {@macro flutter.widgets.RawAutocomplete.onSelected}
-  final AutocompleteOnSelected<AdaptiveAutoCompleteItem<T>>? onSelected;
+  final AutocompleteOnSelected<AdaptiveAutocompleteItem<T>>? onSelected;
 
   /// {@macro flutter.widgets.RawAutocomplete.optionsBuilder}
-  final AutocompleteOptionsBuilder<AdaptiveAutoCompleteItem<T>>? optionsBuilder;
+  final AutocompleteOptionsBuilder<AdaptiveAutocompleteItem<T>>? optionsBuilder;
 
   /// {@macro flutter.widgets.RawAutocomplete.optionsViewBuilder}
   ///
   /// If not provided, will build a standard Material-style list of results by
   /// default.
-  final AutocompleteOptionsViewBuilder<AdaptiveAutoCompleteItem<T>>?
+  final AutocompleteOptionsViewBuilder<AdaptiveAutocompleteItem<T>>?
       optionsViewBuilder;
 
   /// The maximum height used for the default Material options list widget.
@@ -67,7 +67,7 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
   /// [displayStringForOption].
   ///
   /// Uses the `toString` method of the given `option`.
-  static String defaultStringForOption(AdaptiveAutoCompleteItem option) {
+  static String defaultStringForOption(AdaptiveAutocompleteItem option) {
     return option.searchKey;
   }
 
@@ -77,7 +77,7 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawAutocomplete<AdaptiveAutoCompleteItem<T>>(
+    return RawAutocomplete<AdaptiveAutocompleteItem<T>>(
       onSelected: onSelected,
       initialValue: initialValue,
       optionsBuilder: _optionsBuilder,
@@ -102,28 +102,28 @@ abstract class BaseAutocomplete<T> extends StatelessWidget {
 
   Widget defaultAutoCompleteOptions(
     BuildContext context,
-    AutocompleteOnSelected<AdaptiveAutoCompleteItem<T>> onSelected,
-    Iterable<AdaptiveAutoCompleteItem<T>> options,
+    AutocompleteOnSelected<AdaptiveAutocompleteItem<T>> onSelected,
+    Iterable<AdaptiveAutocompleteItem<T>> options,
   );
 
-  FutureOr<Iterable<AdaptiveAutoCompleteItem<T>>> _optionsBuilder(
+  FutureOr<Iterable<AdaptiveAutocompleteItem<T>>> _optionsBuilder(
     TextEditingValue textEditingValue,
   ) {
     if (textEditingValue.text.trim().isEmpty) {
-      return Iterable<AdaptiveAutoCompleteItem<T>>.empty();
+      return Iterable<AdaptiveAutocompleteItem<T>>.empty();
     }
 
-    final Iterable<AdaptiveAutoCompleteItem<T>> filteredOptions =
+    final Iterable<AdaptiveAutocompleteItem<T>> filteredOptions =
         (optionsBuilder?.call(textEditingValue) ??
-            options.where((AdaptiveAutoCompleteItem<T> option) {
+            options.where((AdaptiveAutocompleteItem<T> option) {
               return option.searchKey
                   .toLowerCase()
                   .contains(textEditingValue.text.toLowerCase());
-            })) as Iterable<AdaptiveAutoCompleteItem<T>>;
+            })) as Iterable<AdaptiveAutocompleteItem<T>>;
 
     if (filteredOptions.isEmpty) {
       return [
-        AdaptiveAutoCompleteItem<T>(
+        AdaptiveAutocompleteItem<T>(
           searchKey: EmptyModel(
             searchKey: emptyKey,
             enteredText: textEditingValue.text,
@@ -149,9 +149,9 @@ abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
 
   final double maxOptionsHeight;
   final OptionsDecoration? decoration;
-  final Iterable<AdaptiveAutoCompleteItem<T>> options;
-  final AutocompleteOnSelected<AdaptiveAutoCompleteItem<T>> onSelected;
-  final AutocompleteOptionToString<AdaptiveAutoCompleteItem<T>>? displayStringForOption;
+  final Iterable<AdaptiveAutocompleteItem<T>> options;
+  final AutocompleteOnSelected<AdaptiveAutocompleteItem<T>> onSelected;
+  final AutocompleteOptionToString<AdaptiveAutocompleteItem<T>>? displayStringForOption;
   final EmptyBuilder? emptyBuilderWidget;
 
   @override
@@ -168,7 +168,7 @@ abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 itemCount: options.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final AdaptiveAutoCompleteItem<T> option =
+                  final AdaptiveAutocompleteItem<T> option =
                       options.elementAt(index);
 
                   final bool isHighlight =
@@ -207,7 +207,7 @@ abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
         final key = EmptyModel.from(element.searchKey);
         return key.searchKey == emptyKey;
       },
-      orElse: () => const AdaptiveAutoCompleteItem(searchKey: ''),
+      orElse: () => const AdaptiveAutocompleteItem(searchKey: ''),
     );
 
     if (option.searchKey.isNotEmpty) {

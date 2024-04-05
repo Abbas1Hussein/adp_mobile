@@ -120,7 +120,12 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final labelStyle = Theme.of(context).textTheme.headlineMedium!;
+    final theme = Theme.of(context);
+
+    final labelStyle = theme.useMaterial3
+        ? theme.textTheme.headlineMedium!
+        : theme.textTheme.headlineSmall;
+
     return Switch(
       value: value,
       autofocus: autofocus,
@@ -132,7 +137,7 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
       inactiveTrackColor: inactiveColor,
       dragStartBehavior: dragStartBehavior,
       thumbColor: MaterialStateProperty.all(knobColor),
-    ).margeWith(_buildLabelWidget(context, labelStyle), 6.0);
+    ).margeWith(_buildLabelWidget(context, labelStyle), 0.0);
   }
 
   @override

@@ -113,6 +113,8 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
+    final theme = Theme.of(context);
+
     return Checkbox(
       side: side ??
           (inactiveColor != null ? BorderSide(color: inactiveColor!) : null),
@@ -136,7 +138,7 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
       ),
       onChanged: isEnabled ? (value) => onChanged?.call(value == true) : null,
     ).margeWith(
-      _buildLabelWidget(Theme.of(context).textTheme.titleMedium!),
+      _buildLabelWidget(theme.textTheme.titleMedium!),
     );
   }
 

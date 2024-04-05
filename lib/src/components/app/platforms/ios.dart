@@ -23,8 +23,7 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
     final property = properties?.ios;
     final propertyAndroid = properties?.android;
 
-    final ThemeData? themeData =
-        context.findAncestorWidgetOfExactType<Theme>()?.data;
+   /// final ThemeData? themeData = context.findAncestorWidgetOfExactType<Theme>()?.data;
 
     final mode = themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
@@ -38,8 +37,7 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
     return AnimatedTheme(
       curve: Curves.linearToEaseOut,
       duration: const Duration(milliseconds: 300),
-      data: themeData ??
-          (useDarkStyle
+      data: (useDarkStyle
                   ? (propertyAndroid?.darkTheme ??
                       ThemeData.dark(useMaterial3: true))
                   : (propertyAndroid?.theme ??

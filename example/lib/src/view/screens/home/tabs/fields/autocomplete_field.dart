@@ -1,7 +1,7 @@
 import 'package:adp_mobile/adp_mobile.dart';
 
-class TextSearchFieldPreview extends StatelessWidget {
-  const TextSearchFieldPreview({Key? key}) : super(key: key);
+class AutocompleteFieldPreview extends StatelessWidget {
+  const AutocompleteFieldPreview({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class TextSearchFieldPreview extends StatelessWidget {
             },
             options: contentList.map(
               (user) {
-                return AdaptiveAutoCompleteItem(
+                return AdaptiveAutocompleteItem(
                     value: user, searchKey: user.name);
               },
             ).toList(),

@@ -43,23 +43,23 @@ class AdaptiveAutocompleteField<T> extends CoreAdaptiveComponent {
   /// A list of suggestions for the SearchFieldAutoComplete.
   ///
   /// Each suggestion should have a unique searchKey.
-  final List<AdaptiveAutoCompleteItem<T>> options;
+  final List<AdaptiveAutocompleteItem<T>> options;
 
   /// Callback function called when the user selects a value from the search results.
-  final ValueChanged<AdaptiveAutoCompleteItem<T>>? onSelected;
+  final ValueChanged<AdaptiveAutocompleteItem<T>>? onSelected;
 
   /// {@macro flutter.widgets.RawAutocomplete.displayStringForOption}
-  final AutocompleteOptionToString<AdaptiveAutoCompleteItem<T>>?
+  final AutocompleteOptionToString<AdaptiveAutocompleteItem<T>>?
       displayStringForOption;
 
   /// {@macro flutter.widgets.RawAutocomplete.optionsBuilder}
-  final AutocompleteOptionsBuilder<AdaptiveAutoCompleteItem<T>>? optionsBuilder;
+  final AutocompleteOptionsBuilder<AdaptiveAutocompleteItem<T>>? optionsBuilder;
 
   /// {@macro flutter.widgets.RawAutocomplete.optionsViewBuilder}
   ///
   /// If not provided, will build a standard Material-style list of results by
   /// default.
-  final AutocompleteOptionsViewBuilder<AdaptiveAutoCompleteItem<T>>?
+  final AutocompleteOptionsViewBuilder<AdaptiveAutocompleteItem<T>>?
       optionsViewBuilder;
 
   /// The maximum height used for the default Material options list widget.

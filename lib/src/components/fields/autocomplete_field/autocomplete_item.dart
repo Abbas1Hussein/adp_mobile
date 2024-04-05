@@ -2,8 +2,8 @@ import 'package:flutter/widgets.dart';
 
 typedef BuilderSearchItem = Widget Function(bool isHighlight, VoidCallback onTap);
 
-class AdaptiveAutoCompleteItem<T> {
-  const AdaptiveAutoCompleteItem(
+class AdaptiveAutocompleteItem<T> {
+  const AdaptiveAutocompleteItem(
       { this.value, this.builder, required this.searchKey });
 
   /// The value of the search item. This can be any type of object.
@@ -19,7 +19,7 @@ class AdaptiveAutoCompleteItem<T> {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is AdaptiveAutoCompleteItem &&
+        other is AdaptiveAutocompleteItem &&
             runtimeType == other.runtimeType &&
             searchKey == other.searchKey &&
             builder == other.builder &&

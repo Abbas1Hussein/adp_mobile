@@ -10,16 +10,12 @@ abstract final class HighlightPaths {
 
   static const String basicButtonsTab = '$_basePath/buttons/basic_buttons.dart';
   static const String menusButtonsTab = '$_basePath/buttons/menus.dart';
-  static const String selectionButtonsTab =
-      '$_basePath/buttons/selection_buttons.dart';
-  static const String windowControlButtonsTab =
-      '$_basePath/buttons/window_control_buttons.dart';
-  static const String navigationButtonsTab =
-      '$_basePath/buttons/navigation_buttons.dart';
+  static const String selectionButtonsTab = '$_basePath/buttons/selection_buttons.dart';
+  static const String navigationButtonsTab = '$_basePath/buttons/navigation_buttons.dart';
 
   static const String textField = '$_basePath/fields/text_field.dart';
   static const String textFormField = '$_basePath/fields/text_form_field.dart';
-  static const String textSearchField = '$_basePath/fields/autocomplete_field.dart';
+  static const String autocompleteField = '$_basePath/fields/autocomplete_field.dart';
 
   static const String icon = '$_basePath/icons/icon.dart';
   static const String iconAll = '$_basePath/icons/icon_all.dart';
@@ -27,20 +23,13 @@ abstract final class HighlightPaths {
   static const String iconButton = '$_basePath/icons/icon_button.dart';
   static const String iconTheme = '$_basePath/icons/icon_theme.dart';
 
-  static const String ratingIndicator =
-      '$_basePath/indicators/rating_indicator.dart';
-  static const String sliderContinuous =
-      '$_basePath/indicators/slider_continuous.dart';
-  static const String sliderDiscrete =
-      '$_basePath/indicators/slider_discrete.dart';
-  static const String circularProgressIndicator =
-      '$_basePath/indicators/circular_progress_indicator.dart';
-  static const String progressBarIndicator =
-      '$_basePath/indicators/progress_bar_indicator.dart';
+  static const String ratingIndicator = '$_basePath/indicators/rating_indicator.dart';
+  static const String sliderContinuous = '$_basePath/indicators/slider_continuous.dart';
+  static const String sliderDiscrete = '$_basePath/indicators/slider_discrete.dart';
+  static const String circularProgressIndicator = '$_basePath/indicators/circular_progress_indicator.dart';
 
   static const String scaffold = '$_basePath/layouts/scaffold.dart';
   static const String scaffoldPage = '$_basePath/layouts/scaffold_page.dart';
-  static const String titleBar = '$_basePath/layouts/title_bar.dart';
 
   static const String datePicker = '$_basePath/pickers/date_picker.dart';
   static const String timePicker = '$_basePath/pickers/time_picker.dart';
@@ -52,7 +41,5 @@ abstract final class HighlightPaths {
 
   static const String colors = '$_basePath/additional/colors.dart';
   static const String adaptive = '$_basePath/additional/adaptive.dart';
-  static const String pageRoute = '$_basePath/additional/page_route.dart';
-  static const String brightnessTypography =
-      '$_basePath/additional/brightness_typography.dart';
+  static const String brightnessTypography = '$_basePath/additional/brightness_typography.dart';
 }

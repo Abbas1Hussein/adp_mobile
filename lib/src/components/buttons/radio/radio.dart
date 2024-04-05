@@ -110,6 +110,7 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     final labelStyle = Theme.of(context).textTheme.labelLarge!;
+
     return Radio<T>(
       value: value,
       groupValue: groupValue,
