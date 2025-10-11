@@ -21,7 +21,7 @@ extension TargetPlatformEx on MobileTargetPlatform {
   }
 }
 
-extension DesktopTargetPlatformEx on TargetPlatform {
+extension MobileTargetPlatformEx on TargetPlatform {
   MobileTargetPlatform get mobileTargetPlatform {
     if (this == TargetPlatform.macOS || this == TargetPlatform.windows) {
       switch (this) {

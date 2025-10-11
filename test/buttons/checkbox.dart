@@ -1,4 +1,5 @@
 import 'package:adp_mobile/adp_mobile.dart';
+import 'package:adp_mobile/src/core/enum/target.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,7 +11,7 @@ void main() {
 
   testWidgets(
     'Renders correctly AdaptiveCheckbox',
-        (WidgetTester tester) async {
+    (WidgetTester tester) async {
       await tester.pumpWidget(
         wrapAppWithScaffold(
           child: AdaptiveCheckbox(value: true, onChanged: (value) {}),
@@ -39,7 +40,7 @@ void main() {
 
   testWidgets(
     'Toggling AdaptiveCheckbox updates its value directly',
-        (WidgetTester tester) async {
+    (WidgetTester tester) async {
       bool? checkBoxValue = false;
 
       await tester.pumpWidget(

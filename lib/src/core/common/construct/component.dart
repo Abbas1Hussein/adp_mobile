@@ -16,9 +16,7 @@ export '../../extension/widget.dart';
 ///
 /// - [Android]: Type of Android-specific properties.
 /// - [IOS]: Type of IOS-specific properties.
-abstract class CoreAdaptiveComponent<Android extends CoreAndroidProperty,
-        IOS extends CoreIOSProperty> extends StatelessWidget
-    with AdaptiveComponentMixin<Android, IOS> {
+abstract class CoreAdaptiveComponent<Android extends CoreAndroidProperty, IOS extends CoreIOSProperty> extends StatelessWidget with AdaptiveComponentMixin<Android, IOS> {
   const CoreAdaptiveComponent({this.builders, this.properties, super.key});
 
   /// Builders for adapting the component based on platform and theme.

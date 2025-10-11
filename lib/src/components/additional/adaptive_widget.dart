@@ -43,10 +43,8 @@ class AdaptiveWidget extends CoreAdaptiveComponent {
   }
 
   @override
-  Widget android(BuildContext context, [CoreAndroidProperty? property]) =>
-      onAndroid(context);
+  Widget android(BuildContext context, [CoreAndroidProperty? property]) => onAndroid(context);
 
   @override
-  Widget iOS(BuildContext context, [CoreIOSProperty? property]) =>
-      oniOS(context);
+  Widget iOS(BuildContext context, [CoreIOSProperty? property]) => oniOS(context);
 }

@@ -18,7 +18,7 @@ abstract final class PlatformRuining {
   /// ```dart
   /// void main() async {
   ///   DefaultsPlatformManager.initialize(
-  ///     DesktopTargetPlatform.iOS,
+  ///     MobileTargetPlatform.iOS,
   ///     isDebugging: true,
   ///   );
   ///   runApp(const App());
@@ -33,13 +33,12 @@ abstract final class PlatformRuining {
   /// ```dart
   /// void main() async {
   ///   DefaultsPlatformManager.initialize(
-  ///     DesktopTargetPlatform.iOS,
+  ///     MobileTargetPlatform.iOS,
   ///     isDebugging: false,
   ///   );
   ///   runApp(const App());
   /// }
-  static final isRealIOS =
-      !isWeb && _defaultTargetPlatform == TargetPlatform.iOS;
+  static final isRealIOS = !isWeb && _defaultTargetPlatform == TargetPlatform.iOS;
 
   /// Whether the app is running on either Real or Debugging IOS.
   static final isIOS = isRealIOS || isFakeIOS;
@@ -53,7 +52,7 @@ abstract final class PlatformRuining {
   /// ```dart
   /// void main() async {
   ///   DefaultsPlatformManager.initialize(
-  ///     DesktopTargetPlatform.android,
+  ///     MobileTargetPlatform.android,
   ///     isDebugging: true,
   ///   );
   ///   runApp(const App());
@@ -68,13 +67,12 @@ abstract final class PlatformRuining {
   /// ```dart
   /// void main() async {
   ///   DefaultsPlatformManager.initialize(
-  ///     DesktopTargetPlatform.android,
+  ///     MobileTargetPlatform.android,
   ///     isDebugging: false,
   ///   );
   ///   runApp(const App());
   /// }
-  static final isRealAndroid =
-      !isWeb && _defaultTargetPlatform == TargetPlatform.android;
+  static final isRealAndroid = !isWeb && _defaultTargetPlatform == TargetPlatform.android;
 
   /// Whether the app is running on either Real or Debugging Android.
   static final isAndroid = isRealAndroid || isFakeAndroid;
@@ -83,18 +81,16 @@ abstract final class PlatformRuining {
   static const isWeb = kIsWeb;
 
   /// Retrieve the current platform from [DefaultsPlatformManager], or use the default if it's null.
-  static final targetPlatform = _debugDesktopTargetPlatform ??
-      _defaultTargetPlatform.mobileTargetPlatform;
-
-  /// The default target platform when not in debugging mode.
-  static final _defaultTargetPlatform = defaultTargetPlatform;
+  static final targetPlatform = _debugMobileTargetPlatform ?? _defaultTargetPlatform.mobileTargetPlatform;
 
   /// Whether the app is currently in debugging mode.
   static final isDebugging = kPlatformManager.isDebugging;
 
+  /// The default target platform when not in debugging mode.
+  static final _defaultTargetPlatform = defaultTargetPlatform;
+
   /// The target platform when in debugging mode, obtained from [kPlatformManager]. Null if not in debugging mode.
-  static final _debugDesktopTargetPlatform =
-      isDebugging ? kPlatformManager.targetPlatform : null;
+  static final _debugMobileTargetPlatform = isDebugging ? kPlatformManager.targetPlatform : null;
 
   /// Check if the current or target platforms match the specified platform.
   static bool _isTargetPlatform(MobileTargetPlatform platform) {
@@ -102,6 +98,6 @@ abstract final class PlatformRuining {
       return kPlatformManager.targetWeb == platform;
     }
 
-    return _debugDesktopTargetPlatform == platform;
+    return _debugMobileTargetPlatform == platform;
   }
 }

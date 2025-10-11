@@ -6,7 +6,7 @@ import 'package:adp_mobile/adp_mobile.dart';
 /// ```dart
 /// void main() async {
 ///   DefaultsPlatformManager.initialize(
-///     MobileTargetPlatform.windows,
+///     MobileTargetPlatform.android,
 ///     isDebugging: true,
 ///   );
 ///   runApp(const App());
@@ -27,14 +27,8 @@ class DefaultsPlatformManager {
     required MobileTargetPlatform targetPlatform,
     MobileTargetPlatform? targetWeb,
     bool isDebugging = true,
-  }) {
-    assert(
+  }) { assert(
         _instance == null, 'DefaultsPlatformManager is already initialized.');
-
-    // final isMobile = defaultTargetPlatform == TargetPlatform.android || defaultTargetPlatform == TargetPlatform.iOS;
-    // if (isDebugging && !kIsWeb && !isMobile) {
-    //   _initializeWindowConfiguration();
-    // }
 
     return _instance = DefaultsPlatformManager._(
       targetPlatform,

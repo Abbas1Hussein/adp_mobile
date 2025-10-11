@@ -7,49 +7,57 @@ class CustomTitle extends StatelessWidget {
   const CustomTitle({
     super.key,
     this.path,
-    this.message,
-    this.useBackgroundColor = false,
+    required this.message,
     required this.title,
   });
 
   final String? path;
   final String title;
-  final String? message;
-
-  final bool useBackgroundColor;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
     final localizations = MaterialLocalizations.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: AdaptiveListTile(
         onTap: () {
-          if (message != null && path != null) {
-            DialogPresenter.showConfirmationDialog(
-              context,
-              title: title,
-              message: message!,
-              confirmLabel: 'Source code',
-              cancelLabel: 'Cancel',
-            ).then(
-              (value) {
-                if (value == true) {
-                  _buildHighlightViewCode(context);
-                }
-              },
-            );
-          } else if (message != null && path == null) {
-            DialogPresenter.showInformationDialog(
-              context,
-              title: title,
-              message: message!,
-              confirmLabel: localizations.cancelButtonLabel,
-            );
-          }
+          DialogPresenter.showCustomDialog(
+            context,
+            child: AdaptiveDialog(
+              title: Text(title),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: message.split('\n').map(
+                  (line) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Text(line),
+                    );
+                  },
+                ).toList(),
+              ),
+              actions: [
+                AdaptiveDialogAction(
+                  child: const Text("Source Code"),
+                  onPressed: () {
+                    _buildHighlightViewCode(context);
+                  },
+                ),
+                AdaptiveDialogAction(
+                  child: Text(localizations.cancelButtonLabel),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
         },
         title: Text(title),
-        subtitle: message != null ? Text(message!) : null,
+        //subtitle: message != null ? Text(message!) : null,
       ),
     );
   }
@@ -58,7 +66,7 @@ class CustomTitle extends StatelessWidget {
     Navigator.push(
       context,
       PageRouteBuilder(
-        //   transition: AdaptiveTransition.entrance,
+        //transition: AdaptiveTransition.entrance,
         pageBuilder: (context, animation, secondaryAnimation) {
           return HighlightViewCode(title: title, path: path ?? '');
         },
@@ -66,3 +74,4 @@ class CustomTitle extends StatelessWidget {
     );
   }
 }
+

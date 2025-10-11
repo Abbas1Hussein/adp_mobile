@@ -18,7 +18,6 @@ dependencies:
     path: D:/flutter/packages/adp_mobile_preview
 
   cupertino_icons: ^1.0.2
-
   url_launcher: ^6.2.5
   custom_text: ^2.0.1
   highlight: ^0.7.0

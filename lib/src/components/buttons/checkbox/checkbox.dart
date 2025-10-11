@@ -125,12 +125,12 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
       autofocus: autofocus,
       focusNode: focusNode,
       checkColor: checkColor,
-      fillColor: MaterialStateProperty.resolveWith(
-        (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith(
+        (Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) {
             return inactiveColor;
           }
-          if (states.contains(MaterialState.selected)) {
+          if (states.contains(WidgetState.selected)) {
             return activeColor;
           }
           return null;
@@ -154,7 +154,7 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
       focusNode: focusNode,
       checkColor: checkColor,
       activeColor: activeColor,
-      inactiveColor: inactiveColor,
+      fillColor: WidgetStatePropertyAll(inactiveColor) ,
       onChanged: isEnabled ? (value) => onChanged?.call(value == true) : null,
     ).margeWith(
       _buildLabelWidget(CupertinoTheme.of(context).textTheme.navTitleTextStyle),

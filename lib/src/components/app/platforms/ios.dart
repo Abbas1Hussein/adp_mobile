@@ -4,6 +4,18 @@ import 'package:flutter/material.dart';
 import '../../../core/common/construct/properties.dart';
 import 'android.dart';
 
+
+class AppIOSProperty extends CoreIOSProperty {
+  const AppIOSProperty({this.theme, this.darkTheme});
+
+  /// The style used if [themeMode] is [ThemeMode.dark]
+  final CupertinoThemeData? darkTheme;
+
+  /// The style used if [themeMode] is [ThemeMode.light]
+  final CupertinoThemeData? theme;
+}
+
+
 class IOSMaterialThemeBuilder extends StatelessWidget {
   const IOSMaterialThemeBuilder({
     super.key,
@@ -81,14 +93,4 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
       child: builder?.call(context, child) ?? child ?? const SizedBox.shrink(),
     );
   }
-}
-
-class AppIOSProperty extends CoreIOSProperty {
-  const AppIOSProperty({this.theme, this.darkTheme});
-
-  /// The style used if [themeMode] is [ThemeMode.dark]
-  final CupertinoThemeData? darkTheme;
-
-  /// The style used if [themeMode] is [ThemeMode.light]
-  final CupertinoThemeData? theme;
 }

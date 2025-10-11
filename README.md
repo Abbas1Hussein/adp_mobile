@@ -3,7 +3,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/Abbas1Hussein/adp_mobile)](https://github.com/Abbas1Hussein/adp_mobile/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/Abbas1Hussein/adp_mobile)](https://github.com/Abbas1Hussein/adp_mobile/network)
 
-![logo](https://i.imgur.com/2KHNJfH.png)
+<p align="center">
+  <img src="banner/banner.png" alt="banner" />
+</p>
 
 Use this package to create adaptive apps on mobile. With just one codebase, you can preview your app on both Android and IOS platforms, regardless of the device you're used.
 
@@ -20,7 +22,7 @@ import 'package:flutter/foundation.dart';
 void main() async {
   DefaultsPlatformManager.initialize(
     // Specify the target platform (Android or IOS)
-    targetPlatform: DesktopTargetPlatform.iOS,
+    targetPlatform: MobileTargetPlatform.iOS,
     // If set to false, the targetPlatform parameter will be ignored, and the specific widget behavior will depend on the base platform.
     isDebugging: !kReleaseMode,
   );
