@@ -1,4 +1,3 @@
-import 'package:adp_mobile/src/components/navigation/navigation_view/platforms/android.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

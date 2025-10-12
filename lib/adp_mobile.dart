@@ -28,7 +28,7 @@ export 'package:flutter/material.dart'
         InteractiveInkFeatureFactory,
         TabAlignment,
         TabBarIndicatorSize,
-        MaterialStateProperty,
+        WidgetStateProperty,
         FloatingActionButtonLocation,
         FloatingActionButtonAnimator,
         NavigationRailLabelType,

@@ -1,5 +1,5 @@
 import 'package:adp_mobile/adp_mobile.dart';
-import 'package:adp_mobile/src/components/buttons/button/iOS.dart';
+import 'package:adp_mobile/src/components/buttons/button/ios.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

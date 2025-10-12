@@ -108,7 +108,7 @@ class _TextSearchFieldAndroidState extends State<TextSearchFieldAndroid> {
   @override
   Widget build(BuildContext context) {
     final color = widget.decoration?.color != null
-        ? const MaterialStatePropertyAll(Colors.transparent)
+        ? const WidgetStatePropertyAll(Colors.transparent)
         : null;
 
     // The icon size will be scaled by a factor of the accessibility text scale.
@@ -158,10 +158,10 @@ class _TextSearchFieldAndroidState extends State<TextSearchFieldAndroid> {
       child: SearchBar(
         controller: controller,
         constraints: widget.constraints,
-        shape: MaterialStatePropertyAll(effectiveBorder),
-        padding: MaterialStatePropertyAll(widget.padding),
-        textStyle: MaterialStatePropertyAll(widget.style),
-        hintStyle: MaterialStatePropertyAll(widget.placeholderStyle),
+        shape: WidgetStatePropertyAll(effectiveBorder),
+        padding: WidgetStatePropertyAll(widget.padding),
+        textStyle: WidgetStatePropertyAll(widget.style),
+        hintStyle: WidgetStatePropertyAll(widget.placeholderStyle),
         hintText: widget.placeholder ??
             MaterialLocalizations.of(context).searchFieldLabel,
         leading: leading,
@@ -218,9 +218,9 @@ class SearchFieldAndroidProperty extends CoreAndroidProperty {
   ///
   /// If null, the value of [SearchBarThemeData.elevation] will be used. If this
   /// is also null, then default value is 6.0.
-  final MaterialStateProperty<double?>? elevation;
+  final WidgetStateProperty<double?>? elevation;
 
   /// The highlight color that's typically used to indicate that
   /// the search bar is focused, hovered, or pressed.
-  final MaterialStateProperty<Color?>? overlayColor;
+  final WidgetStateProperty<Color?>? overlayColor;
 }

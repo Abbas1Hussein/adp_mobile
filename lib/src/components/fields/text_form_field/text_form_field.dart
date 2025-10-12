@@ -46,7 +46,7 @@ class AdaptiveTextFormField
     super.builders,
     super.properties,
     super.textDirection,
-    super.scribbleEnabled = true,
+    super.stylusHandwritingEnabled = true,
     super.spellCheckConfiguration,
     super.clipBehavior = Clip.hardEdge,
     super.contentInsertionConfiguration,

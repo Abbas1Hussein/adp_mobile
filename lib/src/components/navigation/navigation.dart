@@ -7,8 +7,7 @@ export 'tab_bar/platforms/platforms.dart'
         TabBarIOSProperty,
         TabBarAndroidProperty,
         TabBarIOSStyle,
-        TabBarAndroidStyle,
-        TabDirection;
+        TabBarAndroidStyle;
 
 export 'tab_view/platforms/platforms.dart';
 

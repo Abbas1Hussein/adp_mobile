@@ -53,7 +53,7 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
     this.cursorOpacityAnimates,
     this.enableIMEPersonalizedLearning = true,
     this.magnifierConfiguration,
-    this.scribbleEnabled = true,
+    this.stylusHandwritingEnabled = true,
     this.textDirection,
     this.autofocus = false,
     this.obscuringCharacter,
@@ -116,7 +116,7 @@ abstract class BaseTextField<A extends CoreAndroidProperty,
 
   /// {@macro flutter.widgets.editableText.scribbleEnabled}
   @override
-  final bool scribbleEnabled;
+  final bool stylusHandwritingEnabled;
 
   /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
   @override

@@ -106,16 +106,16 @@ class BottomNavigationBar2Property extends CoreAndroidProperty {
   /// items.
   ///
   /// If [mouseCursor] is a [MaterialStateProperty<MouseCursor>],
-  /// [MaterialStateProperty.resolve] is used for the following [MaterialState]s:
+  /// [WidgetStateProperty.resolve] is used for the following [WidgetState]s:
   ///
-  ///  * [MaterialState.selected].
+  ///  * [WidgetState.selected].
   ///
   /// If null, then the value of [BottomNavigationBarThemeData.mouseCursor] is used. If
-  /// that is also null, then [MaterialStateMouseCursor.clickable] is used.
+  /// that is also null, then [WidgetStateMouseCursor.clickable] is used.
   ///
   /// See also:
   ///
-  ///  * [MaterialStateMouseCursor], which can be used to create a [MouseCursor]
+  ///  * [WidgetStateMouseCursor], which can be used to create a [MouseCursor]
   ///    that is also a [MaterialStateProperty<MouseCursor>].
   final MouseCursor? mouseCursor;
 
@@ -235,7 +235,7 @@ class BottomNavigationBar3Property extends CoreAndroidProperty {
 
   /// The highlight color that's typically used to indicate that
   /// the [NavigationDestination] is focused, hovered, or pressed.
-  final MaterialStateProperty<Color?>? overlayColor;
+  final WidgetStateProperty<Color?>? overlayColor;
 }
 
 extension NavigationLabelVisibilityX on NavigationDestinationLabelBehavior {

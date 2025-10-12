@@ -63,8 +63,8 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
 
   ButtonStyle androidDefaultStyle() {
     return ButtonStyle(
-      shape: shape != null ? MaterialStateProperty.all(shape) : null,
-      backgroundColor: MaterialStateProperty.resolveWith(
+      shape: shape != null ? WidgetStateProperty.all(shape) : null,
+      backgroundColor: WidgetStateProperty.resolveWith(
         (states) {
           return forStates(
             states,
@@ -80,21 +80,21 @@ abstract class AdaptiveBaseButton extends CoreAdaptiveComponent {
 }
 
 T forStates<T>(
-  Set<MaterialState> states, {
+  Set<WidgetState> states, {
   required T disabled,
   required T none,
   T? pressed,
   T? hovering,
   T? focused,
 }) {
-  if (states.contains(MaterialState.disabled)) return disabled;
-  if (pressed != null && states.contains(MaterialState.pressed)) {
+  if (states.contains(WidgetState.disabled)) return disabled;
+  if (pressed != null && states.contains(WidgetState.pressed)) {
     return pressed;
   }
-  if (hovering != null && states.contains(MaterialState.hovered)) {
+  if (hovering != null && states.contains(WidgetState.hovered)) {
     return hovering;
   }
-  if (states.contains(MaterialState.focused)) {
+  if (states.contains(WidgetState.focused)) {
     return focused ?? pressed ?? none;
   }
 

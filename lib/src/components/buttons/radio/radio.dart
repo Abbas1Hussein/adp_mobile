@@ -117,22 +117,22 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
       autofocus: autofocus,
       focusNode: focusNode,
       focusColor: focusColor,
-      fillColor: MaterialStateProperty.resolveWith(
-        (Set<MaterialState> states) {
-          if (states.contains(MaterialState.disabled)) {
+      fillColor: WidgetStateProperty.resolveWith(
+        (Set<WidgetState> states) {
+          if (states.contains(WidgetState.disabled)) {
             return inactiveColor;
           }
-          if (!states.contains(MaterialState.selected)) {
+          if (!states.contains(WidgetState.selected)) {
             return inactiveColor;
           }
-          if (states.contains(MaterialState.selected)) {
+          if (states.contains(WidgetState.selected)) {
             return activeColor;
           }
           return null;
         },
       ),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      overlayColor: MaterialStateProperty.all(activeColor?.withOpacity(0.5)),
+      overlayColor: WidgetStateProperty.all(activeColor?.withOpacity(0.5)),
       onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
     ).margeWith(_buildLabelWidget(context, labelStyle), 2.0);
   }

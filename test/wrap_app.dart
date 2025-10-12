@@ -8,25 +8,30 @@ import 'package:adp_mobile/adp_mobile.dart';
 /// If testing multiple files, the target platform is
 /// determined from the 'platform' environment variable using [getTargetPlatformFromEnvironment].
 void initializeMobileDefaultsTests([MobileTargetPlatform? platform]) {
-  final targetPlatform = platform ?? getTargetPlatformFromEnvironment();
+  final targetPlatform = getTargetPlatformFromEnvironment(platform);
 
-  DefaultsPlatformManager.initialize(targetPlatform: targetPlatform, isDebugging: true);
+  DefaultsPlatformManager.initialize(
+    targetPlatform: targetPlatform,
+    isDebugging: true,
+  );
 }
 
 /// Determines the target desktop platform based on the 'platform' environment variable.
 ///
 /// If the environment variable is set to 'iOS', returns [MobileTargetPlatform.iOS].
 /// If it is set to 'android', returns [MobileTargetPlatform.android].
-MobileTargetPlatform getTargetPlatformFromEnvironment() {
+MobileTargetPlatform getTargetPlatformFromEnvironment(MobileTargetPlatform? platform) {
   const targetPlatform = String.fromEnvironment('platform');
 
   /// Throws an [UnimplementedError] if running a single test and the 'platform' parameter
   /// on [initializeMobileDefaultsTests] is not provided.
   if (targetPlatform.isEmpty) {
+    if (platform != null) return platform;
     throw UnimplementedError(
       'Please specify the target platform using initializeMobileDefaultsTests when running a single test.',
     );
   }
+
   switch (targetPlatform) {
     case 'iOS':
       return MobileTargetPlatform.iOS;

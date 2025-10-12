@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/common/construct/component.dart';
-import '../button/iOS.dart';
+import '../button/ios.dart';
 
 const _kAdpIconConstraints = BoxConstraints(minHeight: 20, minWidth: 30);
 

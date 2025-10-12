@@ -26,7 +26,7 @@ class TextFieldAndroid extends StatelessWidget {
           onEditingComplete: fieldProperties?.onEditingComplete,
           clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
           textDirection: fieldProperties?.textDirection,
-          scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
+          stylusHandwritingEnabled: fieldProperties?.stylusHandwritingEnabled ?? true,
           spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
           enableIMEPersonalizedLearning:
               fieldProperties?.enableIMEPersonalizedLearning ?? true,
@@ -160,9 +160,9 @@ class FieldAndroidProperty extends CoreAndroidProperty {
 
   /// The shape of the border to draw around the decoration's container.
   ///
-  /// If [border] is a [MaterialStateUnderlineInputBorder]
-  /// or [MaterialStateOutlineInputBorder], then the effective border can depend on
-  /// the [MaterialState.focused] state, i.e. if the [TextField] is focused or not.
+  /// If [border] is a [WidgetStateInputBorder]
+  /// or [WidgetStateProperty], then the effective border can depend on
+  /// the [WidgetState.focused] state, i.e. if the [TextField] is focused or not.
   ///
   /// If [border] derives from [InputBorder] the border's [InputBorder.borderSide],
   /// i.e. the border's color and width, will be overridden to reflect the input
@@ -217,8 +217,8 @@ class FieldAndroidProperty extends CoreAndroidProperty {
   /// When the [InputDecoration.labelText] is on top of the input field, the
   /// text uses the [labelStyle] instead.
   ///
-  /// If [floatingLabelStyle] is a [MaterialStateTextStyle], then the effective
-  /// text style can depend on the [MaterialState.focused] state, i.e.
+  /// If [floatingLabelStyle] is a [WidgetStateTextStyle], then the effective
+  /// text style can depend on the [WidgetState.focused] state, i.e.
   /// if the [TextField] is focused or not.
   ///
   /// If null, defaults to [labelStyle].
@@ -232,7 +232,7 @@ class FieldAndroidProperty extends CoreAndroidProperty {
   /// just the default state, or both.
   ///
   /// In this example the [floatingLabelStyle] is specified with a
-  /// [MaterialStateProperty] which resolves to a text style whose color depends
+  /// [WidgetStateProperty] which resolves to a text style whose color depends
   /// on the decorator's error state.
   ///
   /// ** See code in examples/api/lib/material/input_decorator/input_decoration.floating_label_style_error.0.dart **

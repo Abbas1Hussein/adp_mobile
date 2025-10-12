@@ -1,6 +1,5 @@
 import 'package:adp_mobile/adp_mobile.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../controllers/platforms_controller.dart';
@@ -38,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return AdaptiveScaffoldPage(
       contentPadding: EdgeInsets.zero,
       appBar: AdaptiveNavigationAppbar(
-        title: const Text('Adaptive Desktop'),
+
+        title: const Text('Adaptive Mobiles'),
         actions: [
           AdaptiveTextButton.icon(
             label: const Text('github'),

@@ -1,4 +1,5 @@
 import 'package:adp_mobile/adp_mobile.dart';
+import 'package:flutter/foundation.dart';
 
 /// Manages default configurations for the mobile platform.
 ///
@@ -16,7 +17,7 @@ class DefaultsPlatformManager {
   const DefaultsPlatformManager._(
     this._platform, {
     MobileTargetPlatform? targetWeb,
-    bool isDebugging = true,
+    bool isDebugging = kDebugMode,
   })  : _targetWeb = targetWeb,
         _isDebugging = isDebugging;
 
@@ -26,9 +27,9 @@ class DefaultsPlatformManager {
   factory DefaultsPlatformManager.initialize({
     required MobileTargetPlatform targetPlatform,
     MobileTargetPlatform? targetWeb,
-    bool isDebugging = true,
-  }) { assert(
-        _instance == null, 'DefaultsPlatformManager is already initialized.');
+    bool isDebugging = kDebugMode,
+  }) {
+    assert(_instance == null, 'DefaultsPlatformManager is already initialized.');
 
     return _instance = DefaultsPlatformManager._(
       targetPlatform,
@@ -53,9 +54,17 @@ class DefaultsPlatformManager {
   ///
   /// Throws an error if the manager is not initialized.
   static DefaultsPlatformManager get instance {
-    assert(_instance != null, 'DefaultsPlatformManager is not initialized.');
+    if (!isInitialized) {
+      throw StateError(
+        'DefaultsPlatformManager has not been initialized.\n'
+        'Call DefaultsPlatformManager.initialize() before accessing instance.',
+      );
+    }
+
     return _instance!;
   }
+
+  static bool get isInitialized => _instance != null;
 
   static DefaultsPlatformManager? _instance;
 }

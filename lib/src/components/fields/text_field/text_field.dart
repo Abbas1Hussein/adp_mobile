@@ -72,7 +72,7 @@ class AdaptiveTextField extends BaseTextField<FieldAndroidProperty, FieldIOSProp
     super.cursorWidth,
     super.dragStartBehavior,
     super.textDirection,
-    super.scribbleEnabled = true,
+    super.stylusHandwritingEnabled = true,
     super.spellCheckConfiguration,
     super.clipBehavior =  Clip.hardEdge,
     super.contentInsertionConfiguration,

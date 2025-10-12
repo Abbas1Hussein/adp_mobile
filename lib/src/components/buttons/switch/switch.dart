@@ -132,11 +132,11 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
       onChanged: onChanged,
       focusNode: focusNode,
       focusColor: focusColor,
-      activeColor: activeColor,
+      activeThumbColor: activeColor,
       onFocusChange: onFocusChange,
       inactiveTrackColor: inactiveColor,
       dragStartBehavior: dragStartBehavior,
-      thumbColor: MaterialStateProperty.all(knobColor),
+      thumbColor: WidgetStateProperty.all(knobColor),
     ).margeWith(_buildLabelWidget(context, labelStyle), 0.0);
   }
 
@@ -154,8 +154,8 @@ class AdaptiveSwitch extends CoreAdaptiveComponent {
       focusNode: focusNode,
       thumbColor: knobColor,
       focusColor: focusColor,
-      activeColor: activeColor,
-      trackColor: inactiveColor,
+      activeTrackColor: activeColor,
+      inactiveTrackColor: inactiveColor,
       onFocusChange: onFocusChange,
       dragStartBehavior: dragStartBehavior,
     ).margeWith(_buildLabelWidget(context, labelStyle), 10.0);

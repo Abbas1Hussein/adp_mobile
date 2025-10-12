@@ -27,7 +27,7 @@ class TextFormFieldAndroid extends StatelessWidget {
           onEditingComplete: fieldProperties?.onEditingComplete,
           clipBehavior: fieldProperties?.clipBehavior ?? Clip.hardEdge,
           textDirection: fieldProperties?.textDirection,
-          scribbleEnabled: fieldProperties?.scribbleEnabled ?? true,
+          stylusHandwritingEnabled: fieldProperties?.stylusHandwritingEnabled ?? true,
           spellCheckConfiguration: fieldProperties?.spellCheckConfiguration,
           enableIMEPersonalizedLearning:
               fieldProperties?.enableIMEPersonalizedLearning ?? true,

@@ -37,7 +37,7 @@ class HighlightViewCode extends StatelessWidget {
 
   String _buildGitHubUrl() {
     final pathUrlSplit = path.split('/');
-    return 'https://github.com/Abbas1Hussein/adp_desktop/blob/master/example/lib/src/view/screens/home/tabs/${pathUrlSplit[6]}/${pathUrlSplit.last}';
+    return 'https://github.com/Abbas1Hussein/adp_mobiles/blob/master/example/lib/src/view/screens/home/tabs/${pathUrlSplit[6]}/${pathUrlSplit.last}';
   }
 
   Widget _buildFutureBuilder(String path) {

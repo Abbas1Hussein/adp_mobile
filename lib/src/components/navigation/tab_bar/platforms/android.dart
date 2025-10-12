@@ -247,7 +247,7 @@ class TabBarAndroidProperty extends CoreAndroidProperty {
   ///
   /// If null and [ThemeData.useMaterial3] is true, [TabBarTheme.dividerColor]
   /// color is used. If that is null and [ThemeData.useMaterial3] is true,
-  /// [ColorScheme.surfaceVariant] will be used, otherwise divider will not be drawn.
+  /// [ColorScheme.surfaceContainerHighest] will be used, otherwise divider will not be drawn.
   final Color? dividerColor;
 
   /// The padding added to each of the tab labels.
@@ -261,16 +261,16 @@ class TabBarAndroidProperty extends CoreAndroidProperty {
 
   /// Defines the ink response focus, hover, and splash colors.
   ///
-  /// If non-null, it is resolved against one of [MaterialState.focused],
-  /// [MaterialState.hovered], and [MaterialState.pressed].
+  /// If non-null, it is resolved against one of [WidgetState.focused],
+  /// [WidgetState.hovered], and [WidgetState.pressed].
   ///
-  /// [MaterialState.pressed] triggers a ripple (an ink splash), per
+  /// [WidgetState.pressed] triggers a ripple (an ink splash), per
   /// the current Material Design spec.
   ///
   /// If the overlay color is null or resolves to null, then the default values
   /// for [InkResponse.focusColor], [InkResponse.hoverColor], [InkResponse.splashColor],
   /// and [InkResponse.highlightColor] will be used instead.
-  final MaterialStateProperty<Color?>? overlayColor;
+  final WidgetStateProperty<Color?>? overlayColor;
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior? dragStartBehavior;

@@ -18,7 +18,7 @@ abstract class BaseFieldProperties {
     this.cursorOpacityAnimates,
     this.enableIMEPersonalizedLearning = true,
     this.magnifierConfiguration,
-    this.scribbleEnabled = true,
+    this.stylusHandwritingEnabled = true,
     this.textDirection,
     this.suffix,
     this.keyboardType,
@@ -91,7 +91,7 @@ abstract class BaseFieldProperties {
   final TextDirection? textDirection;
 
   /// {@macro flutter.widgets.editableText.scribbleEnabled}
-  final bool scribbleEnabled;
+  final bool stylusHandwritingEnabled;
 
   /// {@macro flutter.services.TextInputConfiguration.enableIMEPersonalizedLearning}
   final bool enableIMEPersonalizedLearning;
@@ -302,7 +302,7 @@ class FieldProperties extends BaseFieldProperties  {
     super.cursorOpacityAnimates,
     super.enableIMEPersonalizedLearning,
     super.magnifierConfiguration,
-    super.scribbleEnabled,
+    super.stylusHandwritingEnabled,
     super.textDirection,
     super.maxLength,
     super.maxLines,
@@ -355,7 +355,7 @@ class FieldProperties extends BaseFieldProperties  {
       contentInsertionConfiguration: baseTextField.contentInsertionConfiguration,
       cursorOpacityAnimates: baseTextField.cursorOpacityAnimates,
       spellCheckConfiguration: baseTextField.spellCheckConfiguration,
-      scribbleEnabled: baseTextField.scribbleEnabled,
+      stylusHandwritingEnabled: baseTextField.stylusHandwritingEnabled,
       textDirection: baseTextField.textDirection,
       clipBehavior: baseTextField.clipBehavior,
       enableIMEPersonalizedLearning: baseTextField.enableIMEPersonalizedLearning,
@@ -432,7 +432,7 @@ class FormFieldProperties extends BaseFieldProperties {
     super.cursorOpacityAnimates,
     super.enableIMEPersonalizedLearning,
     super.magnifierConfiguration,
-    super.scribbleEnabled,
+    super.stylusHandwritingEnabled,
     super.textDirection,
     super.maxLength,
     super.maxLines,
@@ -490,7 +490,7 @@ class FormFieldProperties extends BaseFieldProperties {
       contentInsertionConfiguration: baseTextField.contentInsertionConfiguration,
       cursorOpacityAnimates: baseTextField.cursorOpacityAnimates,
       spellCheckConfiguration: baseTextField.spellCheckConfiguration,
-      scribbleEnabled: baseTextField.scribbleEnabled,
+      stylusHandwritingEnabled: baseTextField.stylusHandwritingEnabled,
       textDirection: baseTextField.textDirection,
       clipBehavior: baseTextField.clipBehavior,
       enableIMEPersonalizedLearning: baseTextField.enableIMEPersonalizedLearning,
