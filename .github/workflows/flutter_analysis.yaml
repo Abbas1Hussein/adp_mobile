@@ -29,8 +29,8 @@ jobs:
         continue-on-error: true
         run: flutter pub publish --dry-run
 
-      - name: Run tests (Windows)
-        run: flutter test --dart-define=platform="windows"
+      - name: Run tests (Android)
+        run: flutter test --dart-define=platform="android"
 
-      - name: Run tests (Macos)
-        run: flutter test --dart-define=platform="macos"
+      - name: Run tests (IOS)
+        run: flutter test --dart-define=platform="iOS"
