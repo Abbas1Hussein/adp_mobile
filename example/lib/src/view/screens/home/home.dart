@@ -37,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return AdaptiveScaffoldPage(
       contentPadding: EdgeInsets.zero,
       appBar: AdaptiveNavigationAppbar(
-
         title: const Text('Adaptive Mobiles'),
         actions: [
           AdaptiveTextButton.icon(
@@ -84,10 +83,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(MobileTargetPlatform.iOS.name),
               ),
               AdaptivePulldownMenuItem(
-                enabled:
-                    PlatformRuining.targetPlatform == MobileTargetPlatform.iOS,
-                onTap: () =>
-                    _showConfirmationDialog(MobileTargetPlatform.android),
+                enabled: PlatformRuining.targetPlatform == MobileTargetPlatform.iOS,
+                onTap: () => _showConfirmationDialog(MobileTargetPlatform.android),
                 child: Text(MobileTargetPlatform.android.name),
               ),
             ],

@@ -12,7 +12,7 @@ class AdaptiveValuePreview extends StatelessWidget {
       child: AdaptiveButton.filled(
         child: Text(PlatformRuining.isIOS ? 'show cupertino Alert-Dialog' : 'show material License-Page'),
         onPressed: () => adaptiveValue(
-          // handel some think on macOS.
+          // handel some things on iOS.
           ios: () {
             showCupertinoDialog(
               context: context,
@@ -30,7 +30,7 @@ class AdaptiveValuePreview extends StatelessWidget {
               },
             );
           },
-          // handel some think on Windows.
+          // handel some things on android.
           android: () => showLicensePage(context: context),
         ),
       ),

@@ -7,7 +7,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final targetPlatform = await PlatformController().targetPlatform;
-
   DefaultsPlatformManager.initialize(
     targetPlatform: targetPlatform,
     isDebugging: true,
