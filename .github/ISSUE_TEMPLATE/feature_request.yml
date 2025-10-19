@@ -10,6 +10,8 @@ body:
       description: Describe the new feature you'd like to see
       placeholder: |
         I'd like to have...
+    validations:
+      required: true
 
   - type: textarea
     id: motivation
