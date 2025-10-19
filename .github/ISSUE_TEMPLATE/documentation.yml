@@ -10,6 +10,8 @@ body:
       description: What is unclear, missing, or incorrect?
       placeholder: |
         The docs for XYZ are missing...
+    validations:
+      required: true
 
   - type: textarea
     id: location
