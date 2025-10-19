@@ -31,7 +31,7 @@ body:
       placeholder: |
         Flutter version:
         Dart version:
-        Platform (Windows/Mac/Linux):
+        Platform (Windows/Mac/Linux/Android/IOS):
 
   - type: textarea
     id: logs
