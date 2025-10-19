@@ -19,6 +19,9 @@ jobs:
 
       - name: Build Android APK
         run: flutter build apk --release
+        working-directory: ./example
+
 
       - name: Build iOS
         run: flutter build ios --release --no-codesign
+        working-directory: ./example
