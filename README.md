@@ -1031,14 +1031,12 @@ You can use these material widgets, which are adaptive for both iOS and Android:
 ---
 ### 🤝 Contributing <a id="contributing"></a>
 
-We welcome all contributions whether it's through **Pull Requests**, **Issues**, or feature discussions,
-Your feedback and collaboration help this project grow and improve.
+We welcome all contributions whether it's through **Pull Requests**, **Issues**, Your feedback and collaboration help this project grow and improve.
 
 If you’d like to contribute:
 
 * Open a new issue for bugs or feature requests.
 * Submit a pull request with improvements or fixes.
-* Share your ideas and suggestions in the discussions section.
 * Read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and best practices.
 
 Every contribution, big or small, is greatly appreciated.
