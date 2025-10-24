@@ -16,7 +16,7 @@ void main() {
       await tester.tap(find.byType(AdaptiveDatePicker));
       await tester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoDatePicker), findsOneWidget);
           expect(find.byType(DatePickerDialog), findsNothing);
         },

@@ -73,8 +73,8 @@ class AdaptiveBuilderWidget extends CoreAdaptiveComponent {
   /// which is a builder that works for both Android and iOS platforms.
   static PlatformBuilderExtended adaptiveBuilder(PlatformBuilder builders) {
     return AdaptiveBuilder(
-      ios: (platformChild, theme, _) {
-        return builders.ios?.call(platformChild, theme) ?? platformChild;
+      iOS: (platformChild, theme, _) {
+        return builders.iOS?.call(platformChild, theme) ?? platformChild;
       },
       android: (platformChild, theme, _) {
         return builders.android?.call(platformChild, theme) ?? platformChild;

@@ -50,7 +50,7 @@ class AdaptiveTabBarPreferred extends AdaptiveTabBar
   EdgeInsetsGeometry get margin {
     return adaptiveValue(
       android: () => EdgeInsets.zero,
-      ios: () => const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
+      iOS: () => const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6.0),
     );
   }
 
@@ -60,7 +60,7 @@ class AdaptiveTabBarPreferred extends AdaptiveTabBar
       toolbarHeight ??
           adaptiveValue<double>(
             android: () => kToolbarHeight,
-            ios: () => kMinInteractiveDimensionCupertino,
+            iOS: () => kMinInteractiveDimensionCupertino,
           ),
     );
   }

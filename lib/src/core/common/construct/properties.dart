@@ -4,23 +4,23 @@ export 'property.dart';
 
 /// Core properties class providing a common structure for platform-specific properties.
 abstract class CoreProperties<A, I> {
-  CoreProperties({ this.android, this.ios });
+  CoreProperties({ this.android, this.iOS });
 
   /// Android-specific properties.
   A? android;
 
   /// IOS-specific properties.
-  I? ios;
+  I? iOS;
 }
 
 /// The [Properties] class allows you to customize the visual and functional aspects
 /// of a support widget separately for Android and IOS platforms.
 final class Properties<A, I> extends CoreProperties<A, I> {
-  Properties({ super.android, super.ios });
+  Properties({ super.android, super.iOS });
 
   Properties.android(A android) : super(android: android);
 
-  Properties.ios(I ios) : super(ios: ios);
+  Properties.iOS(I iOS) : super(iOS: iOS);
 }
 
 /// Callback type for defining platform-specific properties.
@@ -34,9 +34,9 @@ final class PropertiesLogic<A, I> extends CoreProperties<A, I> {
   /// creating an instance of [PropertiesLogic].
   factory PropertiesLogic({
     PropertiesCallback<A>? android,
-    PropertiesCallback<I>? ios,
+    PropertiesCallback<I>? iOS,
   }) {
-    return PropertiesLogic._internal(android: android, ios: ios);
+    return PropertiesLogic._internal(android: android, iOS: iOS);
   }
 
   /// creating an instance of [PropertiesLogic] with Android-specific properties.
@@ -45,21 +45,21 @@ final class PropertiesLogic<A, I> extends CoreProperties<A, I> {
   }
 
   /// creating an instance of [PropertiesLogic] with IOS-specific properties.
-  factory PropertiesLogic.ios(PropertiesCallback<I>? ios) {
-    return PropertiesLogic._internal(ios: ios);
+  factory PropertiesLogic.iOS(PropertiesCallback<I>? iOS) {
+    return PropertiesLogic._internal(iOS: iOS);
   }
 
   /// Internal constructor for [PropertiesLogic].
   PropertiesLogic._internal({
     PropertiesCallback<A>? android,
-    PropertiesCallback<I>? ios,
+    PropertiesCallback<I>? iOS,
   }) {
     adaptiveValue<void>(
       android: () {
         if (android != null) this.android = android();
       },
-      ios: () {
-        if (ios != null) this.ios = ios();
+      iOS: () {
+        if ( iOS != null) this.iOS =  iOS();
       },
     );
   }

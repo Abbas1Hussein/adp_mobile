@@ -30,14 +30,14 @@ mixin AdaptiveComponentMixin<Android extends CoreAndroidProperty, IOS extends Co
         }
         return body;
       },
-      ios: () {
-        final body = iOS(context, properties?.ios);
+      iOS: () {
+        final body = iOS(context, properties?.iOS);
 
-        if (builders?.ios != null) {
-          return builders!.ios!.call(
+        if (builders?.iOS != null) {
+          return builders!.iOS!.call(
             body,
             CupertinoTheme.of(context),
-            properties?.ios,
+            properties?.iOS,
           );
         }
         return body;

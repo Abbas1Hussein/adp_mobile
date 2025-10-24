@@ -289,7 +289,7 @@ class AdaptiveScaffold extends StatelessWidget {
 
     final Color? scaffoldBackgroundColor = backgroundColor ??
         adaptiveValue(
-          ios: () => CupertinoTheme.of(context).scaffoldBackgroundColor,
+          iOS: () => CupertinoTheme.of(context).scaffoldBackgroundColor,
           android: () => Theme.of(context).scaffoldBackgroundColor,
         );
 

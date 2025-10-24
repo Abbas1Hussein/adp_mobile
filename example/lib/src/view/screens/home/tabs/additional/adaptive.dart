@@ -13,7 +13,7 @@ class AdaptiveValuePreview extends StatelessWidget {
         child: Text(PlatformRuining.isIOS ? 'show cupertino Alert-Dialog' : 'show material License-Page'),
         onPressed: () => adaptiveValue(
           // handel some things on iOS.
-          ios: () {
+          iOS: () {
             showCupertinoDialog(
               context: context,
               builder: (context) {

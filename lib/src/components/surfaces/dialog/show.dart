@@ -31,7 +31,7 @@ Future<T?>? showAdpDialog<T>({
       barrierColor: barrierColor,
       barrierDismissible: barrierDismissible,
     ),
-    ios: () {
+    iOS: () {
       return showCupertinoDialog<T>(
         context: context,
         builder: (context) {

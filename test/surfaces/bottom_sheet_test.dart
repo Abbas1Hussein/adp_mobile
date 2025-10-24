@@ -47,7 +47,7 @@ void main() {
       await widgetTester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () => expect(find.byType(CupertinoActionSheet), findsOneWidget),
+        iOS: () => expect(find.byType(CupertinoActionSheet), findsOneWidget),
         android: () => expect(find.byType(CupertinoActionSheet), findsNothing),
       );
     },

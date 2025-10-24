@@ -32,7 +32,7 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final property = properties?.ios;
+    final property = properties?.iOS;
     final propertyAndroid = properties?.android;
 
    /// final ThemeData? themeData = context.findAncestorWidgetOfExactType<Theme>()?.data;

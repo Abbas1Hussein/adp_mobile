@@ -12,16 +12,16 @@ class IconFromPreview extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         AdaptiveIcon.from(
-          material: m.Icons.camera_alt,
-          cupertino: CupertinoIcons.camera_fill,
+          aICON: m.Icons.camera_alt,
+          iICON: CupertinoIcons.camera_fill,
         ),
         AdaptiveIcon.from(
-          material: CupertinoIcons.settings,
-          cupertino: m.Icons.settings,
+          aICON: CupertinoIcons.settings,
+          iICON: m.Icons.settings,
         ),
         AdaptiveIcon.from(
-          material: m.Icons.airplanemode_on_sharp,
-          cupertino: CupertinoIcons.airplane,
+          aICON: m.Icons.airplanemode_on_sharp,
+          iICON: CupertinoIcons.airplane,
         ),
       ],
     );

@@ -8,45 +8,45 @@ typedef Value<T> = T Function();
 
 /// Returns the adaptive value based on the current platform.
 ///
-/// The [ios] and [android] parameters are required, and they provide the
+/// The [iOS] and [android] parameters are required, and they provide the
 /// values to be returned for iOS and Android platforms, respectively.
 ///
 /// The [web] parameter is optional, and it provides the value to be returned
 /// for web platforms. If not provided, the default value for web,
-/// will be either [ios] or [android] based on [DefaultPlatformManager.platform].
+/// will be either [iOS] or [android] based on [DefaultPlatformManager.platform].
 ///
 /// Example:
 /// ```dart
 /// final result = adaptiveValue(
-///   ios: () => iosValue,
+///   iOS: () => iOSValue,
 ///   android: () => androidValue,
 ///   web: () => webValue,
 /// );
 /// ```
 T adaptiveValue<T>({
-  required Value<T> ios,
+  required Value<T> iOS,
   required Value<T> android,
   Value<T>? web,
 }) {
   if (kIsWeb) {
-    return web?.call() ?? _handleWebPlatform<T>(ios, android);
+    return web?.call() ?? _handleWebPlatform<T>(iOS, android);
   }
 
-  return _handleMobilePlatform<T>(ios, android);
+  return _handleMobilePlatform<T>(iOS, android);
 }
 
-T _handleWebPlatform<T>(Value<T> ios, Value<T> android) {
+T _handleWebPlatform<T>(Value<T> iOS, Value<T> android) {
   if (kPlatformManager.targetWeb == MobileTargetPlatform.iOS) {
-    return ios();
+    return iOS();
   } else {
     return android();
   }
 }
 
-T _handleMobilePlatform<T>(Value<T> ios, Value<T> android) {
+T _handleMobilePlatform<T>(Value<T> iOS, Value<T> android) {
   switch (PlatformRuining.targetPlatform) {
     case MobileTargetPlatform.iOS:
-      return ios();
+      return iOS();
     case MobileTargetPlatform.android:
       return android();
   }

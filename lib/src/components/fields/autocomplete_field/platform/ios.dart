@@ -47,7 +47,7 @@ class CupertinoAutocomplete<T> extends BaseAutocomplete<T> {
       suffixMode: autocompleteField?.suffixMode,
       prefixInsets: autocompleteField?.prefixInsets,
       suffixInsets: autocompleteField?.suffixInsets,
-      property: autocompleteField?.properties?.ios,
+      property: autocompleteField?.properties?.iOS,
       placeholder: autocompleteField?.placeholder,
       placeholderStyle: autocompleteField?.placeholderStyle,
       onSubmitted: (String value) {

@@ -26,7 +26,7 @@ void main() {
       await widgetTester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoListTile), findsOneWidget);
           expect(find.byType(ListTile), findsNothing);
         },

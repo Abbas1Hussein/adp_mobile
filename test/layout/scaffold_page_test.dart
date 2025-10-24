@@ -17,7 +17,7 @@ void main() {
 
       await widgetTester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoPageScaffold), findsOneWidget);
           expect(find.byType(Scaffold), findsNothing);
         },

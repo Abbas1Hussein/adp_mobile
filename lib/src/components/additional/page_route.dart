@@ -28,7 +28,7 @@ PageRoute<T> adaptivePageRoute<T>({
   required WidgetBuilder builder,
 }) {
   return adaptiveValue<PageRoute<T>>(
-    ios: () => CupertinoPageRoute<T>(
+    iOS: () => CupertinoPageRoute<T>(
       title: title,
       builder: builder,
       settings: settings,

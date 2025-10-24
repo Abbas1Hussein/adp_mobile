@@ -17,7 +17,7 @@ void main() {
       await tester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoTimerPicker), findsOneWidget);
           expect(find.byType(TimePickerDialog), findsNothing);
         },

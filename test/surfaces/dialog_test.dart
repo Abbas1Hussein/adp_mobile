@@ -52,7 +52,7 @@ void main() {
       await widgetTester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoAlertDialog), findsOneWidget);
           expect(find.byType(AlertDialog), findsNothing);
         },

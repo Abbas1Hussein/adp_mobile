@@ -50,7 +50,7 @@ class AdaptivePage<T> extends Page<T> {
   @override
   Route<T> createRoute(BuildContext context) {
     return adaptiveValue(
-      ios: () => CupertinoPage<T>(child: child).createRoute(context),
+      iOS: () => CupertinoPage<T>(child: child).createRoute(context),
       android: () => MaterialPage<T>(child: child).createRoute(context),
     );
   }

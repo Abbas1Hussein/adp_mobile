@@ -29,8 +29,8 @@ Future<T?>? showAdpBottomSheet<T>({
   }
 
   return adaptiveValue<Future<T?>?>(
-    ios: () {
-      final iOSProperty = properties?.ios;
+    iOS: () {
+      final iOSProperty = properties?.iOS;
       return showCupertinoModalPopup<T>(
         context: context,
         builder: builder,

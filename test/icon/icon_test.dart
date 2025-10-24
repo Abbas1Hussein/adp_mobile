@@ -12,7 +12,7 @@ void main() {
       await tester.pumpWidget(wrapApp(child: const AdaptiveIcon(AdpIcons.add)));
 
       adaptiveValue(
-        ios: () => expect(find.byType(Icon), findsOneWidget),
+        iOS: () => expect(find.byType(Icon), findsOneWidget),
         android: () => expect(find.byType(Icon), findsOneWidget),
       );
     },

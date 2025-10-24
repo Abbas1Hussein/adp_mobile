@@ -33,29 +33,29 @@ class AdaptiveTypography {
   /// Internal method to retrieve the adaptive typography based on the current platform.
   static AdaptiveTypography _data(BuildContext context) {
     final platformTheme = adaptiveValue<(CupertinoThemeData?, ThemeData?)?>(
-      ios: () => (CupertinoTheme.of(context), null),
+      iOS: () => (CupertinoTheme.of(context), null),
       android: () => (null, Theme.of(context)),
     );
     return AdaptiveTypography(
       body: adaptiveValue<TextStyle?>(
-        ios: () => platformTheme?.$1?.textTheme.textStyle,
+        iOS: () => platformTheme?.$1?.textTheme.textStyle,
         android: () => platformTheme?.$2?.textTheme.bodyMedium,
       ),
       headline: adaptiveValue<TextStyle?>(
-        ios: () => platformTheme?.$1?.textTheme.navLargeTitleTextStyle,
+        iOS: () => platformTheme?.$1?.textTheme.navLargeTitleTextStyle,
         android: () =>
             platformTheme?.$2?.textTheme.displaySmall?.copyWith(fontSize: 24),
       ),
       caption: adaptiveValue<TextStyle?>(
-        ios: () => platformTheme?.$1?.textTheme.tabLabelTextStyle,
+        iOS: () => platformTheme?.$1?.textTheme.tabLabelTextStyle,
         android: () => platformTheme?.$2?.textTheme.bodySmall,
       ),
       label: adaptiveValue<TextStyle?>(
-        ios: () => platformTheme?.$1?.textTheme.navActionTextStyle,
+        iOS: () => platformTheme?.$1?.textTheme.navActionTextStyle,
         android: () => platformTheme?.$2?.textTheme.labelMedium,
       ),
       subheading: adaptiveValue<TextStyle?>(
-        ios: () => platformTheme?.$1?.textTheme.navTitleTextStyle,
+        iOS: () => platformTheme?.$1?.textTheme.navTitleTextStyle,
         android: () => platformTheme?.$2?.textTheme.headlineMedium,
       ),
     );

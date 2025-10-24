@@ -27,7 +27,7 @@ void main() {
       await tester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () => expect(find.byType(TextFormField), findsNothing),
+        iOS: () => expect(find.byType(TextFormField), findsNothing),
         android: () => expect(find.byType(TextFormField), findsOneWidget),
       );
     },

@@ -22,7 +22,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(IOSButton), findsOneWidget);
           expect(find.byType(IconButton), findsNothing);
         },

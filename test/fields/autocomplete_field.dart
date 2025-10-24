@@ -32,7 +32,7 @@ void main() {
       await tester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(MaterialAutocomplete<int>), findsNothing);
           expect(find.byType(CupertinoAutocomplete<int>), findsOneWidget);
         },

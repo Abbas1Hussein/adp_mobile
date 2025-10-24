@@ -25,7 +25,7 @@ void main() {
 
       await tester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoSearchTextField), findsOneWidget);
           expect(find.byType(SearchBar), findsNothing);
         },

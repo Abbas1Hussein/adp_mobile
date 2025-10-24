@@ -16,7 +16,7 @@ void main() {
       );
 
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoActivityIndicator), findsOneWidget);
           expect(find.byType(CircularProgressIndicator), findsNothing);
         },

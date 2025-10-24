@@ -9,7 +9,7 @@ abstract final class AdaptiveBrightness {
 
   static Brightness of(BuildContext context) {
     return adaptiveValue(
-      ios: () => CupertinoTheme.brightnessOf(context),
+      iOS: () => CupertinoTheme.brightnessOf(context),
       android: () => Theme.of(context).brightness,
     );
   }

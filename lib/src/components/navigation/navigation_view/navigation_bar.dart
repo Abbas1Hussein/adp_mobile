@@ -185,7 +185,7 @@ class AdaptiveNavigationBar extends CoreModel<
 
   @override
   CupertinoTabBar toIOS(BuildContext context) {
-    final property = properties?.ios;
+    final property = properties?.iOS;
 
     return CupertinoTabBar(
       key: key,

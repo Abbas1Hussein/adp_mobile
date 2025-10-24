@@ -20,14 +20,14 @@ class AdaptiveIcon extends Icon {
     super.opticalSize,
     super.semanticLabel,
     super.textDirection,
-  })  : cupertino = null,
-        material = null,
+  })  : iICON = null,
+        aICON = null,
         super(null);
 
   /// Creates a new adaptive icon with specific icons for each platform.
   ///
-  /// - On Android: [material] icon is used.
-  /// - On IOS: [cupertino]  icon is used.
+  /// - On Android: [aICON] icon is used.
+  /// - On IOS: [iICON]  icon is used.
   const AdaptiveIcon.from({
     super.key,
     super.size,
@@ -39,8 +39,8 @@ class AdaptiveIcon extends Icon {
     super.opticalSize,
     super.semanticLabel,
     super.textDirection,
-    required IconData this.material,
-    required IconData this.cupertino,
+    required IconData this.aICON,
+    required IconData this.iICON,
   })  : adaptiveIcons = null,
         super(null);
 
@@ -57,12 +57,13 @@ class AdaptiveIcon extends Icon {
     super.opticalSize,
     super.semanticLabel,
     super.textDirection,
-  })  : material = iconData,
-        cupertino = iconData,
+  })  : aICON = iconData,
+        iICON = iconData,
         adaptiveIcons = null,
         super(null);
 
   /// The icon to display, used for different platforms.
+  ///
   /// The available icons are described in [CupertinoIcons] snd [MaterialIcons].
   ///
   /// The icon cannot be null.
@@ -71,18 +72,18 @@ class AdaptiveIcon extends Icon {
   /// The material UI icon data to be displayed on Android [materialIcons].
   ///
   /// used on [AdaptiveIcon.from].
-  final IconData? material;
+  final IconData? aICON;
 
   /// The Cupertino icon data to be displayed on IOS [CupertinoIcons].
   ///
   /// used on [AdaptiveIcon.from].
-  final IconData? cupertino;
+  final IconData? iICON;
 
   @override
   Widget build(BuildContext context) {
     final icon = adaptiveValue<IconData?>(
-      ios: () => cupertino ?? adaptiveIcons?.cupertino,
-      android: () => material ?? adaptiveIcons?.material,
+      iOS: () => iICON ?? adaptiveIcons?.iICON,
+      android: () => aICON ?? adaptiveIcons?.aICON,
     );
 
     return Icon(

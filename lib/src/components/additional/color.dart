@@ -70,7 +70,7 @@ abstract final class AdpColors {
     required Color cupertinoColor,
   }) {
     return adaptiveValue<Color>(
-      ios: () => cupertinoColor,
+      iOS: () => cupertinoColor,
       android: () => materialColor,
     );
   }

@@ -51,7 +51,7 @@ void main() {
       );
 
       await adaptiveValue<Future<void>>(
-        ios: () async {
+        iOS: () async {
           await tester.slideToValue(find.byType(AdaptiveSwitch), 10);
           await tester.pumpAndSettle();
         },

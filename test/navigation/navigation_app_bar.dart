@@ -38,7 +38,7 @@ void main() {
 
       await widgetTester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoNavigationBar), findsOneWidget);
           expect(find.byType(AppBar), findsNothing);
         },

@@ -46,7 +46,7 @@ void main() {
 
       await tester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(PopupMenuIOS<String>), findsOneWidget);
           expect(find.byType(DropdownButton<String>), findsNothing);
         },

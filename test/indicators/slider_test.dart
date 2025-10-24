@@ -20,7 +20,7 @@ void main() {
       );
       await tester.pumpAndSettle();
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoSlider), findsOneWidget);
           expect(find.byType(Slider), findsNothing);
 

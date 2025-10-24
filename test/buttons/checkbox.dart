@@ -20,7 +20,7 @@ void main() {
       await tester.pumpAndSettle();
 
       adaptiveValue(
-        ios: () {
+        iOS: () {
           expect(find.byType(CupertinoCheckbox), findsOneWidget);
           expect(find.byType(Checkbox), findsNothing);
         },
