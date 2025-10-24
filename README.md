@@ -71,9 +71,14 @@ void main() async {
 
 <details>
 <summary>Icon</summary>
+<a href="#Icon-section">Icon</a>
+<ul>
+    <li><a href="#basic-adaptive-icon-section">Basic Adaptive Icon</a></li>
+    <li><a href="#platform-specific-icon-section">Platform-Specific Icon</a></li>
+    <li><a href="#consistent-icon-across-platforms-section">Consistent Icon Across Platforms</a></li>
+</ul>
+<a href="#Icons-section">Icons</a>
 
-  - [Icon](#icon)
-  - [Icons](#icons)
 </details>
 
 <details>
@@ -124,16 +129,16 @@ void main() async {
   - [AdaptiveBrightness](#brightness)
   - [AdaptiveTypography](#typography)
   - [Color's](#colors)
-
   - [Material widgets](#material-widgets)
+  - [Contributing](#contributing)
 </details>
 
 ## Buttons
 
 ### General Buttons
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                       |
-| --------------------------------------------- | ----------------------------------------------|
-| ![IOS Dark Mode](https://i.imgur.com/lwU34XO.png)  | ![Android Dark Mode](https://i.imgur.com/f9dsUOu.png) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/lwU34XO.png)  | ![Android Dark Mode](https://i.imgur.com/f9dsUOu.png)  |
 | ![IOS Light Mode](https://i.imgur.com/TRzSbL7.png) | ![Android Light Mode](https://i.imgur.com/D88uQwM.png) |
 
 #### Base Button
@@ -175,10 +180,10 @@ It is one of the most widely used buttons in the flutter library typically conta
 It is commonly used to trigger actions or events in response to user interaction, such as tapping or clicking.
 If the onPressed callback is null, then the button will be disabled and will not react to touch.
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/vuGp8jI.gif) | ![Android Dark Mode](https://i.imgur.com/su3aIks.gif) |
-| ![IOS Light Mode](https://i.imgur.com/xAuMoeb.gif)| ![Android Light Mode](https://i.imgur.com/c8CEDF4.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/vuGp8jI.gif)  | ![Android Dark Mode](https://i.imgur.com/su3aIks.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/xAuMoeb.gif) | ![Android Light Mode](https://i.imgur.com/c8CEDF4.gif) |
 
 ```dart
 AdaptiveIconButton(
@@ -189,13 +194,13 @@ AdaptiveIconButton(
 
 #### Text Button
 A textButton widget is just a text label displayed on a zero-elevation Material widget.
-By default, it does’t have visible borders and reacts to touches by filling with a background color.
+By default, it doesn't have visible borders and reacts to touches by filling with a background color.
 If the onPressed && onLongPress callbacks is null, then the button will be disabled and will not react to touch.
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/tdDNuta.gif) | ![Android Dark Mode](https://i.imgur.com/PrnR7Lm.gif) |
-| ![IOS Light Mode](https://i.imgur.com/IjF2WC1.gif)| ![Android Light Mode](https://i.imgur.com/fUIwtJx.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/tdDNuta.gif)  | ![Android Dark Mode](https://i.imgur.com/PrnR7Lm.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/IjF2WC1.gif) | ![Android Light Mode](https://i.imgur.com/fUIwtJx.gif) |
 
 ```dart
 AdaptiveTextButton(
@@ -211,10 +216,10 @@ A pull-down menu button is used to create a nice overlay on the screen, allowing
 The `AdaptivePulldownMenuButton.singleChoice` constructor option focuses on only one `AdaptivePulldownMenuItem`.
 If `enabled` is true, it will be focused. There should be exactly one item with the specified 'enabled' value set to true.
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/zfLjhGj.gif) | ![Android Dark Mode](https://i.imgur.com/4q34ofl.gif) |
-| ![IOS Light Mode](https://i.imgur.com/xQivv32.gif)| ![Android Light Mode](https://i.imgur.com/TItI5Yu.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/zfLjhGj.gif)  | ![Android Dark Mode](https://i.imgur.com/4q34ofl.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/xQivv32.gif) | ![Android Light Mode](https://i.imgur.com/TItI5Yu.gif) |
 
 ```dart
 AdaptivePulldownMenuButton(
@@ -255,10 +260,10 @@ that, when clicked, displays a menu containing a list of mutually exclusive choi
 A pop-up button includes a double-arrow indicator that alludes to the
 direction in which the menu will appear (only vertical is currently supported).
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/aaPmuOE.gif) | ![Android Dark Mode](https://i.imgur.com/Y9FfqjR.gif) |
-| ![IOS Light Mode](https://i.imgur.com/odf5l26.gif)| ![Android Light Mode](https://i.imgur.com/9yTO2QD.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/aaPmuOE.gif)  | ![Android Dark Mode](https://i.imgur.com/Y9FfqjR.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/odf5l26.gif) | ![Android Light Mode](https://i.imgur.com/9yTO2QD.gif) |
 
 ```dart
 AdaptivePopupMenuButton<int>(
@@ -288,10 +293,10 @@ considered on when it contains a checkmark and off when it's empty.
 A checkbox is almost always followed by a title unless it appears in
 a checklist.
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/BckRa1M.gif) | ![Android Dark Mode](https://i.imgur.com/S58xv4F.gif) |
-| ![IOS Light Mode](https://i.imgur.com/rwGgXNC.gif)| ![Android Light Mode](https://i.imgur.com/y7mUqMe.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/BckRa1M.gif)  | ![Android Dark Mode](https://i.imgur.com/S58xv4F.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/rwGgXNC.gif) | ![Android Light Mode](https://i.imgur.com/y7mUqMe.gif) |
 
 ```dart
 AdaptiveCheckbox(
@@ -323,10 +328,10 @@ Use a switch for binary operations that take effect right after the
 user flips the switch,Think of the switch as a physical power switch for a device: you flip
 it on or off when you want to enable or disable the action performed by the device.
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/xzyfioV.gif) | ![Android Dark Mode](https://i.imgur.com/zS1yY7i.gif) |
-| ![IOS Light Mode](https://i.imgur.com/H7fw9Kg.gif)| ![Android Light Mode](https://i.imgur.com/jhiqYTd.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/xzyfioV.gif)  | ![Android Dark Mode](https://i.imgur.com/zS1yY7i.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/H7fw9Kg.gif) | ![Android Light Mode](https://i.imgur.com/jhiqYTd.gif) |
 
 ```dart
 AdaptiveSwitch(
@@ -362,9 +367,9 @@ initial cleared state.
 The singular behavior of a RadioButtons group distinguishes it from check
 boxes, which support multi-selection and deselection, or clearing.
 
-| IOS Dark\Light Mode                           | Android Dark\Light Mode                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/ZAxaQk3.gif)  | ![Android Dark Mode](https://i.imgur.com/xprrMW3.gif) |
+| IOS Dark\Light Mode                                | Android Dark\Light Mode                                |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/ZAxaQk3.gif)  | ![Android Dark Mode](https://i.imgur.com/xprrMW3.gif)  |
 | ![IOS Light Mode](https://i.imgur.com/jCVsDek.gif) | ![Android Light Mode](https://i.imgur.com/g2IaGiC.gif) |
 
 ```dart
@@ -414,10 +419,10 @@ AdaptiveCloseButton(),
 The TextField widget in Flutter is a fundamental input component used to collect text input from the user,
 it allows users to enter and edit text interactively.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/HFGQPoQ.gif) | ![Android Dark Mode](https://i.imgur.com/mbvcO39.gif) |
-| ![IOS Light Mode](https://i.imgur.com/aHvp4O6.gif)| ![Android Light Mode](https://i.imgur.com/qlb0QoG.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/HFGQPoQ.gif)  | ![Android Dark Mode](https://i.imgur.com/mbvcO39.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/aHvp4O6.gif) | ![Android Light Mode](https://i.imgur.com/qlb0QoG.gif) |
 
 ```dart
 AdaptiveTextField(),
@@ -427,10 +432,10 @@ AdaptiveTextField(),
 The TextFormField widget in Flutter is an enhanced version of the TextField widget,
 specifically designed to be used within a Form widget to enable form validation and submission.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/Fnllw1W.gif) | ![Android Dark Mode](https://i.imgur.com/Q3lKIkf.gif) |
-| ![IOS Light Mode](https://i.imgur.com/3YU4qYX.gif)| ![Android Light Mode](https://i.imgur.com/s6NnMgC.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/Fnllw1W.gif)  | ![Android Dark Mode](https://i.imgur.com/Q3lKIkf.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/3YU4qYX.gif) | ![Android Light Mode](https://i.imgur.com/s6NnMgC.gif) |
 
 ```dart
 Form(
@@ -454,10 +459,10 @@ A search field lets people search a collection of content for specific terms the
 A search field is an editable text field that often displays a Search button, a Clear button,
 and optional placeholder text.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/zVzctlO.gif) | ![Android Dark Mode](https://i.imgur.com/r941BUH.gif) |
-| ![IOS Light Mode](https://i.imgur.com/KCutnU4.gif)| ![Android Light Mode](https://i.imgur.com/gfSD3uD.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/zVzctlO.gif)  | ![Android Dark Mode](https://i.imgur.com/r941BUH.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/KCutnU4.gif) | ![Android Light Mode](https://i.imgur.com/gfSD3uD.gif) |
 
 ```dart
 AdaptiveTextSearchField(),
@@ -470,10 +475,10 @@ It combines a text input field with a dropdown or list of suggestions that dynam
 This widget provides a convenient way for users to find relevant information quickly without having to type the entire query themselves.
 It enhances the user experience by offering predictive text suggestions, which can save time and effort.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/7T8gAYE.gif) | ![Android Dark Mode](https://i.imgur.com/3sHMdjE.gif) |
-| ![IOS Light Mode](https://i.imgur.com/jjTVkRW.gif)| ![Android Light Mode](https://i.imgur.com/OE2Z85R.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/7T8gAYE.gif)  | ![Android Dark Mode](https://i.imgur.com/3sHMdjE.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/jjTVkRW.gif) | ![Android Light Mode](https://i.imgur.com/OE2Z85R.gif) |
 
 ```dart
 AdaptiveAutocompleteField(
@@ -494,35 +499,45 @@ AdaptiveAutocompleteField(
 
 ## Icon
 
-### Icon
-Icon are graphical symbols used to represent actions, objects, or concepts within an application's user interface.
+### 🎨 Icon <a id="Icon-section"></a>
+Icons are graphical symbols used to represent actions, objects, or concepts within an application's user interface.  
 They provide visual cues that help users quickly understand and interact with the interface.
 
-A basic adaptive icon that adjusts its appearance based on the platform.
+
+#### 1. Basic Adaptive Icon <a id="basic-adaptive-icon-section"></a>
+A simple adaptive icon that automatically adjusts its appearance to match the current platform style.
+
 ```dart
 AdaptiveIcon(AdpIcons.app),
-```
+````
 
-An adaptive icon data with platform-specific designs for IOS and Android.
+#### 2. Platform-Specific Icon <a id="platform-specific-icon-section"></a>
+An adaptive icon with platform-specific designs for **Android** and **iOS**.
+
 ```dart
 AdaptiveIcon.from(
- material: _iconAndroidData,
- cupertino: _iconIOSData,
+  iICON: _iconIOSData,
+  aICON: _iconAndroidData,
 ),
 ```
 
+#### 3. Consistent Icon Across Platforms <a id="consistent-icon-across-platforms-section"></a>
 An icon that remains consistent across all platforms.
+
 ```dart
 AdaptiveIcon.all(Icons.code),
 ```
 
-### Icons
-Icons are a collection of predefined graphical symbols that represent common actions, objects, or concepts.
+### 🧱 Icons <a id="Icons-section"></a>
+
+`Icons` are a collection of predefined graphical symbols that represent common actions, objects, or concepts.
 They provide visual cues that help users quickly understand and interact with the interface.
 
 ```dart
-final AdpIcons adpIcon = AdpIcons.app,
-final IconData iconData = adpIcon.platform, /// you can get platform iconData by using platform.
+final AdpIcons adpIcon = AdpIcons.app;
+
+// You can get the platform-specific IconData using `.platform`.
+final IconData iconData = adpIcon.platform, 
 ```
 
 ## Indicators
@@ -539,10 +554,10 @@ If `value` is non-null, it should be between 0 and 1, representing the progress 
 If `value` is null, the circular progress will be considered indeterminate,
 indicating that the progress is ongoing without a specific completion percentage.
 
-| IOS Dark\Light Mode                         | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/5IwbaMc.gif) | ![Android Dark Mode](https://i.imgur.com/pRRs45J.gif) |
-| ![IOS Light Mode](https://i.imgur.com/iccO10y.gif)| ![Android Light Mode](https://i.imgur.com/qyaGqjN.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/5IwbaMc.gif)  | ![Android Dark Mode](https://i.imgur.com/pRRs45J.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/iccO10y.gif) | ![Android Light Mode](https://i.imgur.com/qyaGqjN.gif) |
 
 ```dart
 AdaptiveCircularProgressIndicator(),
@@ -571,10 +586,11 @@ moving a thumb control along a track, A slider is a good choice when you know th
 relative quantity, not a numeric value. For example, users think about
 setting their audio volume to low or medium — not about setting the value to
 2 or 5.
-| IOS Dark\Light Mode                         | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/6vbtWtn.gif) | ![Android Dark Mode](https://i.imgur.com/MeapycJ.gif) |
-| ![IOS Light Mode](https://i.imgur.com/4lf0t03.gif)| ![Android Light Mode](https://i.imgur.com/2xbkgvg.gif) |
+
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/6vbtWtn.gif)  | ![Android Dark Mode](https://i.imgur.com/MeapycJ.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/4lf0t03.gif) | ![Android Light Mode](https://i.imgur.com/2xbkgvg.gif) |
 
 ```dart
 AdaptiveSlider(
@@ -596,15 +612,15 @@ The scaffold is designed to be a top level container for a `AdpApp`.
 This means that adding a Scaffold to each route on a adp app will provide the app with
 platform's basic visual layout structure.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/BICG1RQ.png) | ![Android Dark Mode](https://i.imgur.com/Y3q1YgV.png) |
-| ![IOS Light Mode](https://i.imgur.com/aA27b02.png)| ![Android Light Mode](https://i.imgur.com/mqDrIdA.png) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/BICG1RQ.png)  | ![Android Dark Mode](https://i.imgur.com/Y3q1YgV.png)  |
+| ![IOS Light Mode](https://i.imgur.com/aA27b02.png) | ![Android Light Mode](https://i.imgur.com/mqDrIdA.png) |
 
 ```dart
 AdaptiveScaffold(
   appBar: AdaptiveAppBar(
-    title: const Text('Abbas Hussein'),
+    title: const Text('AppBarTitle'),
     actions: _actions,
   ),
   drawer: NavigationDrawer(
@@ -656,7 +672,7 @@ It includes an app bar with customizable actions and a content area for displayi
 ```dart
 AdaptiveScaffoldPage(
   appBar: AdaptiveAppBarPage(
-    title: const Text('Abbas Hussein'),
+    title: const Text('AppBarPageTitle'),
     actions: _actions,
   ),
   content: const Center(
@@ -684,15 +700,15 @@ It typically consists of a sidebar for navigation options and an app bar for add
 Provides a flexible layout for navigation purposes, allowing users to interact with the app's content seamlessly,
 making it suitable for various application designs and platforms.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/EcdIJuE.png) | ![Android Dark Mode](https://i.imgur.com/iBVc1Ov.png) |
-| ![IOS Light Mode](https://i.imgur.com/Q8hLC1u.png)| ![Android Light Mode](https://i.imgur.com/xZOhdkF.png) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/EcdIJuE.png)  | ![Android Dark Mode](https://i.imgur.com/iBVc1Ov.png)  |
+| ![IOS Light Mode](https://i.imgur.com/Q8hLC1u.png) | ![Android Light Mode](https://i.imgur.com/xZOhdkF.png) |
 
 ```dart
 AdaptiveNavigationView(
   appBar: AdaptiveNavigationAppbar(
-    title: const Text('Abbas Hussein'),
+    title: const Text('Appbar Title'),
     actions: [
       AdaptiveIconButton(
         onPressed: () {},
@@ -725,10 +741,10 @@ Apps often have different categories of content or features available to users. 
 you want your users to be able to quickly glance at each option and move between categories with a simple swipe.
 That’s where the Flutter TabBar class comes in.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/TZRaAZV.gif) | ![Android Dark Mode](https://i.imgur.com/ao7uCRO.gif) |
-| ![IOS Light Mode](https://i.imgur.com/pQcHFOo.gif)| ![Android Light Mode](https://i.imgur.com/lx9A8nJ.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/TZRaAZV.gif)  | ![Android Dark Mode](https://i.imgur.com/ao7uCRO.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/pQcHFOo.gif) | ![Android Light Mode](https://i.imgur.com/lx9A8nJ.gif) |
 
 ```dart
 DefaultTabController(
@@ -746,10 +762,10 @@ DefaultTabController(
 A specialized version of [AdaptiveTabBar] that implements the [PreferredSizeWidget] interface.
 You can use it within an [AdaptiveAppBar] to position the tab bar at the bottom.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/EeNv74B.gif) | ![Android Dark Mode](https://i.imgur.com/SJBHoJR.gif) |
-| ![IOS Light Mode](https://i.imgur.com/riEmzJK.gif)| ![Android Light Mode](https://i.imgur.com/ruVA3q9.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/EeNv74B.gif)  | ![Android Dark Mode](https://i.imgur.com/SJBHoJR.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/riEmzJK.gif) | ![Android Light Mode](https://i.imgur.com/ruVA3q9.gif) |
 
 ```dart
 AdaptiveScaffold(
@@ -804,10 +820,10 @@ It allows users to easily choose a specific date by clicking or tapping on the d
 Date pickers provide options for navigating between months and years. They are widely used in various applications,
 including scheduling, event management, and form submissions, to facilitate the input of dates with accuracy and efficiency.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/clGhRkP.gif) | ![Android Dark Mode](https://i.imgur.com/12RP4oc.gif) |
-| ![IOS Light Mode](https://i.imgur.com/5SxxJO7.gif)| ![Android Light Mode](https://i.imgur.com/kIyy2Zq.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/clGhRkP.gif)  | ![Android Dark Mode](https://i.imgur.com/12RP4oc.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/5SxxJO7.gif) | ![Android Light Mode](https://i.imgur.com/kIyy2Zq.gif) |
 
 ```dart
 AdaptiveDatePicker(
@@ -823,10 +839,10 @@ A time picker is a user interface component that allows users to select a specif
 It provides a graphical interface for users to adjust the hour and minute values using sliders or input fields.
 Time pickers are commonly used in applications that require scheduling or setting reminders, enabling users to choose precise times for events or tasks.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/TtgWXAl.gif) | ![Android Dark Mode](https://i.imgur.com/8KrZHf9.gif) |
-| ![IOS Light Mode](https://i.imgur.com/lJSsgfn.gif)| ![Android Light Mode](https://i.imgur.com/YCbFA3g.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/TtgWXAl.gif)  | ![Android Dark Mode](https://i.imgur.com/8KrZHf9.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/lJSsgfn.gif) | ![Android Light Mode](https://i.imgur.com/YCbFA3g.gif) |
 
 ```dart
 AdaptiveTimePicker(
@@ -845,10 +861,10 @@ It typically contains a title, optional content, and one or more action buttons 
 Dialogs are commonly used to display alerts, messages, warnings, or to request input from the user.
 They provide a way to temporarily interrupt the user's workflow and require their attention before proceeding.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/doEAsNe.gif) | ![Android Dark Mode](https://i.imgur.com/f49Ekh3.gif) |
-| ![IOS Light Mode](https://i.imgur.com/jWhHhlJ.gif)| ![Android Light Mode](https://i.imgur.com/WLmxTUp.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/doEAsNe.gif)  | ![Android Dark Mode](https://i.imgur.com/f49Ekh3.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/jWhHhlJ.gif) | ![Android Light Mode](https://i.imgur.com/WLmxTUp.gif) |
 
 ```dart
 AdaptiveButton(
@@ -882,10 +898,10 @@ A bottom sheet is a type of dialog the screen to provide additional information 
 It typically contains content that is not essential for the current context but may be useful for the user.
 Bottom sheets are commonly used to display menus, settings, or supplementary information without blocking the main content of the application.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/ehol1H1.gif) | ![Android Dark Mode](https://i.imgur.com/ntXC6gm.gif) |
-| ![IOS Light Mode](https://i.imgur.com/Fd5g6te.gif)| ![Android Light Mode](https://i.imgur.com/CGDOpbL.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/ehol1H1.gif)  | ![Android Dark Mode](https://i.imgur.com/ntXC6gm.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/Fd5g6te.gif) | ![Android Light Mode](https://i.imgur.com/CGDOpbL.gif) |
 
 ```dart
 AdaptiveButton(
@@ -907,10 +923,10 @@ AdaptiveButton(
 The list tiles are used to represent a single piece of information, typically within a list or grid layout.
 They provide a compact and structured way to display data, often including an icon, title, and additional details.
 
-| IOS Dark\Light Mode                           | Android  Dark\Light Mode                       |
-| --------------------------------------------- | ---------------------------------------------- |
-| ![IOS Dark Mode](https://i.imgur.com/CIBhkp2.gif) | ![Android Dark Mode](https://i.imgur.com/PzqgNRG.gif) |
-| ![IOS Light Mode](https://i.imgur.com/eg5qqYf.gif)| ![Android Light Mode](https://i.imgur.com/BLsJ31q.gif) |
+| IOS Dark\Light Mode                                | Android  Dark\Light Mode                               |
+|----------------------------------------------------|--------------------------------------------------------|
+| ![IOS Dark Mode](https://i.imgur.com/CIBhkp2.gif)  | ![Android Dark Mode](https://i.imgur.com/PzqgNRG.gif)  |
+| ![IOS Light Mode](https://i.imgur.com/eg5qqYf.gif) | ![Android Light Mode](https://i.imgur.com/BLsJ31q.gif) |
 
 ```dart
 AdaptiveListTile(
@@ -932,7 +948,7 @@ AdaptiveButton(
   child: const Text('Do something'),
   onPressed: () {
     final result = adaptiveValue<String>(
-      ios: () {
+      iOS: () {
         // Action for iOS platform
         return 'iOS action';
       },
@@ -954,8 +970,8 @@ AdaptiveButton(
 Widget that provides platform-specific child.
 ```dart
 AdaptiveWidget(
-  onIOS: (context) => const Text('Abbas Hussein onIOS'),
-  onAndroid: (context) => const Text('Abbas Hussein onAndroid'),
+  onIOS: (context) => const Text('onIOS'),
+  onAndroid: (context) => const Text('onAndroid'),
 )
 ```
 
@@ -983,7 +999,7 @@ AdaptiveBuilderWidget(
       );
     },
   ),
-  child: const Text('Abbas Hussein'),
+  child: const Text('Abbas1Hussein'),
 ),
 ```
 
@@ -1010,26 +1026,23 @@ final brightness = AdaptiveBrightness.of(context);
 ### Material widgets
 You can use these material widgets, which are adaptive for both iOS and Android:
 
-- Tooltip:
-   - A tooltip displays informative text when users hover over, focus on, or long-press an element.
+`Tooltip`, `IconTheme`, `Divider`, `VerticalDivider`, `LinearProgressIndicator`, `Card`, `showSearch`, and `MaterialPageRoute`.
 
-- IconTheme:
-   - IconTheme is used to set the default properties for icons within its subtree, such as size, color, and opacity.
+---
+### 🤝 Contributing <a id="contributing"></a>
 
-- Divider:
-   - A divider is a horizontal line that separates content in a material design application.
+We welcome all contributions whether it's through **Pull Requests**, **Issues**, or feature discussions,
+Your feedback and collaboration help this project grow and improve.
 
-- VerticalDivider:
-   - Similar to Divider, but it creates a vertical line instead of a horizontal one.
+If you’d like to contribute:
 
-- LinearProgressIndicator:
-  - A linear progress indicator displays progress along a horizontal bar to indicate that a lengthy operation is underway.
+* Open a new issue for bugs or feature requests.
+* Submit a pull request with improvements or fixes.
+* Share your ideas and suggestions in the discussions section.
+* Read our [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines and best practices.
 
-- Card:
-   - A card is a sheet of material used to represent some related information, such as an album, geographic location, or contact.
+Every contribution, big or small, is greatly appreciated.
 
-- showSearch:
-   - showSearch is a function that displays a search page and returns the selected search result.
-
-- MaterialPageRoute:
-   - MaterialPageRoute is a type of route that displays its primary contents in the middle of the screen, as a Material-style dialog.
+---
+### 📜 License
+This project is licensed under the [MIT License](LICENSE).
