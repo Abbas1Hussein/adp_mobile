@@ -2,12 +2,12 @@
 
 To run the tests, make sure to specify the correct platform on:
 
-### Android
+#### Android
 ```bash
 flutter test --dart-define=platform="android"
 ````
 
-### iOS
+#### iOS
 
 ```bash
 flutter test --dart-define=platform="iOS"
