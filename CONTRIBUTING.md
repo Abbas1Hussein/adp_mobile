@@ -5,7 +5,7 @@ Firstly, thank you for considering a contribution to adp_mobile Your efforts, wh
 ## 🌿 Branch Structure
 
 * The default working branch is **`dev`**.
-* The **`master`** branch is **reserved for stable releases** published to [pub.dev](https://pub.dev/packages/adp_mobile).
+* The **`stable`** branch is **reserved for stable releases** published to [pub.dev](https://pub.dev/packages/adp_mobile).
 
 All feature branches and pull requests should be based on `dev`.
 
