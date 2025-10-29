@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../../core/common/construct/properties.dart';
 import 'android.dart';
 
-
 class AppIOSProperty extends CoreIOSProperty {
   const AppIOSProperty({this.theme, this.darkTheme});
 
@@ -14,7 +13,6 @@ class AppIOSProperty extends CoreIOSProperty {
   /// The style used if [themeMode] is [ThemeMode.light]
   final CupertinoThemeData? theme;
 }
-
 
 class IOSMaterialThemeBuilder extends StatelessWidget {
   const IOSMaterialThemeBuilder({
@@ -35,7 +33,7 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
     final property = properties?.iOS;
     final propertyAndroid = properties?.android;
 
-   /// final ThemeData? themeData = context.findAncestorWidgetOfExactType<Theme>()?.data;
+    /// final ThemeData? themeData = context.findAncestorWidgetOfExactType<Theme>()?.data;
 
     final mode = themeMode ?? ThemeMode.system;
     final platformBrightness = MediaQuery.platformBrightnessOf(context);
@@ -50,46 +48,50 @@ class IOSMaterialThemeBuilder extends StatelessWidget {
       curve: Curves.linearToEaseOut,
       duration: const Duration(milliseconds: 300),
       data: (useDarkStyle
-                  ? (propertyAndroid?.darkTheme ??
-                      ThemeData.dark(useMaterial3: true))
-                  : (propertyAndroid?.theme ??
-                      ThemeData.light(useMaterial3: true)))
-              .copyWith(
-            platform: TargetPlatform.iOS,
-            cupertinoOverrideTheme: CupertinoThemeData(
-              textTheme: cupertinoTheme.textTheme,
-              brightness: cupertinoTheme.brightness,
-              primaryColor: cupertinoTheme.primaryColor,
-              applyThemeToAll: cupertinoTheme.applyThemeToAll,
-              barBackgroundColor: cupertinoTheme.barBackgroundColor,
-              primaryContrastingColor: cupertinoTheme.primaryContrastingColor,
-              scaffoldBackgroundColor: cupertinoTheme.scaffoldBackgroundColor,
-            ),
-            dividerColor: CupertinoColors.separator,
-            canvasColor: cupertinoTheme.primaryColor,
-            primaryColor: cupertinoTheme.primaryColor,
-            progressIndicatorTheme: ProgressIndicatorThemeData(
-              color: cupertinoTheme.primaryColor,
-            ),
-            navigationDrawerTheme: NavigationDrawerThemeData(
-              iconTheme: const WidgetStatePropertyAll(CupertinoIconThemeData()),
-              labelTextStyle: WidgetStatePropertyAll(cupertinoTheme.textTheme.textStyle),
-              backgroundColor: CupertinoDynamicColor.resolve(cupertinoTheme.barBackgroundColor, context),
-            ),
-            drawerTheme: DrawerThemeData(
-              backgroundColor: useDarkStyle
-                  ? CupertinoDynamicColor.resolve(
-                      cupertinoTheme.barBackgroundColor, context)
-                  : cupertinoTheme.barBackgroundColor,
-            ),
-            bottomNavigationBarTheme: BottomNavigationBarThemeData(
-              backgroundColor: CupertinoDynamicColor.resolve(cupertinoTheme.primaryColor, context),
-            ),
-            floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: CupertinoDynamicColor.resolve(cupertinoTheme.primaryColor, context),
-            ),
-            iconTheme: const CupertinoIconThemeData().copyWith(color: cupertinoTheme.primaryColor),
-          ),
+              ? (propertyAndroid?.darkTheme ??
+                  ThemeData.dark(useMaterial3: true))
+              : (propertyAndroid?.theme ?? ThemeData.light(useMaterial3: true)))
+          .copyWith(
+        platform: TargetPlatform.iOS,
+        cupertinoOverrideTheme: CupertinoThemeData(
+          textTheme: cupertinoTheme.textTheme,
+          brightness: cupertinoTheme.brightness,
+          primaryColor: cupertinoTheme.primaryColor,
+          applyThemeToAll: cupertinoTheme.applyThemeToAll,
+          barBackgroundColor: cupertinoTheme.barBackgroundColor,
+          primaryContrastingColor: cupertinoTheme.primaryContrastingColor,
+          scaffoldBackgroundColor: cupertinoTheme.scaffoldBackgroundColor,
+        ),
+        dividerColor: CupertinoColors.separator,
+        canvasColor: cupertinoTheme.primaryColor,
+        primaryColor: cupertinoTheme.primaryColor,
+        progressIndicatorTheme: ProgressIndicatorThemeData(
+          color: cupertinoTheme.primaryColor,
+        ),
+        navigationDrawerTheme: NavigationDrawerThemeData(
+          iconTheme: const WidgetStatePropertyAll(CupertinoIconThemeData()),
+          labelTextStyle:
+              WidgetStatePropertyAll(cupertinoTheme.textTheme.textStyle),
+          backgroundColor: CupertinoDynamicColor.resolve(
+              cupertinoTheme.barBackgroundColor, context),
+        ),
+        drawerTheme: DrawerThemeData(
+          backgroundColor: useDarkStyle
+              ? CupertinoDynamicColor.resolve(
+                  cupertinoTheme.barBackgroundColor, context)
+              : cupertinoTheme.barBackgroundColor,
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: CupertinoDynamicColor.resolve(
+              cupertinoTheme.primaryColor, context),
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: CupertinoDynamicColor.resolve(
+              cupertinoTheme.primaryColor, context),
+        ),
+        iconTheme: const CupertinoIconThemeData()
+            .copyWith(color: cupertinoTheme.primaryColor),
+      ),
       child: builder?.call(context, child) ?? child ?? const SizedBox.shrink(),
     );
   }

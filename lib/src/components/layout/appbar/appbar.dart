@@ -41,7 +41,7 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
     super.key,
   })  : assert(elevation == null || elevation >= 0.0),
         preferredSize =
-        _PreferredAppBarSize(toolbarHeight, bottom?.preferredSize.height);
+            _PreferredAppBarSize(toolbarHeight, bottom?.preferredSize.height);
 
   /// A size whose height is the sum of [toolbarHeight] and the [bottom] widget's
   /// preferred height.
@@ -481,10 +481,12 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
     );
     const CupertinoIconThemeData().resolve(context);
 
-    final defaultIconTheme = IconTheme.of(context).copyWith(
-      size: iconTheme?.size ?? iconThemeDate.size,
-      color: iconTheme?.color ?? iconThemeDate.color,
-    ).resolve(context);
+    final defaultIconTheme = IconTheme.of(context)
+        .copyWith(
+          size: iconTheme?.size ?? iconThemeDate.size,
+          color: iconTheme?.color ?? iconThemeDate.color,
+        )
+        .resolve(context);
 
     final titleStyled = title != null
         ? DefaultTextStyle.merge(
@@ -514,20 +516,21 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
 
     final handelEndDrawer = hasEndDrawer(context)
         ? AdaptiveIconButton(
-          icon: Icon(
-            size: iconEndDrawerTheme?.size ?? defaultIconTheme.size,
-            color: foregroundColor ??
-                iconEndDrawerTheme?.color ??
-                defaultIconTheme.color,
-            iconEndDrawerTheme?.icon?.iICON ?? CupertinoIcons.bars,
-          ),
-          onPressed: Scaffold.of(context).openEndDrawer,
-        ).iOS(context)
+            icon: Icon(
+              size: iconEndDrawerTheme?.size ?? defaultIconTheme.size,
+              color: foregroundColor ??
+                  iconEndDrawerTheme?.color ??
+                  defaultIconTheme.color,
+              iconEndDrawerTheme?.icon?.iICON ?? CupertinoIcons.bars,
+            ),
+            onPressed: Scaffold.of(context).openEndDrawer,
+          ).iOS(context)
         : null;
 
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
 
-    final bool useCloseButton = parentRoute is PageRoute<dynamic> && parentRoute.fullscreenDialog;
+    final bool useCloseButton =
+        parentRoute is PageRoute<dynamic> && parentRoute.fullscreenDialog;
 
     Widget? handelLeading = leading;
     if (leading == null && automaticallyImplyLeading) {
@@ -584,8 +587,8 @@ class AdaptiveAppBar extends CoreAdaptiveComponent
 class _PreferredAppBarSize extends Size {
   const _PreferredAppBarSize(this.toolbarHeight, this.bottomHeight)
       : super.fromHeight(
-    (toolbarHeight ?? kToolbarHeight) + (bottomHeight ?? 0),
-  );
+          (toolbarHeight ?? kToolbarHeight) + (bottomHeight ?? 0),
+        );
 
   /// The preferred height of the toolbar component of the app bar.
   final double? toolbarHeight;
@@ -594,14 +597,13 @@ class _PreferredAppBarSize extends Size {
   final double? bottomHeight;
 }
 
-
 /// Defines the theme for app bar icons, including specifications for color, size, and the icon itself:
 ///
 ///   * [iconTheme]: Specifies the theme for all icons in the app bar.
 ///   * [iconDrawerTheme]: Specifies the theme for the drawer icon.
 ///   * [iconEndDrawerTheme]: Specifies the theme for the end drawer icon.
 class AppBarIconTheme {
-  const AppBarIconTheme({ this.icon, this.color, this.size });
+  const AppBarIconTheme({this.icon, this.color, this.size});
 
   /// The color of the app bar icon.
   final Color? color;

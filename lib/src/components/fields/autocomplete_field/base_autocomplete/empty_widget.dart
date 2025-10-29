@@ -11,7 +11,7 @@ final emptyKey = UniqueKey().toString();
 typedef EmptyBuilder = Widget? Function(String value);
 
 class EmptyModel {
-  const EmptyModel({ required this.searchKey, required this.enteredText });
+  const EmptyModel({required this.searchKey, required this.enteredText});
 
   final String searchKey;
   final String enteredText;

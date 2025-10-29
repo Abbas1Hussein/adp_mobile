@@ -7,10 +7,12 @@ import 'properties.dart';
 
 export 'builders.dart';
 
-mixin AdaptiveComponentMixin<Android extends CoreAndroidProperty, IOS extends CoreIOSProperty> {
+mixin AdaptiveComponentMixin<Android extends CoreAndroidProperty,
+    IOS extends CoreIOSProperty> {
   CoreProperties<Android, IOS>? get properties => null;
 
-  CoreAdaptiveBuilder<Builder<ThemeData, Android?>, Builder<CupertinoThemeData, IOS?>>? get builders => null;
+  CoreAdaptiveBuilder<Builder<ThemeData, Android?>,
+      Builder<CupertinoThemeData, IOS?>>? get builders => null;
 
   Widget android(BuildContext context, [Android? property]);
 

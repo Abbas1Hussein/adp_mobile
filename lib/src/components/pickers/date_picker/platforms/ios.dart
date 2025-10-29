@@ -136,7 +136,7 @@ class _DatePickerIOSState extends State<DatePickerIOS> {
       );
     }
 
-    if (widget.datePickerButtonBuilder != null){
+    if (widget.datePickerButtonBuilder != null) {
       return widget.datePickerButtonBuilder!(
         context,
         selectedDate,

@@ -20,7 +20,8 @@ void initializeMobileDefaultsTests([MobileTargetPlatform? platform]) {
 ///
 /// If the environment variable is set to 'iOS', returns [MobileTargetPlatform.iOS].
 /// If it is set to 'android', returns [MobileTargetPlatform.android].
-MobileTargetPlatform getTargetPlatformFromEnvironment(MobileTargetPlatform? platform) {
+MobileTargetPlatform getTargetPlatformFromEnvironment(
+    MobileTargetPlatform? platform) {
   const targetPlatform = String.fromEnvironment('platform');
 
   /// Throws an [UnimplementedError] if running a single test and the 'platform' parameter

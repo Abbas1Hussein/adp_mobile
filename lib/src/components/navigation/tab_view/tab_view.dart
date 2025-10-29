@@ -131,7 +131,8 @@ class AdaptiveTabView extends CoreAdaptiveComponent {
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    return CupertinoPageScaffold(backgroundColor: primaryColor, child: _buildTabView());
+    return CupertinoPageScaffold(
+        backgroundColor: primaryColor, child: _buildTabView());
   }
 
   Widget _buildTabView() {

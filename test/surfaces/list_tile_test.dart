@@ -85,11 +85,13 @@ void main() {
         ),
       );
 
-      await widgetTester.longPress(find.byType(AdaptiveListTile), warnIfMissed: false);
+      await widgetTester.longPress(find.byType(AdaptiveListTile),
+          warnIfMissed: false);
       await widgetTester.pumpAndSettle();
       expect(longPressTriggered, false);
 
-      await widgetTester.tap(find.byType(AdaptiveListTile), warnIfMissed: false);
+      await widgetTester.tap(find.byType(AdaptiveListTile),
+          warnIfMissed: false);
       await widgetTester.pumpAndSettle();
       expect(onTap, false);
     },

@@ -125,7 +125,6 @@ abstract class BaseFieldProperties {
   /// {@end-tool}
   final TextMagnifierConfiguration? magnifierConfiguration;
 
-
   /// A lighter colored placeholder hint that appears on the first line of the
   /// text field when the text entry is empty.
   ///
@@ -285,7 +284,7 @@ abstract class BaseFieldProperties {
   final bool? showCursor;
 }
 
-class FieldProperties extends BaseFieldProperties  {
+class FieldProperties extends BaseFieldProperties {
   const FieldProperties({
     super.padding,
     super.placeholder,
@@ -352,13 +351,15 @@ class FieldProperties extends BaseFieldProperties  {
   factory FieldProperties.fromBaseTextField(BaseTextField baseTextField) {
     return FieldProperties(
       magnifierConfiguration: baseTextField.magnifierConfiguration,
-      contentInsertionConfiguration: baseTextField.contentInsertionConfiguration,
+      contentInsertionConfiguration:
+          baseTextField.contentInsertionConfiguration,
       cursorOpacityAnimates: baseTextField.cursorOpacityAnimates,
       spellCheckConfiguration: baseTextField.spellCheckConfiguration,
       stylusHandwritingEnabled: baseTextField.stylusHandwritingEnabled,
       textDirection: baseTextField.textDirection,
       clipBehavior: baseTextField.clipBehavior,
-      enableIMEPersonalizedLearning: baseTextField.enableIMEPersonalizedLearning,
+      enableIMEPersonalizedLearning:
+          baseTextField.enableIMEPersonalizedLearning,
       onSubmitted: baseTextField.onSubmitted,
       focusNode: baseTextField.focusNode,
       contextMenuBuilder: baseTextField.contextMenuBuilder,
@@ -487,13 +488,15 @@ class FormFieldProperties extends BaseFieldProperties {
   factory FormFieldProperties.fromBaseTextField(BaseTextField baseTextField) {
     return FormFieldProperties(
       magnifierConfiguration: baseTextField.magnifierConfiguration,
-      contentInsertionConfiguration: baseTextField.contentInsertionConfiguration,
+      contentInsertionConfiguration:
+          baseTextField.contentInsertionConfiguration,
       cursorOpacityAnimates: baseTextField.cursorOpacityAnimates,
       spellCheckConfiguration: baseTextField.spellCheckConfiguration,
       stylusHandwritingEnabled: baseTextField.stylusHandwritingEnabled,
       textDirection: baseTextField.textDirection,
       clipBehavior: baseTextField.clipBehavior,
-      enableIMEPersonalizedLearning: baseTextField.enableIMEPersonalizedLearning,
+      enableIMEPersonalizedLearning:
+          baseTextField.enableIMEPersonalizedLearning,
       focusNode: baseTextField.focusNode,
       contextMenuBuilder: baseTextField.contextMenuBuilder,
       suffix: baseTextField.suffix,

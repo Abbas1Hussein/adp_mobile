@@ -41,10 +41,12 @@ class BottomSheetAndroid extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (title != null) Padding(
+            if (title != null)
+              Padding(
                 padding: titlePadding ?? const EdgeInsets.all(8.0),
                 child: DefaultTextStyle.merge(
-                  style: titleTextStyle ?? Theme.of(context).textTheme.titleMedium,
+                  style:
+                      titleTextStyle ?? Theme.of(context).textTheme.titleMedium,
                   child: title!,
                 ),
               ),
@@ -52,7 +54,8 @@ class BottomSheetAndroid extends StatelessWidget {
               child: Padding(
                 padding: contentPadding ?? const EdgeInsets.all(8.0),
                 child: DefaultTextStyle.merge(
-                  style: contentTextStyle ?? Theme.of(context).textTheme.bodySmall,
+                  style:
+                      contentTextStyle ?? Theme.of(context).textTheme.bodySmall,
                   child: SingleChildScrollView(
                     controller: contentScrollController,
                     child: content,
@@ -75,8 +78,11 @@ class BottomSheetAndroid extends StatelessWidget {
                     return Row(
                       children: [
                         Expanded(child: _buildAction(buildActions![0])),
-                        if (buildActions.length > 1) const SizedBox(height: 15.0, child: VerticalDivider()),
-                        if (buildActions.length > 1) Expanded(child: _buildAction(buildActions[1])),
+                        if (buildActions.length > 1)
+                          const SizedBox(
+                              height: 15.0, child: VerticalDivider()),
+                        if (buildActions.length > 1)
+                          Expanded(child: _buildAction(buildActions[1])),
                       ],
                     );
                   } else {
@@ -84,7 +90,9 @@ class BottomSheetAndroid extends StatelessWidget {
                       controller: actionScrollController,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: actions!.map((child) => _buildAction(child)).toList(),
+                        children: actions!
+                            .map((child) => _buildAction(child))
+                            .toList(),
                       ),
                     );
                   }

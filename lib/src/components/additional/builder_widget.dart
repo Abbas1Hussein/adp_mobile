@@ -56,7 +56,7 @@ class AdaptiveBuilderWidget extends CoreAdaptiveComponent {
   ///     builders for Android and iOS. If provided, these builders will be
   ///     used to potentially customize the widget's appearance on each platform.
   AdaptiveBuilderWidget(
-      { super.key, PlatformBuilder? builders, required this.child })
+      {super.key, PlatformBuilder? builders, required this.child})
       : super(builders: builders != null ? adaptiveBuilder(builders) : null);
 
   /// The child widget to be displayed on both platforms.

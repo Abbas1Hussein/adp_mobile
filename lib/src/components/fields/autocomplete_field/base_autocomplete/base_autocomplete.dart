@@ -151,7 +151,8 @@ abstract class BaseAutocompleteOptions<T> extends StatelessWidget {
   final OptionsDecoration? decoration;
   final Iterable<AdaptiveAutocompleteItem<T>> options;
   final AutocompleteOnSelected<AdaptiveAutocompleteItem<T>> onSelected;
-  final AutocompleteOptionToString<AdaptiveAutocompleteItem<T>>? displayStringForOption;
+  final AutocompleteOptionToString<AdaptiveAutocompleteItem<T>>?
+      displayStringForOption;
   final EmptyBuilder? emptyBuilderWidget;
 
   @override

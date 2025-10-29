@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
-const Color kCupertinoMenuActionBackgroundColor = CupertinoDynamicColor.withBrightness(
+const Color kCupertinoMenuActionBackgroundColor =
+    CupertinoDynamicColor.withBrightness(
   color: Color(0xFFF1F1F1),
   darkColor: Color(0xFF212122),
 );
-const Color kCupertinoMenuActionBackgroundColorPressed = CupertinoDynamicColor.withBrightness(
+const Color kCupertinoMenuActionBackgroundColorPressed =
+    CupertinoDynamicColor.withBrightness(
   color: Color(0xFFDDDDDD),
   darkColor: Color(0xFF3F3F40),
 );
@@ -135,9 +137,11 @@ class _CupertinoMenuActionState extends State<CupertinoMenuAction> {
     );
   }
 
-  Color get backgroundColor => widget.backgroundColor ?? kCupertinoMenuActionBackgroundColor;
+  Color get backgroundColor =>
+      widget.backgroundColor ?? kCupertinoMenuActionBackgroundColor;
 
-  Color get pressedColor => widget.pressedColor ?? kCupertinoMenuActionBackgroundColorPressed;
+  Color get pressedColor =>
+      widget.pressedColor ?? kCupertinoMenuActionBackgroundColorPressed;
 
   TextStyle get _textStyle {
     return widget.textStyle ??

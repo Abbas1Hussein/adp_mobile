@@ -107,7 +107,8 @@ class AdaptiveNavigationBar extends CoreModel<
   final IconThemeData? unselectedIconTheme;
 
   @override
-  (BottomNavigationBar, NavigationBar, NavigationRail) toAndroid(BuildContext context) {
+  (BottomNavigationBar, NavigationBar, NavigationRail) toAndroid(
+      BuildContext context) {
     final property = properties?.android;
 
     final railProperty = property?.navigationRailProperty;

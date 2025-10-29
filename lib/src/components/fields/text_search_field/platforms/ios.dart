@@ -75,13 +75,13 @@ class TextSearchFieldIOS extends StatelessWidget
   @override
   final TextEditingController? controller;
 
-
   final SearchFieldIOSProperty? property;
 
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: constraints ?? const BoxConstraints(minWidth: 360.0, maxWidth: 800.0),
+      constraints:
+          constraints ?? const BoxConstraints(minWidth: 360.0, maxWidth: 800.0),
       child: CupertinoSearchTextField(
         style: style,
         decoration: decoration?.copyWith(

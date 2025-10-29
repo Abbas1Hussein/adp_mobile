@@ -26,7 +26,7 @@ class _ScaffoldPreviewState extends State<ScaffoldPreview> {
         child: ListView(
           children: List.generate(
             labels.length,
-                (index) {
+            (index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: AdaptiveListTile(
@@ -42,14 +42,12 @@ class _ScaffoldPreviewState extends State<ScaffoldPreview> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Builder(
-        builder: (context) {
-          return FloatingActionButton(
-            onPressed: Scaffold.of(context).openEndDrawer,
-            child: const AdaptiveIcon(AdpIcons.add),
-          );
-        }
-      ),
+      floatingActionButton: Builder(builder: (context) {
+        return FloatingActionButton(
+          onPressed: Scaffold.of(context).openEndDrawer,
+          child: const AdaptiveIcon(AdpIcons.add),
+        );
+      }),
       bottomNavigationBar: AdaptiveBottomNavigationBar(
         currentIndex: _currentValue,
         onChanged: (value) {

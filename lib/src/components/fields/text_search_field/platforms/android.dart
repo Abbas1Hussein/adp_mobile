@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../../../../core/common/construct/property.dart';
 import '../base_properties.dart';
 
-class TextSearchFieldAndroid extends StatefulWidget implements BaseSearchFieldProperties {
+class TextSearchFieldAndroid extends StatefulWidget
+    implements BaseSearchFieldProperties {
   const TextSearchFieldAndroid({
     super.key,
     this.style,
@@ -74,7 +75,6 @@ class TextSearchFieldAndroid extends StatefulWidget implements BaseSearchFieldPr
 
   @override
   final TextEditingController? controller;
-
 
   final SearchFieldAndroidProperty? property;
 

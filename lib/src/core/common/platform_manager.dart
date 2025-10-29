@@ -29,7 +29,8 @@ class DefaultsPlatformManager {
     MobileTargetPlatform? targetWeb,
     bool isDebugging = kDebugMode,
   }) {
-    assert(_instance == null, 'DefaultsPlatformManager is already initialized.');
+    assert(
+        _instance == null, 'DefaultsPlatformManager is already initialized.');
 
     return _instance = DefaultsPlatformManager._(
       targetPlatform,

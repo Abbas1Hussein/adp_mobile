@@ -15,7 +15,6 @@ class TextFormFieldIOS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: formFieldProperties?.padding ?? const EdgeInsets.all(4.0),
       child: TextFieldTapRegion(
@@ -32,15 +31,17 @@ class TextFormFieldIOS extends StatelessWidget {
           initialValue: formFieldProperties?.initialValue,
           placeholder: formFieldProperties?.placeholder,
           errorHighlightColor: formFieldProperties?.errorHighlightColor,
-          autovalidateMode:
-              formFieldProperties?.autovalidateMode ?? AutovalidateMode.disabled,
+          autovalidateMode: formFieldProperties?.autovalidateMode ??
+              AutovalidateMode.disabled,
           placeholderStyle:
               formFieldProperties?.placeholderStyle ?? kDefaultPlaceholderStyle,
-         /// padding: formFieldProperties?.padding ?? const EdgeInsets.all(4.0),
+
+          /// padding: formFieldProperties?.padding ?? const EdgeInsets.all(4.0),
           decoration: property?.decoration,
           clipBehavior: formFieldProperties?.clipBehavior ?? Clip.hardEdge,
           textDirection: formFieldProperties?.textDirection,
-          stylusHandwritingEnabled: formFieldProperties?.stylusHandwritingEnabled ?? true,
+          stylusHandwritingEnabled:
+              formFieldProperties?.stylusHandwritingEnabled ?? true,
           spellCheckConfiguration: formFieldProperties?.spellCheckConfiguration,
           enableIMEPersonalizedLearning:
               formFieldProperties?.enableIMEPersonalizedLearning ?? true,
@@ -109,8 +110,8 @@ class TextFormFieldIOS extends StatelessWidget {
               formFieldProperties?.dragStartBehavior ?? DragStartBehavior.start,
           selectionHeightStyle:
               formFieldProperties?.selectionHeightStyle ?? BoxHeightStyle.tight,
-          textCapitalization:
-              formFieldProperties?.textCapitalization ?? TextCapitalization.none,
+          textCapitalization: formFieldProperties?.textCapitalization ??
+              TextCapitalization.none,
         ),
       ),
     );

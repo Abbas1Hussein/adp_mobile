@@ -40,7 +40,7 @@ class BottomSheetIOS extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actions = this.actions?.where((value) {
-      if (value is AdaptiveBottomSheetAction){
+      if (value is AdaptiveBottomSheetAction) {
         return !value.canceled;
       }
       return false;
@@ -50,7 +50,8 @@ class BottomSheetIOS extends StatelessWidget {
       title: title != null
           ? Padding(
               padding: titlePadding ?? EdgeInsets.zero,
-              child: DefaultTextStyle.merge(style: titleTextStyle, child: title!),
+              child:
+                  DefaultTextStyle.merge(style: titleTextStyle, child: title!),
             )
           : null,
       message: Padding(
@@ -80,7 +81,7 @@ class BottomSheetIOS extends StatelessWidget {
 }
 
 class BottomSheetIOSProperty extends CoreIOSProperty {
-  const BottomSheetIOSProperty({ this.cancelButton, this.filter });
+  const BottomSheetIOSProperty({this.cancelButton, this.filter});
 
   final ImageFilter? filter;
 

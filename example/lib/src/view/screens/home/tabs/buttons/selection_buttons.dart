@@ -32,7 +32,7 @@ class _SelectionButtonsState extends State<SelectionButtons> {
             setState(() => _switchValue = value);
           },
         ),
-       // const SizedBox(height: 10.0),
+        // const SizedBox(height: 10.0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

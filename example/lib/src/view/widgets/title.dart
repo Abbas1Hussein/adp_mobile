@@ -74,4 +74,3 @@ class CustomTitle extends StatelessWidget {
     );
   }
 }
-

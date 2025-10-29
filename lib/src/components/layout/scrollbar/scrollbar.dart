@@ -73,7 +73,8 @@ class AdaptiveScrollbar extends CoreAdaptiveComponent {
       controller: controller,
       radius: radius ?? CupertinoScrollbar.defaultRadius,
       thickness: thickness ?? CupertinoScrollbar.defaultThickness,
-      notificationPredicate: notificationPredicate ?? defaultScrollNotificationPredicate,
+      notificationPredicate:
+          notificationPredicate ?? defaultScrollNotificationPredicate,
       scrollbarOrientation: scrollbarOrientation,
       thumbVisibility: thumbVisibility,
       child: child,

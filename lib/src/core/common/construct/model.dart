@@ -8,7 +8,6 @@ abstract class CoreModel<A, I> {
   const CoreModel({this.key});
   final Key? key;
 
-
   /// Converts the model to its representation on the Android platform.
   ///
   /// Returns an instance of [A] representing the model on the Android platform.

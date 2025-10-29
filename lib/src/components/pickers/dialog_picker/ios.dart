@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class IOSDialogPicker {
   const IOSDialogPicker(this.context, this.localizations,
-      { required this.picker });
+      {required this.picker});
 
   final Widget picker;
   final BuildContext context;

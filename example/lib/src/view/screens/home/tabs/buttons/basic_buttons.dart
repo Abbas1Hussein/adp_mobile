@@ -34,8 +34,7 @@ class BasicButtonsPreview extends StatelessWidget {
         ),
       ].map((child) {
         return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: child);
+            padding: const EdgeInsets.symmetric(horizontal: 8.0), child: child);
       }).toList(),
     );
   }

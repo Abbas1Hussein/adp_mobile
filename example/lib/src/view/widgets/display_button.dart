@@ -1,4 +1,3 @@
-
 import 'package:adp_mobile/adp_mobile.dart';
 
 class DisplayNavButton extends StatelessWidget {

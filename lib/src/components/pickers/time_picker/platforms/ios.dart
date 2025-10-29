@@ -9,7 +9,6 @@ import '../../dialog_picker/ios.dart';
 import '../../button_picker/button_constraints.dart';
 import '../../date_picker/platforms/ios.dart';
 
-
 /// available modes for CupertinoTimePicker
 enum CupertinoTimePickerModeStyle {
   /// Displayed CupertinoTimePicker with IOS-Style Dialog.

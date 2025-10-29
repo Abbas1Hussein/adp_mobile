@@ -100,7 +100,9 @@ class AdaptiveBottomNavigationBar extends CoreAdaptiveComponent<
         destinations: items.map((e) => e.toNavigationDestination()).toList(),
       );
     }
-    final showLabelVisibility = (property?.labelBehavior ?? NavigationDestinationLabelBehavior.alwaysShow).showLabelVisibility;
+    final showLabelVisibility = (property?.labelBehavior ??
+            NavigationDestinationLabelBehavior.alwaysShow)
+        .showLabelVisibility;
     return BottomNavigationBar(
       key: key,
       type: property?.bar2property?.type,

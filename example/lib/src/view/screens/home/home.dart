@@ -83,8 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(MobileTargetPlatform.iOS.name),
               ),
               AdaptivePulldownMenuItem(
-                enabled: PlatformRuining.targetPlatform == MobileTargetPlatform.iOS,
-                onTap: () => _showConfirmationDialog(MobileTargetPlatform.android),
+                enabled:
+                    PlatformRuining.targetPlatform == MobileTargetPlatform.iOS,
+                onTap: () =>
+                    _showConfirmationDialog(MobileTargetPlatform.android),
                 child: Text(MobileTargetPlatform.android.name),
               ),
             ],
@@ -148,7 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
 
   List<IconData> icons = [
     Icons.smart_button,

@@ -16,7 +16,7 @@ void main() {
 
   testWidgets(
     'AdaptiveTextSearchField render correctly',
-        (tester) async {
+    (tester) async {
       await tester.pumpWidget(
         wrapAppWithScaffold(
           child: Center(child: AdaptiveTextSearchField(controller: controller)),

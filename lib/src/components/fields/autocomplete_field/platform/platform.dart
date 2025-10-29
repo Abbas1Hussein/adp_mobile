@@ -1,2 +1,2 @@
-export 'android.dart' ;
+export 'android.dart';
 export 'ios.dart';

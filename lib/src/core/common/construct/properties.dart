@@ -4,7 +4,7 @@ export 'property.dart';
 
 /// Core properties class providing a common structure for platform-specific properties.
 abstract class CoreProperties<A, I> {
-  CoreProperties({ this.android, this.iOS });
+  CoreProperties({this.android, this.iOS});
 
   /// Android-specific properties.
   A? android;
@@ -16,7 +16,7 @@ abstract class CoreProperties<A, I> {
 /// The [Properties] class allows you to customize the visual and functional aspects
 /// of a support widget separately for Android and IOS platforms.
 final class Properties<A, I> extends CoreProperties<A, I> {
-  Properties({ super.android, super.iOS });
+  Properties({super.android, super.iOS});
 
   Properties.android(A android) : super(android: android);
 
@@ -59,9 +59,8 @@ final class PropertiesLogic<A, I> extends CoreProperties<A, I> {
         if (android != null) this.android = android();
       },
       iOS: () {
-        if ( iOS != null) this.iOS =  iOS();
+        if (iOS != null) this.iOS = iOS();
       },
     );
   }
 }
-

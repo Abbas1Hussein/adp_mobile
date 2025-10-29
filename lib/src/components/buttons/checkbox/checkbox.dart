@@ -154,7 +154,7 @@ class AdaptiveCheckbox extends CoreAdaptiveComponent {
       focusNode: focusNode,
       checkColor: checkColor,
       activeColor: activeColor,
-      fillColor: WidgetStatePropertyAll(inactiveColor) ,
+      fillColor: WidgetStatePropertyAll(inactiveColor),
       onChanged: isEnabled ? (value) => onChanged?.call(value == true) : null,
     ).margeWith(
       _buildLabelWidget(CupertinoTheme.of(context).textTheme.navTitleTextStyle),

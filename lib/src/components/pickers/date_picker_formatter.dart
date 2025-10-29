@@ -27,5 +27,4 @@ abstract class BaseDateFormatter extends StatelessWidget {
   String get amPm => timeOfDay.period.name.toUpperCase();
 
   TimeOfDay get timeOfDay => TimeOfDay.fromDateTime(initialDate);
-
 }

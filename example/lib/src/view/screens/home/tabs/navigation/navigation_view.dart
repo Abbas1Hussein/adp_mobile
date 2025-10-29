@@ -58,7 +58,7 @@ class _NavigationViewPreviewState extends State<NavigationViewPreview> {
   }
 
   final List<AdaptiveNavigationBarItem> items = const [
-     AdaptiveNavigationBarItem(
+    AdaptiveNavigationBarItem(
       label: 'Main Home',
       icon: AdaptiveIcon(AdpIcons.home),
     ),

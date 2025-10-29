@@ -5,15 +5,18 @@ class ScaffoldPagePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  AdaptiveScaffoldPage(
+    return AdaptiveScaffoldPage(
       appBar: AdaptiveAppBarPage(
         title: const Text('Appbar Page'),
         actions: [
           AdaptivePulldownMenuButton(
             items: [
-              AdaptivePulldownMenuItem(child: const Text('Action 1'), onTap: () {}),
-              AdaptivePulldownMenuItem(child: const Text('Action 2'), onTap: () {}),
-              AdaptivePulldownMenuItem(child: const Text('Action 3'), onTap: () {}),
+              AdaptivePulldownMenuItem(
+                  child: const Text('Action 1'), onTap: () {}),
+              AdaptivePulldownMenuItem(
+                  child: const Text('Action 2'), onTap: () {}),
+              AdaptivePulldownMenuItem(
+                  child: const Text('Action 3'), onTap: () {}),
             ],
           ),
         ],

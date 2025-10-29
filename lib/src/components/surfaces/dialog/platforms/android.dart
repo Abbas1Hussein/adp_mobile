@@ -2,10 +2,11 @@ import 'package:flutter/widgets.dart';
 
 import '../../../../core/common/construct/property.dart';
 
-const EdgeInsets defaultInsetPadding = EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
+const EdgeInsets defaultInsetPadding =
+    EdgeInsets.symmetric(horizontal: 40.0, vertical: 24.0);
 
 class DialogAndroidProperty extends CoreAndroidProperty {
- const DialogAndroidProperty({
+  const DialogAndroidProperty({
     this.icon,
     this.iconColor,
     this.iconPadding,

@@ -10,7 +10,9 @@ class AdaptiveValuePreview extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: AdaptiveButton.filled(
-        child: Text(PlatformRuining.isIOS ? 'show cupertino Alert-Dialog' : 'show material License-Page'),
+        child: Text(PlatformRuining.isIOS
+            ? 'show cupertino Alert-Dialog'
+            : 'show material License-Page'),
         onPressed: () => adaptiveValue(
           // handel some things on iOS.
           iOS: () {
@@ -18,8 +20,8 @@ class AdaptiveValuePreview extends StatelessWidget {
               context: context,
               builder: (context) {
                 return CupertinoAlertDialog(
-                  title:  Text(DummyText.generateQuestion),
-                  content:  Text(DummyText.generateAnswer),
+                  title: Text(DummyText.generateQuestion),
+                  content: Text(DummyText.generateAnswer),
                   actions: [
                     CupertinoDialogAction(
                       onPressed: () => Navigator.pop(context),

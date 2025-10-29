@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-
 abstract class BaseSearchFieldProperties {
   const BaseSearchFieldProperties({
     this.style,

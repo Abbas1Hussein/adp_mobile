@@ -433,7 +433,8 @@ class NavigationRailProperty {
   final TextStyle? selectedLabelTextStyle;
 }
 
-extension NavigationDestinationLabelBehaviorX on NavigationDestinationLabelBehavior {
+extension NavigationDestinationLabelBehaviorX
+    on NavigationDestinationLabelBehavior {
   /// Returns a [NavigationRailLabelType] representing the appropriate
   /// label behavior for a [NavigationRail] widget.
   ///

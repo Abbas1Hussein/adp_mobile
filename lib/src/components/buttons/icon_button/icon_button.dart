@@ -85,12 +85,14 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
   @override
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
-    final buildLabel = label != null ? DefaultTextStyle.merge(
+    final buildLabel = label != null
+        ? DefaultTextStyle.merge(
             style: Theme.of(context).textTheme.labelLarge?.copyWith(
                   fontWeight: FontWeight.w300,
                 ),
             child: label!,
-          ) : null;
+          )
+        : null;
 
     return IconButton(
       color: color,
@@ -105,10 +107,12 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
 
   @override
   Widget iOS(BuildContext context, [CoreIOSProperty? property]) {
-    final buildLabel = label != null ? DefaultTextStyle.merge(
+    final buildLabel = label != null
+        ? DefaultTextStyle.merge(
             style: CupertinoTheme.of(context).textTheme.navActionTextStyle,
             child: label!,
-          ) : null;
+          )
+        : null;
 
     return IOSButton(
       pressedOpacity: 0.45,
@@ -125,7 +129,9 @@ class AdaptiveIconButton extends CoreAdaptiveComponent {
           fit: BoxFit.scaleDown,
           child: IconTheme.merge(
             data: CupertinoIconThemeData(
-              color: onPressed != null ? color : (disabledColor ?? CupertinoColors.systemGrey),
+              color: onPressed != null
+                  ? color
+                  : (disabledColor ?? CupertinoColors.systemGrey),
             ).resolve(context),
             child: icon.margeWith(buildLabel, 6.0),
           ),

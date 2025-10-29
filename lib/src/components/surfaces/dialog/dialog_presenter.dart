@@ -71,7 +71,8 @@ abstract final class DialogPresenter {
       builder: (context) => AdaptiveDialog(
         title: Text(title),
         content: Text(message),
-        contentPadding: PlatformRuining.isIOS ? const EdgeInsets.only(top: 12.0): null,
+        contentPadding:
+            PlatformRuining.isIOS ? const EdgeInsets.only(top: 12.0) : null,
         actions: [
           AdaptiveDialogAction(
             child: Text(confirmLabel),

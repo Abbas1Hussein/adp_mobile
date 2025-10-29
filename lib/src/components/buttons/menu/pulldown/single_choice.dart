@@ -24,4 +24,3 @@ enum SelectionType {
   /// - There should be exactly one item with the specified 'enabled' value set to true.
   single,
 }
-

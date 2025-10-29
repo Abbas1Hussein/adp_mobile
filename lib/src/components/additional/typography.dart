@@ -8,7 +8,7 @@ import '../../core/common/adaptive.dart';
 class AdaptiveTypography {
   /// Creates an instance of [AdaptiveTypography].
   const AdaptiveTypography(
-      { this.body, this.label, this.caption, this.headline, this.subheading });
+      {this.body, this.label, this.caption, this.headline, this.subheading});
 
   /// The text style for body text.
   final TextStyle? body;
