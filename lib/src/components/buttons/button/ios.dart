@@ -140,7 +140,7 @@ class IOSButtonState extends State<IOSButton>
     Color hoverColor = CupertinoDynamicColor.resolve(
       widget.backgroundColor != null &&
               widget.backgroundColor != Colors.transparent
-          ? widget.backgroundColor!.withOpacity(0.7)
+          ? widget.backgroundColor!.withValues(alpha: 0.7)
           : widget.hoverColor ?? Colors.transparent,
       context,
     );
@@ -148,7 +148,7 @@ class IOSButtonState extends State<IOSButton>
     Color pressedColor = CupertinoDynamicColor.resolve(
       widget.backgroundColor != null &&
               widget.backgroundColor != Colors.transparent
-          ? widget.backgroundColor!.withOpacity(0.7)
+          ? widget.backgroundColor!.withValues(alpha: 0.7)
           : widget.pressedColor ?? Colors.transparent,
       context,
     );

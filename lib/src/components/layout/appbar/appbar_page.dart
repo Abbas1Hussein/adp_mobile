@@ -195,7 +195,7 @@ class AdaptiveAppBarPage extends CoreModel<AppBar, CupertinoNavigationBar> {
             )
           : styledTitle,
       backgroundColor: (backgroundColor ?? defaultBackgroundColor)
-          .withOpacity(toolbarOpacity),
+          .withValues(alpha: toolbarOpacity),
       padding: EdgeInsetsDirectional.zero,
       automaticallyImplyLeading: automaticallyImplyLeading,
     );

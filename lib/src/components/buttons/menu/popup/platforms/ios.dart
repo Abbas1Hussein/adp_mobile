@@ -51,10 +51,10 @@ class PopupMenuIOS<T> extends StatefulWidget {
   final Color? iconEnabledColor;
 
   @override
-  _PopupMenuIOSState createState() => _PopupMenuIOSState<T>();
+  PopupMenuIOSState createState() => PopupMenuIOSState<T>();
 }
 
-class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
+class PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
   T? value;
   int _selectedIndex = 0;
 
@@ -123,8 +123,9 @@ class _PopupMenuIOSState<T> extends State<PopupMenuIOS<T>> {
             child: CupertinoMenuAction(
               padding: widget.padding,
               backgroundColor: backgroundColor,
-              pressedColor:
-                  isSelected ? widget.focusColor?.withOpacity(0.90) : null,
+              pressedColor: isSelected
+                  ? widget.focusColor?.withValues(alpha: 0.90)
+                  : null,
               textStyle: CupertinoTheme.of(context)
                   .textTheme
                   .textStyle

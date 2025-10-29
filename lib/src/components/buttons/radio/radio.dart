@@ -111,30 +111,34 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
   Widget android(BuildContext context, [CoreAndroidProperty? property]) {
     final labelStyle = Theme.of(context).textTheme.labelLarge!;
 
-    return Radio<T>(
-      value: value,
+    return RadioGroup<T>(
       groupValue: groupValue,
-      autofocus: autofocus,
-      focusNode: focusNode,
-      focusColor: focusColor,
-      fillColor: WidgetStateProperty.resolveWith(
-        (Set<WidgetState> states) {
-          if (states.contains(WidgetState.disabled)) {
-            return inactiveColor;
-          }
-          if (!states.contains(WidgetState.selected)) {
-            return inactiveColor;
-          }
-          if (states.contains(WidgetState.selected)) {
-            return activeColor;
-          }
-          return null;
-        },
-      ),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      overlayColor: WidgetStateProperty.all(activeColor?.withOpacity(0.5)),
-      onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
-    ).margeWith(_buildLabelWidget(context, labelStyle), 2.0);
+      onChanged: (value) => onChanged?.call(value as T),
+      child: Radio<T>(
+        value: value,
+        enabled: _enabled,
+        autofocus: autofocus,
+        focusNode: focusNode,
+        focusColor: focusColor,
+        fillColor: WidgetStateProperty.resolveWith(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.disabled)) {
+              return inactiveColor;
+            }
+            if (!states.contains(WidgetState.selected)) {
+              return inactiveColor;
+            }
+            if (states.contains(WidgetState.selected)) {
+              return activeColor;
+            }
+            return null;
+          },
+        ),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        overlayColor:
+            WidgetStateProperty.all(activeColor?.withValues(alpha: 0.5)),
+      ).margeWith(_buildLabelWidget(context, labelStyle), 2.0),
+    );
   }
 
   @override
@@ -149,16 +153,19 @@ class AdaptiveRadio<T> extends CoreAdaptiveComponent {
         height: 20.0,
         width: 20.0,
         child: FittedBox(
-          child: CupertinoRadio<T>(
-            value: value,
+          child: RadioGroup<T>(
             groupValue: groupValue,
-            autofocus: autofocus,
-            focusNode: focusNode,
-            fillColor: activeColor,
-            focusColor: focusColor,
-            activeColor: activeColor,
-            inactiveColor: inactiveColor,
-            onChanged: _enabled ? (value) => onChanged?.call(value as T) : null,
+            onChanged: (value) => onChanged?.call(value as T),
+            child: CupertinoRadio<T>(
+              value: value,
+              enabled: _enabled,
+              autofocus: autofocus,
+              focusNode: focusNode,
+              fillColor: activeColor,
+              focusColor: focusColor,
+              activeColor: activeColor,
+              inactiveColor: inactiveColor,
+            ),
           ),
         ),
       ).margeWith(_buildLabelWidget(context, labelStyle), 6.0),
