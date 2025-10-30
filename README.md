@@ -4,7 +4,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/Abbas1Hussein/adp_mobile)](https://github.com/Abbas1Hussein/adp_mobile/network)
 
 <p align="center">
-  <img src="banner/banner.png" alt="banner" />
+  <img src="https://i.imgur.com/OR5Wy0s.png" alt="banner" />
 </p>
 
 Use this package to create adaptive apps on mobile. With just one codebase, you can preview your app on both Android and IOS platforms, regardless of the device you're used.
