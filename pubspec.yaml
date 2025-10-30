@@ -10,15 +10,12 @@ environment:
   flutter: ">=1.17.0"
 
 topics:
-  - ui
-  - web
-  - iOS
-  - android
-  - fuchsia
-  - mobile
-  - widgets
   - adaptive
   - responsive
+  - mobile
+  - android
+  - ios
+
 
 dependencies:
   flutter:
