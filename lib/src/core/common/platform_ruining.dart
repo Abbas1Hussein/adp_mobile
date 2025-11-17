@@ -87,12 +87,9 @@ abstract final class PlatformRuining {
   /// Throws an error if [DefaultsPlatformManager] is not initialized.
   static MobileTargetPlatform get targetPlatform {
     if (!DefaultsPlatformManager.isInitialized) {
-      throw ArgumentError(
-        'Do not use PlatformRuining.targetPlatform before or inside DefaultsPlatformManager.initialize(). '
-        'Use MobileTargetPlatform.<value> instead.',
-      );
+      throw StateError(
+          'Do not use PlatformRuining.targetPlatform before or inside DefaultsPlatformManager.initialize().');
     }
-
     return _debugMobileTargetPlatform ??
         _defaultTargetPlatform.mobileTargetPlatform;
   }

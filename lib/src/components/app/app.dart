@@ -298,6 +298,12 @@ class AdpApp extends CoreAdaptiveComponent<AppAndroidProperty, AppIOSProperty> {
   bool get usesRouter => routerDelegate != null || routerConfig != null;
 
   @override
+  Widget build(BuildContext context) {
+    DefaultsPlatformManager.ensureInitialized();
+    return super.build(context);
+  }
+
+  @override
   Widget android(BuildContext context, [AppAndroidProperty? property]) {
     final lightTheme = property?.theme ?? ThemeData.light(useMaterial3: true);
     final darkTheme = property?.darkTheme ?? ThemeData.dark(useMaterial3: true);
